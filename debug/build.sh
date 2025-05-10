@@ -4,6 +4,7 @@ java_out="$game_home/tmp"
 java_src="$game_home/src/com/app/game/*.java"
 jar_game="$game_home/game.jar"
 jar_engine="$game_home/engine.jar"
+manifest="$game_home/debug/MANIFEST.MF"
 
 
 prep() {
@@ -12,9 +13,8 @@ prep() {
 }
 
 build() {
-  $java_bin/javac -cp .:engine.jar -d $java_out $java_src
-#  $java_bin/javac -d $java_out $java_src
-  $java_bin/jar cmf $game_home/debug/MANIFEST.MF $jar_game -C $java_out .
+  $java_bin/javac -cp .:$jar_engine -d $java_out $java_src
+  $java_bin/jar cmf $manifest $jar_game -C $java_out .
 }
 
 cleanup() {

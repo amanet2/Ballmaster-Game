@@ -12,14 +12,13 @@ prep() {
 }
 
 build() {
-  $java_bin/javac -d $java_out $java_src
-  $java_bin/jar cf $jar_name -C $java_out .
+  $java_bin/javac -cp .:engine.jar -d $java_out $java_src
+#  $java_bin/javac -d $java_out $java_src
+  $java_bin/jar cmf $game_home/debug/MANIFEST.MF $jar_game -C $java_out .
 }
 
 cleanup() {
   rm -rf $java_out
-  rm -f $jar_copy_to/$jar_name
-  cp $jar_name $jar_copy_to
 }
 
 prep

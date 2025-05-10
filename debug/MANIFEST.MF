@@ -1,2 +1,3 @@
 Manifest-Version: 1.0
-Main-Class: xMain
+Main-Class: com.app.game.game
+Class-Path: engine.jar

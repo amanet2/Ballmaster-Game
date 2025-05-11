@@ -25,12 +25,12 @@ public class game {
         launchArgs = args;
 
         long currentTimeMillis = System.currentTimeMillis();
-        scheduler.putEvent(Long.toString(currentTimeMillis), new doableImpl() {
+        scheduler.putEvent(currentTimeMillis, new doableImpl() {
             public void doCommand() {
                 System.out.print("\nDid a scheduled event");
             }
         });
-        scheduler.putEvent(Long.toString(currentTimeMillis + 5000), new doableImpl() {
+        scheduler.putEvent(currentTimeMillis + 5000, new doableImpl() {
             public void doCommand() {
                 System.out.print("\nWe should not see this");
             }

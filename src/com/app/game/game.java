@@ -9,6 +9,7 @@ import com.app.engine.spritesImpl;
 import com.app.engine.keyboardImpl;
 import com.app.engine.schedulerImpl;
 import com.app.engine.doableImpl;
+import com.app.engine.cVarImpl;
 
 public class game {
     static final utilsImpl utils = new utilsImpl();
@@ -17,11 +18,18 @@ public class game {
     static final spritesImpl sprites = new spritesImpl();
     static final keyboardImpl keyboard = new keyboardImpl();
     static final schedulerImpl scheduler = new schedulerImpl();
-    static final int roundToTestVal = 36;
-    static final int roundToTestNearest = 30;
+    static int roundToTestVal = 36;
+    static int roundToTestNearest = 30;
 
     public static void main(String[] args) {
         long currentTimeMillis = System.currentTimeMillis();
+
+        cVarImpl roundToValVar = new cVarImpl("round_to", Integer.toString(roundToTestVal)) {
+            public void onUpdate() {
+                roundToTestVal = Integer.parseInt(this.getValue());
+                System.out.printf("\nRounding %s to nearest %d: %d", this.getValue(), roundToTestNearest, utils.roundToNearest(roundToTestVal, roundToTestNearest));
+            }
+        };
 
         scheduler.putEvent(currentTimeMillis, new doableImpl() {
             public void doCommand() {
@@ -47,6 +55,7 @@ public class game {
         System.out.printf("\nSprite for 'none': %s", sprites.getScaledImage("none", 0, 0));
         System.out.printf("\nKeyboard code for key a: %d", keyboard.getCodeForKey("a"));
         scheduler.doEvents(System.currentTimeMillis()); // prints stuff
+        roundToValVar.setValue("62");
         System.out.println();
 
     }

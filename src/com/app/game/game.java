@@ -11,9 +11,8 @@ import com.app.engine.schedulerImpl;
 import com.app.engine.doableImpl;
 
 public class game {
-    public static String[] launchArgs;
     static final utilsImpl utils = new utilsImpl();
-    static final cameraImpl cam = new cameraImpl();
+    static final cameraImpl camera = new cameraImpl();
     static final fileMgrImpl files = new fileMgrImpl();
     static final spritesImpl sprites = new spritesImpl();
     static final keyboardImpl keyboard = new keyboardImpl();
@@ -22,12 +21,16 @@ public class game {
     static final int roundToTestNearest = 30;
 
     public static void main(String[] args) {
-        launchArgs = args;
-
         long currentTimeMillis = System.currentTimeMillis();
+
         scheduler.putEvent(currentTimeMillis, new doableImpl() {
             public void doCommand() {
                 System.out.print("\nDid a scheduled event");
+            }
+        });
+        scheduler.putEvent(currentTimeMillis, new doableImpl() {
+            public void doCommand() {
+                System.out.print("\nDid another scheduled event");
             }
         });
         scheduler.putEvent(currentTimeMillis + 5000, new doableImpl() {
@@ -36,14 +39,14 @@ public class game {
             }
         });
 
-        System.out.printf("\nStarted Game w/ scale %d, args: %s", settings.nativeScale, Arrays.toString(launchArgs));
+        String startString = String.format("\nStarted Game w/ scale %d, args: %s", settings.nativeScale, Arrays.toString(args));
+        System.out.print(startString);
         System.out.printf("\nRounding %d to nearest %d: %d", roundToTestVal, roundToTestNearest, utils.roundToNearest(roundToTestVal, roundToTestNearest));
-        System.out.printf("\nCam coords: %s", Arrays.toString(cam.getCoords()));
+        System.out.printf("\nCam coords: %s", Arrays.toString(camera.getCoords()));
         System.out.printf("\nFiles in /data: %s", Arrays.toString(files.getFilesInDirectory("data")));
         System.out.printf("\nSprite for 'none': %s", sprites.getScaledImage("none", 0, 0));
         System.out.printf("\nKeyboard code for key a: %d", keyboard.getCodeForKey("a"));
-        scheduler.doEvents(System.currentTimeMillis());
-
+        scheduler.doEvents(System.currentTimeMillis()); // prints stuff
         System.out.println();
 
     }

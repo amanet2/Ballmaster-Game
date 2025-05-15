@@ -27,6 +27,7 @@ public class game {
         cVarImpl roundToValVar = new cVarImpl("round_to", Integer.toString(roundToTestVal)) {
             public void onUpdate() {
                 roundToTestVal = Integer.parseInt(this.getValue());
+                System.out.printf("\nSet cvar %s value to: %s", this.getKey(), this.getValue());
                 System.out.printf("\nRounding %s to nearest %d: %d", this.getValue(), roundToTestNearest, utils.roundToNearest(roundToTestVal, roundToTestNearest));
             }
         };

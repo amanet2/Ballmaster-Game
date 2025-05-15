@@ -7,10 +7,10 @@ jar_engine="$game_home/engine.jar"
 manifest="$game_home/debug/MANIFEST.MF"
 
 
-prep() {
-  rm -f $jar_game
-  rm -rf $java_out
-}
+#prep() {
+#  rm -f $jar_game
+#  rm -rf $java_out
+#}
 
 build() {
   $java_bin/javac -cp .:$jar_engine -d $java_out $java_src
@@ -21,6 +21,6 @@ cleanup() {
   rm -rf $java_out
 }
 
-prep
+#prep
 build
 cleanup

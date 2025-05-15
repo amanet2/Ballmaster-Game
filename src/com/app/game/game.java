@@ -10,6 +10,7 @@ import com.app.engine.keyboardImpl;
 import com.app.engine.schedulerImpl;
 import com.app.engine.doableImpl;
 import com.app.engine.cVarImpl;
+import com.app.engine.stateImpl;
 
 public class game {
     static final utilsImpl utils = new utilsImpl();
@@ -28,9 +29,16 @@ public class game {
             public void onUpdate() {
                 roundToTestVal = Integer.parseInt(this.getValue());
                 System.out.printf("\nSet cvar %s value to: %s", this.getKey(), this.getValue());
-                System.out.printf("\nRounding %s to nearest %d: %d", this.getValue(), roundToTestNearest, utils.roundToNearest(roundToTestVal, roundToTestNearest));
+                System.out.printf(
+                        "\nRounding %s to nearest %d: %d",
+                        this.getValue(),
+                        roundToTestNearest,
+                        utils.roundToNearest(roundToTestVal, roundToTestNearest)
+                );
             }
         };
+
+        stateImpl testState = new stateImpl("{foo=bar,bar=");
 
         scheduler.putEvent(currentTimeMillis, new doableImpl() {
             public void doCommand() {
@@ -48,16 +56,32 @@ public class game {
             }
         });
 
-        String startString = String.format("\nStarted Game w/ scale %d, args: %s", settings.nativeScale, Arrays.toString(args));
+        String startString = String.format(
+                "\nStarted Game w/ scale %d, args: %s",
+                settings.nativeScale,
+                Arrays.toString(args)
+        );
         System.out.print(startString);
-        System.out.printf("\nRounding %d to nearest %d: %d", roundToTestVal, roundToTestNearest, utils.roundToNearest(roundToTestVal, roundToTestNearest));
+        System.out.printf(
+                "\nRounding %d to nearest %d: %d",
+                roundToTestVal,
+                roundToTestNearest,
+                utils.roundToNearest(roundToTestVal, roundToTestNearest)
+        );
         System.out.printf("\nCam coords: %s", Arrays.toString(camera.getCoords()));
         System.out.printf("\nFiles in /data: %s", Arrays.toString(files.getFilesInDirectory("data")));
         System.out.printf("\nSprite for 'none': %s", sprites.getScaledImage("none", 0, 0));
         System.out.printf("\nKeyboard code for key a: %d", keyboard.getCodeForKey("a"));
         scheduler.doEvents(System.currentTimeMillis()); // prints stuff
         roundToValVar.setValue("62");
-        System.out.println();
+        System.out.printf(
+                "\nTest state: %s. (keys: %s) (foo value: %s, bar value:%s)",
+                testState,
+                testState.keys(),
+                testState.get("foo"),
+                testState.get("bar")
+        );
 
+        System.out.println();
     }
 }

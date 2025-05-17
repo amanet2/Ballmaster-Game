@@ -2,50 +2,63 @@ package com.app.game;
 
 import java.util.Arrays;
 import com.app.engine.settings;
-import com.app.engine.utilsImpl;
-import com.app.engine.cameraImpl;
-import com.app.engine.fileMgrImpl;
-import com.app.engine.spritesImpl;
-import com.app.engine.keyboardImpl;
-import com.app.engine.schedulerImpl;
-import com.app.engine.doableImpl;
-import com.app.engine.cVarImpl;
-import com.app.engine.dictImpl;
-import com.app.engine.cmdImpl;
-import com.app.engine.consoleImpl;
+import com.app.engine.utils;
+import com.app.engine.camera;
+import com.app.engine.fileMgr;
+import com.app.engine.sprites;
+import com.app.engine.keyboard;
+import com.app.engine.scheduler;
+import com.app.engine.doable;
+import com.app.engine.cvar;
+import com.app.engine.dict;
+import com.app.engine.cmd;
+import com.app.engine.console;
 
 public class game {
-    static final utilsImpl utils = new utilsImpl();
-    static final cameraImpl camera = new cameraImpl();
-    static final fileMgrImpl files = new fileMgrImpl();
-    static final consoleImpl console = new consoleImpl();
-    static final spritesImpl sprites = new spritesImpl();
-    static final keyboardImpl keyboard = new keyboardImpl();
-    static final schedulerImpl scheduler = new schedulerImpl();
+    static final utils utils = new utils();
+    static final camera camera = new camera();
+    static final fileMgr files = new fileMgr();
+    static final console console = new console();
+    static final sprites sprites = new sprites();
+    static final keyboard keyboard = new keyboard();
+    static final scheduler scheduler = new scheduler();
     static int roundToTestVal = 36;
     static int roundToTestNearest = 30;
 
     public static void main(String[] args) {
         long currentTimeMillis = System.currentTimeMillis();
 
-        console.registerCmd("echo", new cmdImpl(){
+        console.registerCmd("echo", new cmd(){
             @Override
             public String doCmd(String[] args) {
                 StringBuilder echoStr = new StringBuilder();
                 for(String tok : args) {
                     echoStr.append(tok).append(" ");
                 }
-                System.out.printf("\n%s", echoStr);
+                System.out.printf("%s%n", echoStr);
                 return echoStr.toString();
             }
         });
 
-        cVarImpl roundToValVar = new cVarImpl("round_to", Integer.toString(roundToTestVal)) {
+        console.registerCmd("add", new cmd(){
+            @Override
+            public String doCmd(String[] args) {
+                try {
+                    return Integer.toString(Integer.parseInt(args[0]) + Integer.parseInt(args[1]));
+                }
+                catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return "null";
+            }
+        });
+
+        cvar roundToValVar = new cvar("round_to", Integer.toString(roundToTestVal)) {
             public void onUpdate() {
                 roundToTestVal = Integer.parseInt(this.getValue());
-                System.out.printf("\nSet cvar %s value to: %s", this.getKey(), this.getValue());
+                System.out.printf("Set cvar %s value to: %s%n", this.getKey(), this.getValue());
                 System.out.printf(
-                        "\nRounding %s to nearest %d: %d",
+                        "Rounding %s to nearest %d: %d%n",
                         this.getValue(),
                         roundToTestNearest,
                         utils.roundToNearest(roundToTestVal, roundToTestNearest)
@@ -53,50 +66,52 @@ public class game {
             }
         };
 
-        dictImpl testDict = new dictImpl("{foo=bar,bar=");
+        dict testDict = new dict("{foo=bar,bar=");
 
-        scheduler.putEvent(currentTimeMillis, new doableImpl() {
+        scheduler.putEvent(currentTimeMillis, new doable() {
             public void doCommand() {
-                System.out.print("\nDid a scheduled event");
+                System.out.println("Did a scheduled event");
             }
         });
-        scheduler.putEvent(currentTimeMillis, new doableImpl() {
+        scheduler.putEvent(currentTimeMillis, new doable() {
             public void doCommand() {
-                System.out.print("\nDid another scheduled event");
+                System.out.println("Did another scheduled event");
             }
         });
-        scheduler.putEvent(currentTimeMillis + 5000, new doableImpl() {
+        scheduler.putEvent(currentTimeMillis + 5000, new doable() {
             public void doCommand() {
-                System.out.print("\nWe should not see this");
+                System.out.println("We should not see this");
             }
         });
 
         String startString = String.format(
-                "\nStarted Game w/ scale %d, args: %s",
+                "Started Game w/ scale %d, args: %s",
                 settings.nativeScale,
                 Arrays.toString(args)
         );
-        System.out.print(startString);
+        System.out.println(startString);
         System.out.printf(
-                "\nRounding %d to nearest %d: %d",
+                "Rounding %d to nearest %d: %d%n",
                 roundToTestVal,
                 roundToTestNearest,
                 utils.roundToNearest(roundToTestVal, roundToTestNearest)
         );
-        System.out.printf("\nCam coords: %s", Arrays.toString(camera.getCoords()));
-        System.out.printf("\nFiles in /data: %s", Arrays.toString(files.getFilesInDirectory("data")));
-        System.out.printf("\nSprite for 'none': %s", sprites.getScaledImage("none", 0, 0));
-        System.out.printf("\nKeyboard code for key a: %d", keyboard.getCodeForKey("a"));
+        System.out.printf("Cam coords: %s%n", Arrays.toString(camera.getCoords()));
+        System.out.printf("Files in /data: %s%n", Arrays.toString(files.getFilesInDirectory("data")));
+        System.out.printf("Sprite for 'none': %s%n", sprites.getScaledImage("none", 0, 0));
+        System.out.printf("Keyboard code for key a: %d%n", keyboard.getCodeForKey("a"));
         scheduler.doEvents(System.currentTimeMillis()); // prints stuff
         roundToValVar.setValue("62");
         System.out.printf(
-                "\nTest state: %s. (keys: %s) (foo value: %s, bar value:%s)",
+                "Test state: %s. (keys: %s) (foo value: %s, bar value:%s)%n",
                 testDict,
                 testDict.keys(),
                 testDict.get("foo"),
                 testDict.get("bar")
         );
         console.readLine("echo I am echoing something from the console!");
-        System.out.println();
+        String addCom = "add 1 2";
+        System.out.printf("Gonna do this math: %s%n", addCom);
+        System.out.printf("%s%n", console.readLine(addCom));
     }
 }

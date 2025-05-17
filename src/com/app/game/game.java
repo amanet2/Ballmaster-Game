@@ -4,7 +4,6 @@ import java.util.Arrays;
 import com.app.engine.settings;
 import com.app.engine.utils;
 import com.app.engine.camera;
-import com.app.engine.fileMgr;
 import com.app.engine.sprites;
 import com.app.engine.keyboard;
 import com.app.engine.dict;
@@ -12,7 +11,6 @@ import com.app.engine.dict;
 public class game {
     static final utils utils = new utils();
     static final camera camera = new camera();
-    static final fileMgr dataFiles = new fileMgr("data");
     static final sprites sprites = new sprites();
     static final keyboard keyboard = new keyboard();
 
@@ -25,6 +23,7 @@ public class game {
         gameCVarTest.test();
         gameConsoleTest.test();
         gameSchedulerTest.test();
+        gameFileSystemTest.test();
 
         dict testDict = new dict("{foo=bar,bar=");
 
@@ -35,7 +34,6 @@ public class game {
                 utils.roundToNearest(roundToTestVal, roundToTestNearest)
         );
         System.out.printf("Cam coords: %s%n", Arrays.toString(camera.getCoords()));
-        System.out.printf("Files in /%s: %s%n", dataFiles.dir(), Arrays.toString(dataFiles.getFileSelection()));
         System.out.printf("Sprite for 'none': %s%n", sprites.getScaledImage("none", 0, 0));
         System.out.printf("Keyboard code for key a: %d%n", keyboard.getCodeForKey("a"));
         System.out.printf(

@@ -10,12 +10,15 @@ import com.app.engine.keyboardImpl;
 import com.app.engine.schedulerImpl;
 import com.app.engine.doableImpl;
 import com.app.engine.cVarImpl;
-import com.app.engine.stateImpl;
+import com.app.engine.dictImpl;
+import com.app.engine.cmdImpl;
+import com.app.engine.consoleImpl;
 
 public class game {
     static final utilsImpl utils = new utilsImpl();
     static final cameraImpl camera = new cameraImpl();
     static final fileMgrImpl files = new fileMgrImpl();
+    static final consoleImpl console = new consoleImpl();
     static final spritesImpl sprites = new spritesImpl();
     static final keyboardImpl keyboard = new keyboardImpl();
     static final schedulerImpl scheduler = new schedulerImpl();
@@ -24,6 +27,18 @@ public class game {
 
     public static void main(String[] args) {
         long currentTimeMillis = System.currentTimeMillis();
+
+        console.registerCmd("echo", new cmdImpl(){
+            @Override
+            public String doCmd(String[] args) {
+                StringBuilder echoStr = new StringBuilder();
+                for(String tok : args) {
+                    echoStr.append(tok).append(" ");
+                }
+                System.out.printf("\n%s", echoStr);
+                return echoStr.toString();
+            }
+        });
 
         cVarImpl roundToValVar = new cVarImpl("round_to", Integer.toString(roundToTestVal)) {
             public void onUpdate() {
@@ -38,7 +53,7 @@ public class game {
             }
         };
 
-        stateImpl testState = new stateImpl("{foo=bar,bar=");
+        dictImpl testDict = new dictImpl("{foo=bar,bar=");
 
         scheduler.putEvent(currentTimeMillis, new doableImpl() {
             public void doCommand() {
@@ -76,12 +91,12 @@ public class game {
         roundToValVar.setValue("62");
         System.out.printf(
                 "\nTest state: %s. (keys: %s) (foo value: %s, bar value:%s)",
-                testState,
-                testState.keys(),
-                testState.get("foo"),
-                testState.get("bar")
+                testDict,
+                testDict.keys(),
+                testDict.get("foo"),
+                testDict.get("bar")
         );
-
+        console.readLine("echo I am echoing something from the console!");
         System.out.println();
     }
 }

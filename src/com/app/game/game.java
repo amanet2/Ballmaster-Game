@@ -17,7 +17,7 @@ import com.app.engine.console;
 public class game {
     static final utils utils = new utils();
     static final camera camera = new camera();
-    static final fileMgr files = new fileMgr();
+    static final fileMgr dataFiles = new fileMgr("data");
     static final console console = new console();
     static final sprites sprites = new sprites();
     static final keyboard keyboard = new keyboard();
@@ -28,7 +28,7 @@ public class game {
     public static void main(String[] args) {
         long currentTimeMillis = System.currentTimeMillis();
 
-        console.registerCmd("echo", new cmd(){
+        console.registerCmd("echo", new cmd() {
             @Override
             public String doCmd(String[] args) {
                 StringBuilder echoStr = new StringBuilder();
@@ -40,7 +40,7 @@ public class game {
             }
         });
 
-        console.registerCmd("add", new cmd(){
+        console.registerCmd("add", new cmd() {
             @Override
             public String doCmd(String[] args) {
                 try {
@@ -97,7 +97,7 @@ public class game {
                 utils.roundToNearest(roundToTestVal, roundToTestNearest)
         );
         System.out.printf("Cam coords: %s%n", Arrays.toString(camera.getCoords()));
-        System.out.printf("Files in /data: %s%n", Arrays.toString(files.getFilesInDirectory("data")));
+        System.out.printf("Files in /%s: %s%n", dataFiles.dir(), Arrays.toString(dataFiles.getFileSelection()));
         System.out.printf("Sprite for 'none': %s%n", sprites.getScaledImage("none", 0, 0));
         System.out.printf("Keyboard code for key a: %d%n", keyboard.getCodeForKey("a"));
         scheduler.doEvents(System.currentTimeMillis()); // prints stuff

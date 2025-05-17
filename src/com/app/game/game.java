@@ -9,7 +9,6 @@ import com.app.engine.sprites;
 import com.app.engine.keyboard;
 import com.app.engine.scheduler;
 import com.app.engine.doable;
-import com.app.engine.cvar;
 import com.app.engine.dict;
 import com.app.engine.cmd;
 import com.app.engine.console;
@@ -22,11 +21,15 @@ public class game {
     static final sprites sprites = new sprites();
     static final keyboard keyboard = new keyboard();
     static final scheduler scheduler = new scheduler();
+
     static int roundToTestVal = 36;
     static int roundToTestNearest = 30;
 
     public static void main(String[] args) {
         long currentTimeMillis = System.currentTimeMillis();
+
+        gameCVarTest cVarTest = new gameCVarTest();
+        cVarTest.test();
 
         console.registerCmd("echo", new cmd() {
             @Override
@@ -52,19 +55,6 @@ public class game {
                 return "null";
             }
         });
-
-        cvar roundToValVar = new cvar("round_to", Integer.toString(roundToTestVal)) {
-            public void onUpdate() {
-                roundToTestVal = Integer.parseInt(this.getValue());
-                System.out.printf("Set cvar %s value to: %s%n", this.getKey(), this.getValue());
-                System.out.printf(
-                        "Rounding %s to nearest %d: %d%n",
-                        this.getValue(),
-                        roundToTestNearest,
-                        utils.roundToNearest(roundToTestVal, roundToTestNearest)
-                );
-            }
-        };
 
         dict testDict = new dict("{foo=bar,bar=");
 
@@ -101,7 +91,6 @@ public class game {
         System.out.printf("Sprite for 'none': %s%n", sprites.getScaledImage("none", 0, 0));
         System.out.printf("Keyboard code for key a: %d%n", keyboard.getCodeForKey("a"));
         scheduler.doEvents(System.currentTimeMillis()); // prints stuff
-        roundToValVar.setValue("62");
         System.out.printf(
                 "Test state: %s. (keys: %s) (foo value: %s, bar value:%s)%n",
                 testDict,

@@ -10,6 +10,6 @@ public class gameSpriteTest {
     public static void test() {
         gSpriteSystem gSpriteSystem = spriteSystem. new gSpriteSystem();
         gSprite testSprite = gSpriteSystem.getScaledSprite("data/player_pint_03.png", 300, 300);
-        System.out.println("Got sprite " + testSprite);
+        System.out.println("Got sprite " + testSprite.getImage());
     }
 }

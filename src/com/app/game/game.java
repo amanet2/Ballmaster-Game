@@ -9,7 +9,7 @@ public class game {
 
         gameMiscTest.test();
         gameCVarTest.test();
-//        gameSpriteTest.test();  // TODO: why does this test make the run hang for a few seconds at the end?
+        gameSpriteTest.test();  // TODO: why does this test make the run hang for a few seconds at the end?
         gameConsoleTest.test();
         gameSchedulerTest.test();
         gameFileSystemTest.test();

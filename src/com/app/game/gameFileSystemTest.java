@@ -10,6 +10,9 @@ public class gameFileSystemTest {
 
     public static void test() {
         gDirectory gDirectory = fileSystem. new gDirectory("data");
-        System.out.printf("Files in /%s: %s%n", gDirectory.getPath(), Arrays.toString(gDirectory.getFileNames()));
+        System.out.printf("Filenames in /%s: %s%n", gDirectory.getPath(), Arrays.toString(gDirectory.getFileNames()));
+        for(gFile file : gDirectory.getFiles()) {
+            System.out.printf("File obj in /%s: %s%n", gDirectory.getPath(), file.getFullPath());
+        }
     }
 }

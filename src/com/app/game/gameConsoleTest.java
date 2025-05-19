@@ -6,9 +6,9 @@ import com.app.engine.consoleSystem.gConsoleSystem;
 
 public class gameConsoleTest {
     static consoleSystem consoleSystem = new consoleSystem();
+    static gConsoleSystem gConsoleSystem = consoleSystem. new gConsoleSystem();
 
     public static void test() {
-        gConsoleSystem gConsoleSystem = consoleSystem. new gConsoleSystem();
 
         gConsoleCommand gConsoleCommandEcho = consoleSystem. new gConsoleCommand() {
             @Override

@@ -23,8 +23,12 @@ public class game {
             while(true) {
                 Scanner scanner = new Scanner(System.in);
                 String input = scanner.nextLine();
-                System.out.println("Input thread read line: " + input);
-                System.out.println("Use the KeyboardListener for the real game instead.");
+                String result = gameConsoleTest.gConsoleSystem.readLine(input);
+                System.out.printf("Game Console Input Read%n");
+                System.out.printf("Entered: %s%n", input);
+                System.out.printf("Result: %s%n", result);
+//                System.out.println("Input thread read line: " + input);
+//                System.out.println("Use the KeyboardListener for the real game instead.");
             }
         }).start();
 

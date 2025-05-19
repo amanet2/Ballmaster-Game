@@ -16,6 +16,11 @@ public class game {
         gameSchedulerTest.test();
         gameFileSystemTest.test();
 
+
+        // GAME LOOPS TEST
+        // INPUT THREAD WILL READ MOUSE AND KEYBOARD INPUTS
+        // RENDER THREAD (SHELL) WILL DRAW WORLD, MENUS, ETC
+        // GAME LOOP (MAIN THREAD, THIS THREAD) WILL UPDATE WORLD
         System.out.println("Started game loop, press Ctrl+C to exit...");
 
         // INPUT THREAD
@@ -50,6 +55,7 @@ public class game {
         };
         renderThread.start();
 
+        // GAME LOOP
         int gameFrames = 0;
         int internalGameRate = 1000;
         long snapshotTimeNanos = System.nanoTime();  // use nano for game timer

@@ -5,52 +5,35 @@ import java.util.Scanner;
 public class gameLoopsTest {
     public static void inputLoopTest() {
         // INPUT THREAD
+        // TODO: Use KeyboardListener instead (see old game)
         new Thread(() -> {
             while(true) {
                 Scanner scanner = new Scanner(System.in);
                 String input = scanner.nextLine();
+                System.out.println("----------------");
                 System.out.printf("Game Console Input Read%n");
                 System.out.printf("Entered: %s%n", input);
                 String result = gameConsoleTest.gConsoleSystem.readLine(input);
                 System.out.printf("Result: %s%n", result);
-//                System.out.println("Input thread read line: " + input);
-//                System.out.println("Use the KeyboardListener for the real game instead.");
             }
         }).start();
     }
 
-    public static void renderLoopTest() {
-        // RENDER THREAD
-        Thread renderThread = new Thread() {
-            long frameMetricTimeMillis = System.currentTimeMillis() + 1000;
-            int frames = 0;
-
-            public void run() {
-                while(true) {
-                    frames++;
-                    if(System.currentTimeMillis() > frameMetricTimeMillis) {
-                        frameMetricTimeMillis = System.currentTimeMillis() + 1000;
-                        System.out.println("FPS: " + frames);
-                        frames = 0;
-                    }
-                }
-            }
-        };
-        renderThread.start();
-    }
-
-    public static void gameLoopTest() {
-        // GAME LOOP
+    public static void updateAndRenderTest() {
+        // GAME AND RENDER LOOP
         int gameFrames = 0;
         int internalGameRate = 1000;
         long snapshotTimeNanos = System.nanoTime();  // use nano for game timer
         long tickTimeNanos = snapshotTimeNanos;
-        long nextFrameTimeNanos;
+
+        long frameMetricTimeMillis = System.currentTimeMillis() + 1000;
+        int framesTotal = 0;
+        int framesMetric = 0;
 
         while(true) {
             snapshotTimeNanos = System.nanoTime();
-            nextFrameTimeNanos = snapshotTimeNanos + (1000000000 / (long) internalGameRate);
 
+            //game update
             while (tickTimeNanos < snapshotTimeNanos) {
                 tickTimeNanos += (1000000000 / (long) internalGameRate);
                 //update game stuff, move players, execute scheduled events, etc
@@ -59,8 +42,20 @@ public class gameLoopsTest {
                     gameFrames = 0;
             }
 
-            while (nextFrameTimeNanos > System.nanoTime()) {  // wait for next main loop
-                //do nothing
+            //game render
+            framesMetric++;
+            framesTotal++;
+            if(System.currentTimeMillis() > frameMetricTimeMillis) {
+                frameMetricTimeMillis = System.currentTimeMillis() + 1000;
+                System.out.println("----------------");
+                System.out.println("Time: " + System.currentTimeMillis());
+                System.out.println("Ticks: " + gameFrames);
+                System.out.println("Frames: " + framesTotal);
+                System.out.println("FPS: " + framesMetric);
+                System.out.println("(Ctrl+C to exit) Enter your command: ");
+                if(framesTotal >= Integer.MAX_VALUE - 1000000000)
+                    framesTotal = 0;
+                framesMetric = 0;
             }
         }
     }

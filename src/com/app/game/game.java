@@ -10,19 +10,15 @@ public class game {
 
         gameMiscTest.test();
         gameCVarTest.test();
-        gameSpriteTest.test();  // TODO: why does this test make the run hang for a few seconds at the end?
+        gameSpriteTest.test();
         gameConsoleTest.test();
         gameSchedulerTest.test();
         gameFileSystemTest.test();
 
 
         // GAME LOOPS TEST
-        // INPUT THREAD WILL READ MOUSE AND KEYBOARD INPUTS
-        // RENDER THREAD (SHELL) WILL DRAW WORLD, MENUS, ETC
-        // GAME LOOP (MAIN THREAD, THIS THREAD) WILL UPDATE WORLD
         gameLoopsTest.inputLoopTest();
-        gameLoopsTest.renderLoopTest();
-        gameLoopsTest.gameLoopTest();
+        gameLoopsTest.updateAndRenderTest();
         System.out.println("Starting game loop, press Ctrl+C to exit...");
     }
 }

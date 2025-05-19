@@ -117,6 +117,8 @@ public class game {
         registerConsoleCommands();
         registerEvents();
 
+        createInputThread();
+
         int gameFrames = 0;
         int internalGameRate = 1000;
         long snapshotTimeNanos = System.nanoTime();  // use nano for game timer
@@ -135,7 +137,7 @@ public class game {
                 tickTimeNanos += (1000000000 / (long) internalGameRate);
                 //update game stuff, move players, execute scheduled events, etc
                 gameFrames++;
-                if(gameFrames >= Integer.MAX_VALUE - 1000000000)
+                if(gameFrames >= Integer.MAX_VALUE - 1000)
                     gameFrames = 0;
             }
 
@@ -153,7 +155,7 @@ public class game {
                 System.out.println("Frames: " + framesTotal);
                 System.out.println("FPS: " + framesMetric);
                 System.out.println("(Ctrl+C to exit) Enter your command: ");
-                if(framesTotal >= Integer.MAX_VALUE - 1000000000)
+                if(framesTotal >= Integer.MAX_VALUE - 1000)
                     framesTotal = 0;
                 framesMetric = 0;
             }

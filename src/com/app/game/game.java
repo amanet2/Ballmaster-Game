@@ -16,23 +16,56 @@ public class game {
         gameSchedulerTest.test();
         gameFileSystemTest.test();
 
-        Thread inputThread = new Thread(() -> {
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Press enter key to exit");
-            scanner.nextLine();
-            System.exit(0);
-        });
-        inputThread.start();
+        System.out.println("Started game loop, press Ctrl+C to exit...");
 
-        long currentTimeNanos = System.nanoTime();  // use nano for game timer
-        long currentTimeMillis = System.currentTimeMillis() + 1000;  // use millis for timing fps
-        int frames = 0;
+        // INPUT THREAD
+        new Thread(() -> {
+            while(true) {
+                Scanner scanner = new Scanner(System.in);
+                String input = scanner.nextLine();
+                System.out.println("Input thread read line: " + input);
+                System.out.println("Use the KeyboardListener for the real game instead.");
+            }
+        }).start();
+
+        // RENDER THREAD
+        Thread renderThread = new Thread() {
+            long frameMetricTimeMillis = System.currentTimeMillis() + 1000;
+            int frames = 0;
+
+            public void run() {
+                while(true) {
+                    frames++;
+                    if(System.currentTimeMillis() > frameMetricTimeMillis) {
+                        frameMetricTimeMillis = System.currentTimeMillis() + 1000;
+                        System.out.println("FPS: " + frames);
+                        frames = 0;
+                    }
+                }
+            }
+        };
+        renderThread.start();
+
+        int gameFrames = 0;
+        int internalGameRate = 1000;
+        long snapshotTimeNanos = System.nanoTime();  // use nano for game timer
+        long tickTimeNanos = snapshotTimeNanos;
+        long nextFrameTimeNanos;
+
         while(true) {
-            frames++;
-            if(System.currentTimeMillis() > currentTimeMillis) {
-                currentTimeMillis = System.currentTimeMillis() + 1000;
-                System.out.println("Frames last second: " + frames);
-                frames = 0;
+            snapshotTimeNanos = System.nanoTime();
+            nextFrameTimeNanos = snapshotTimeNanos + (1000000000 / (long) internalGameRate);
+
+            while (tickTimeNanos < snapshotTimeNanos) {
+                tickTimeNanos += (1000000000 / (long) internalGameRate);
+                //update game stuff, move players, execute scheduled events, etc
+                gameFrames++;
+                if(gameFrames >= Integer.MAX_VALUE - 1000000000)
+                    gameFrames = 0;
+            }
+
+            while (nextFrameTimeNanos > System.nanoTime()) {  // wait for next main loop
+                //do nothing
             }
         }
     }

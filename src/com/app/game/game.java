@@ -1,6 +1,6 @@
 package com.app.game;
 
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -14,6 +14,7 @@ import com.app.engine.schedulerSystem.gSchedulerEvent;
 import com.app.engine.schedulerSystem.gSchedulerSystem;
 
 import com.app.engine.graphicsSystem;
+import com.app.engine.graphicsSystem.gPanel;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
 
 
@@ -41,6 +42,7 @@ public class game {
                 fpsSnapshot = fpsMetric;
                 fpsMetric = 0;
             }
+            g.setColor(Color.WHITE);
             g.drawString("Time: " + System.currentTimeMillis(), 0, 100);
             g.drawString("Frames: " + framesTotal, 0, 200);
             g.drawString("FPS: " + fpsSnapshot, 0, 300);
@@ -141,7 +143,6 @@ public class game {
 
         registerConsoleCommands();
         registerEvents();
-
         createInputThread();
 
         int gameFrames = 0;

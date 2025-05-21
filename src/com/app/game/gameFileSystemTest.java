@@ -9,7 +9,7 @@ public class gameFileSystemTest {
     static fileSystem fileSystem = new fileSystem();
 
     public static void test() {
-        gDirectory gDirectory = fileSystem. new gDirectory("data");
+        gDirectory gDirectory = fileSystem. new gDirectory("/Users/Stallion/Code/Ballmaster-Game/data");
         System.out.printf("Filenames in /%s: %s%n", gDirectory.getPath(), Arrays.toString(gDirectory.getFileNames()));
         for(gFile file : gDirectory.getFiles()) {
             System.out.printf("File obj in /%s: %s%n", gDirectory.getPath(), file.getFullPath());

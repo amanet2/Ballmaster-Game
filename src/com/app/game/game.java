@@ -26,7 +26,9 @@ public class game {
     static int videoFrames = 0;
     static int videoFramesMetric = 0;
     static int videoFramesSnapshot = 0;
-    static String testSpritePath = "data/player_pink_03.png";
+    // TODO: make baseGamePath an arg passed by run.sh ($game_home) to main(args[]). Will need to rearrage things
+    static String baseGamePath = "/Users/Stallion/Code/Ballmaster-Game";
+    static String testSpritePath = String.format("%s/data/player_pink_03.png", baseGamePath);
     static String testCVarName = "test_cvar";
 
     static engine engine = new engine();

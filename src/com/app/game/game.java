@@ -55,12 +55,18 @@ public class game {
                 fpsMetric = 0;
             }
             g.setColor(Color.WHITE);
-            g.drawString("Time: " + System.currentTimeMillis(), 0, 100);
-            g.drawString("Frames: " + framesTotal, 0, 200);
-            g.drawString("FPS: " + fpsSnapshot, 0, 300);
-            g.setColor(Color.GRAY);
-            g.fill3DRect(512 - 75, 359 + 75, 150, 150, true);
-            g.drawImage(testSprite1.getImage(), 512 - 75, 359 - 75, null);
+            g.drawString("Time: " + System.currentTimeMillis(), 0, 50);
+            g.drawString("Frames: " + framesTotal, 0, 75);
+            g.drawString("FPS: " + fpsSnapshot, 0, 100);
+            for(Integer xpos : new int[]{0, 1, 2, 3, 4, 5, 6, 7}) {
+                g.drawImage(testSprite1.getImage(), xpos*150, 359 - 150, null);
+                g.drawImage(testSprite1.getImage(), xpos*150, 359 - 75, null);
+                g.drawImage(testSprite1.getImage(), xpos*150, 359, null);
+                g.drawImage(testSprite1.getImage(), xpos*150, 359 + 75, null);
+                g.drawImage(testSprite1.getImage(), xpos*150, 359 + 150, null);
+                g.drawImage(testSprite1.getImage(), xpos*150, 359 + 225, null);
+//                g.fill3DRect(xpos*150, 359 + 75, 150, 150, true);  // NOTE: this lowers fps considerably
+            }
         }
     });
 

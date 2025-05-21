@@ -58,13 +58,14 @@ public class game {
             g.drawString("Time: " + System.currentTimeMillis(), 0, 50);
             g.drawString("Frames: " + framesTotal, 0, 75);
             g.drawString("FPS: " + fpsSnapshot, 0, 100);
-            for(Integer xpos : new int[]{0, 1, 2, 3, 4, 5, 6, 7}) {
-                g.drawImage(testSprite1.getImage(), xpos*150, 359 - 150, null);
-                g.drawImage(testSprite1.getImage(), xpos*150, 359 - 75, null);
-                g.drawImage(testSprite1.getImage(), xpos*150, 359, null);
-                g.drawImage(testSprite1.getImage(), xpos*150, 359 + 75, null);
-                g.drawImage(testSprite1.getImage(), xpos*150, 359 + 150, null);
-                g.drawImage(testSprite1.getImage(), xpos*150, 359 + 225, null);
+            for(Integer xpos : new int[]{14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1}) {
+                g.drawImage(testSprite1.getImage(), xpos*75, 359 - 150, null);
+                g.drawImage(testSprite1.getImage(), xpos*75, 359 - 75, null);
+                g.drawImage(testSprite1.getImage(), xpos*75, 359, null);
+                g.drawImage(testSprite1.getImage(), xpos*75, 359 + 75, null);
+                g.drawImage(testSprite1.getImage(), xpos*75, 359 + 150, null);
+                g.drawImage(testSprite1.getImage(), xpos*75, 359 + 225, null);
+                g.drawImage(testSprite1.getImage(), xpos*75, 359 + 300, null);
 //                g.fill3DRect(xpos*150, 359 + 75, 150, 150, true);  // NOTE: this lowers fps considerably
             }
         }

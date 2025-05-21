@@ -19,12 +19,22 @@ import com.app.engine.spriteSystem.gSpriteSystem;
 
 
 public class game {
+    static long frameMetricTimeMillis = System.currentTimeMillis() + 1000;
+    static int gameFrames = 0;
+    static int gameFramesMetric = 0;
+    static int gameFramesSnapshot = 0;
+    static int videoFrames = 0;
+    static int videoFramesMetric = 0;
+    static int videoFramesSnapshot = 0;
     static String testSpritePath = "data/player_pink_03.png";
     static String testCVarName = "test_cvar";
+
     static engine engine = new engine();
 
     static gConsoleSystem gConsoleSystem = engine.consoleSystem. new gConsoleSystem();
+
     static gCVarSystem gCVarSystem = engine.cVarSystem. new gCVarSystem();
+
     static gSchedulerSystem gSchedulerSystem = engine.schedulerSystem. new gSchedulerSystem();
 
     static gSpriteSystem gSpriteSystem = engine.spriteSystem. new gSpriteSystem();
@@ -34,25 +44,24 @@ public class game {
 
 
     static gGraphicsSystem gGraphicsSystem = engine.graphicsSystem.new gGraphicsSystem(engine.graphicsSystem.new gPanel() {
-        int framesTotal = 0;
-        long frameMetricTimeMillis = System.currentTimeMillis() + 1000;
-        int fpsMetric = 0;
-        int fpsSnapshot = 0;
-
         public void draw(Graphics g) {
-            fpsMetric++;
-            framesTotal++;
+            videoFramesMetric++;
+            videoFrames++;
+            if(videoFrames >= Integer.MAX_VALUE - 1000)
+                videoFrames = 0;
             if(System.currentTimeMillis() > frameMetricTimeMillis) {
                 frameMetricTimeMillis = System.currentTimeMillis() + 1000;
-                if(framesTotal >= Integer.MAX_VALUE - 1000)
-                    framesTotal = 0;
-                fpsSnapshot = fpsMetric;
-                fpsMetric = 0;
+                gameFramesSnapshot = gameFramesMetric;
+                gameFramesMetric = 0;
+                videoFramesSnapshot = videoFramesMetric;
+                videoFramesMetric = 0;
             }
+
             g.setColor(Color.WHITE);
-            g.drawString("Time: " + System.currentTimeMillis(), 0, 50);
-            g.drawString("Frames: " + framesTotal, 0, 75);
-            g.drawString("FPS: " + fpsSnapshot, 0, 100);
+            g.drawString("Game Frames: " + gameFrames, 0, 25);
+            g.drawString("Video Frames: " + videoFrames, 0, 50);
+            g.drawString("Game FPS: " + gameFramesSnapshot, 0, 75);
+            g.drawString("Video FPS: " + videoFramesSnapshot, 0, 100);
             for(Integer xpos : new int[]{14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1}) {
                 g.drawImage(testSprite1.getImage(), xpos*75, 359 - 150, null);
                 g.drawImage(testSprite1.getImage(), xpos*75, 359 - 75, null);
@@ -68,8 +77,6 @@ public class game {
     });
 
     public static void createInputThread() {
-        // INPUT THREAD
-        // TODO: Use KeyboardListener instead (see old game)
         new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
             while(true) {
@@ -89,7 +96,6 @@ public class game {
             public void onUpdate() {
                 System.out.println(testCVarName + " value was updated!");
             }
-
             @Override
             public void onChange() {
                 System.out.println(testCVarName + " value was changed!");
@@ -111,7 +117,6 @@ public class game {
                 return echoString;
             }
         };
-
         gConsoleCommand gConsoleCommandAdd = engine.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
@@ -124,7 +129,6 @@ public class game {
                 return "null";
             }
         };
-
         gConsoleSystem.registerCmd("echo", gConsoleCommandEcho);
         gConsoleSystem.registerCmd("add", gConsoleCommandAdd);
     }
@@ -139,7 +143,6 @@ public class game {
                 gCVarSystem.setCVarValue("test_cvar", "bar");
             }
         };
-
         gSchedulerEvent event2 = engine.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
@@ -147,7 +150,6 @@ public class game {
                 gCVarSystem.setCVarValue("test_cvar", "foo");
             }
         };
-
         gSchedulerEvent event3 = engine.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
@@ -156,7 +158,6 @@ public class game {
                 gConsoleSystem.readLine("echo Penultimate Scheduled Event Just Finished!");
             }
         };
-
         gSchedulerEvent event4 = engine.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
@@ -164,10 +165,8 @@ public class game {
                 gCVarSystem.setCVarValue("test_cvar", "bar");
                 String result = gConsoleSystem.readLine("add 2 2");
                 gConsoleSystem.readLine("echo Last Scheduled Event Just Finished! 2 + 2 is... " + result + "!");
-
             }
         };
-
         gSchedulerSystem.addEvent(eventTime, event1);
         gSchedulerSystem.addEvent(eventTime, event2);
         gSchedulerSystem.addEvent(eventTime + 5000, event3);
@@ -185,7 +184,6 @@ public class game {
         registerEvents();
         createInputThread();
 
-        int gameFrames = 0;
         int internalGameRate = 1000;
         long snapshotTimeNanos = System.nanoTime();  // use nano for game timer
         long tickTimeNanos = snapshotTimeNanos;
@@ -194,17 +192,17 @@ public class game {
         while(true) {
             snapshotTimeNanos = System.nanoTime();
 
-            //game update
+            // update state
             while (tickTimeNanos < snapshotTimeNanos) {
-                tickTimeNanos += (1000000000 / (long) internalGameRate);
-                //update game stuff, move players, execute scheduled events, etc
+                tickTimeNanos += (1000000000 / internalGameRate);
                 gameFrames++;
+                gameFramesMetric++;
                 if(gameFrames >= Integer.MAX_VALUE - 1000)
                     gameFrames = 0;
             }
-            //do scheduled events
+
             gSchedulerSystem.doEvents(System.currentTimeMillis());
-            //game render
+
             gGraphicsSystem.update();
         }
     }

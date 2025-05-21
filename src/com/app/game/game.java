@@ -1,10 +1,12 @@
 package com.app.game;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.Arrays;
 import java.util.Scanner;
 
 import com.app.engine.settings;
+
 import com.app.engine.consoleSystem;
 import com.app.engine.consoleSystem.gConsoleCommand;
 import com.app.engine.consoleSystem.gConsoleSystem;
@@ -14,8 +16,12 @@ import com.app.engine.schedulerSystem.gSchedulerEvent;
 import com.app.engine.schedulerSystem.gSchedulerSystem;
 
 import com.app.engine.graphicsSystem;
-import com.app.engine.graphicsSystem.gPanel;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
+
+import com.app.engine.spriteSystem;
+import com.app.engine.spriteSystem.gSprite;
+import com.app.engine.spriteSystem.gSpriteSystem;
+
 
 
 public class game {
@@ -24,6 +30,12 @@ public class game {
 
     static schedulerSystem schedulerSystem = new schedulerSystem();
     static gSchedulerSystem gSchedulerSystem = schedulerSystem. new gSchedulerSystem();
+
+    static spriteSystem spriteSystem = new spriteSystem();
+    static gSpriteSystem gSpriteSystem = spriteSystem. new gSpriteSystem();
+    static gSprite testSprite1 = gSpriteSystem.getScaledSprite("data/player_pink_03.png", 150, 150);
+//    static gSprite testSprite2 = gSpriteSystem.getScaledSprite("data/player_pink_03.png", 300, 300);
+//    static gSprite testSprite3 = gSpriteSystem.getScaledSprite("data/player_pink_03.png", 600, 600);
 
     static graphicsSystem graphicsSystem = new graphicsSystem();
     static gGraphicsSystem gGraphicsSystem = graphicsSystem.new gGraphicsSystem(graphicsSystem.new gPanel() {
@@ -46,6 +58,9 @@ public class game {
             g.drawString("Time: " + System.currentTimeMillis(), 0, 100);
             g.drawString("Frames: " + framesTotal, 0, 200);
             g.drawString("FPS: " + fpsSnapshot, 0, 300);
+            g.setColor(Color.GRAY);
+            g.fill3DRect(512 - 75, 359 + 75, 150, 150, true);
+            g.drawImage(testSprite1.getImage(), 512 - 75, 359 - 75, null);
         }
     });
 
@@ -138,7 +153,6 @@ public class game {
         System.out.println("Testing Game Systems...");
         gameMiscTest.test();
         gameCVarTest.test();
-        gameSpriteTest.test();
         gameFileSystemTest.test();
 
         registerConsoleCommands();

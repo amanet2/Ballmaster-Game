@@ -5,9 +5,7 @@ import java.awt.Graphics;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import com.app.engine.cVarSystem;
-import com.app.engine.consoleSystem;
-import com.app.engine.engineObjects;
+import com.app.engine.engine;
 import com.app.engine.settings;
 import com.app.engine.consoleSystem.gConsoleSystem;
 import com.app.engine.consoleSystem.gConsoleCommand;
@@ -23,19 +21,19 @@ import com.app.engine.spriteSystem.gSpriteSystem;
 public class game {
     static String testSpritePath = "data/player_pink_03.png";
     static String testCVarName = "test_cvar";
-    static engineObjects engineObjects = new engineObjects();
+    static engine engine = new engine();
 
-    static gConsoleSystem gConsoleSystem = engineObjects.consoleSystem. new gConsoleSystem();
-    static gCVarSystem gCVarSystem = engineObjects.cVarSystem. new gCVarSystem();
-    static gSchedulerSystem gSchedulerSystem = engineObjects.schedulerSystem. new gSchedulerSystem();
+    static gConsoleSystem gConsoleSystem = engine.consoleSystem. new gConsoleSystem();
+    static gCVarSystem gCVarSystem = engine.cVarSystem. new gCVarSystem();
+    static gSchedulerSystem gSchedulerSystem = engine.schedulerSystem. new gSchedulerSystem();
 
-    static gSpriteSystem gSpriteSystem = engineObjects.spriteSystem. new gSpriteSystem();
+    static gSpriteSystem gSpriteSystem = engine.spriteSystem. new gSpriteSystem();
     static gSprite testSprite1 = gSpriteSystem.getScaledSprite(testSpritePath, 150, 150);
     static gSprite testSprite2 = gSpriteSystem.getScaledSprite(testSpritePath, 300, 300);
     static gSprite testSprite3 = gSpriteSystem.getScaledSprite(testSpritePath, 600, 600);
 
 
-    static gGraphicsSystem gGraphicsSystem = engineObjects.graphicsSystem.new gGraphicsSystem(engineObjects.graphicsSystem.new gPanel() {
+    static gGraphicsSystem gGraphicsSystem = engine.graphicsSystem.new gGraphicsSystem(engine.graphicsSystem.new gPanel() {
         int framesTotal = 0;
         long frameMetricTimeMillis = System.currentTimeMillis() + 1000;
         int fpsMetric = 0;
@@ -86,7 +84,7 @@ public class game {
     }
 
     static void registerCVars() {
-        gCVar testCVar = engineObjects.cVarSystem. new gCVar(testCVarName, "foo") {
+        gCVar testCVar = engine.cVarSystem. new gCVar(testCVarName, "foo") {
             @Override
             public void onUpdate() {
                 System.out.println(testCVarName + " value was updated!");
@@ -101,7 +99,7 @@ public class game {
     }
 
     static void registerConsoleCommands() {
-        gConsoleCommand gConsoleCommandEcho = engineObjects.consoleSystem. new gConsoleCommand() {
+        gConsoleCommand gConsoleCommandEcho = engine.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
                 StringBuilder echoStrBuilder = new StringBuilder();
@@ -114,7 +112,7 @@ public class game {
             }
         };
 
-        gConsoleCommand gConsoleCommandAdd = engineObjects.consoleSystem. new gConsoleCommand() {
+        gConsoleCommand gConsoleCommandAdd = engine.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
                 try {
@@ -134,7 +132,7 @@ public class game {
     static void registerEvents() {
         final long eventTime = System.currentTimeMillis();
 
-        gSchedulerEvent event1 = engineObjects.schedulerSystem. new gSchedulerEvent(){
+        gSchedulerEvent event1 = engine.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
                 System.out.printf("Did an event scheduled for %d @ %d%n", eventTime, System.currentTimeMillis());
@@ -142,7 +140,7 @@ public class game {
             }
         };
 
-        gSchedulerEvent event2 = engineObjects.schedulerSystem. new gSchedulerEvent(){
+        gSchedulerEvent event2 = engine.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
                 System.out.printf("Did another event scheduled for %d @ %d%n", eventTime, System.currentTimeMillis());
@@ -150,7 +148,7 @@ public class game {
             }
         };
 
-        gSchedulerEvent event3 = engineObjects.schedulerSystem. new gSchedulerEvent(){
+        gSchedulerEvent event3 = engine.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
                 System.out.printf("Did an event scheduled for %d @ %d%n", eventTime + 5000, System.currentTimeMillis());
@@ -159,7 +157,7 @@ public class game {
             }
         };
 
-        gSchedulerEvent event4 = engineObjects.schedulerSystem. new gSchedulerEvent(){
+        gSchedulerEvent event4 = engine.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
                 System.out.printf("Did an event scheduled for %d @ %d%n", eventTime + 10000, System.currentTimeMillis());

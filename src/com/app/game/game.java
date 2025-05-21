@@ -1,5 +1,6 @@
 package com.app.game;
 
+import java.awt.Graphics;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -12,6 +13,9 @@ import com.app.engine.schedulerSystem;
 import com.app.engine.schedulerSystem.gSchedulerEvent;
 import com.app.engine.schedulerSystem.gSchedulerSystem;
 
+import com.app.engine.graphicsSystem;
+import com.app.engine.graphicsSystem.gGraphicsSystem;
+
 
 public class game {
     static consoleSystem consoleSystem = new consoleSystem();
@@ -20,16 +24,39 @@ public class game {
     static schedulerSystem schedulerSystem = new schedulerSystem();
     static gSchedulerSystem gSchedulerSystem = schedulerSystem. new gSchedulerSystem();
 
+    static graphicsSystem graphicsSystem = new graphicsSystem();
+    static gGraphicsSystem gGraphicsSystem = graphicsSystem.new gGraphicsSystem(graphicsSystem.new gPanel() {
+        int framesTotal = 0;
+        long frameMetricTimeMillis = System.currentTimeMillis() + 1000;
+        int fpsMetric = 0;
+        int fpsSnapshot = 0;
+
+        public void draw(Graphics g) {
+            fpsMetric++;
+            framesTotal++;
+            if(System.currentTimeMillis() > frameMetricTimeMillis) {
+                frameMetricTimeMillis = System.currentTimeMillis() + 1000;
+                if(framesTotal >= Integer.MAX_VALUE - 1000)
+                    framesTotal = 0;
+                fpsSnapshot = fpsMetric;
+                fpsMetric = 0;
+            }
+            g.drawString("Time: " + System.currentTimeMillis(), 0, 100);
+            g.drawString("Frames: " + framesTotal, 0, 200);
+            g.drawString("FPS: " + fpsSnapshot, 0, 300);
+        }
+    });
+
     public static void createInputThread() {
         // INPUT THREAD
         // TODO: Use KeyboardListener instead (see old game)
         new Thread(() -> {
+            Scanner scanner = new Scanner(System.in);
             while(true) {
-                Scanner scanner = new Scanner(System.in);
-                String input = scanner.nextLine();
                 System.out.println("----------------");
-                System.out.printf("Game Console Input Read%n");
-                System.out.printf("Entered: %s%n", input);
+                System.out.print("(Ctrl+C to Exit) Enter command: ");
+                String input = scanner.nextLine();
+                System.out.printf("%nEntered: %s%n", input);
                 String result = gConsoleSystem.readLine(input);
                 System.out.printf("Result: %s%n", result);
             }
@@ -106,14 +133,12 @@ public class game {
 
     public static void main(String[] args) {
         System.out.printf("Started Game w/ scale %d, args: %s%n", settings.nativeScale, Arrays.toString(args));
-
         System.out.println("Testing Game Systems...");
         gameMiscTest.test();
         gameCVarTest.test();
         gameSpriteTest.test();
         gameFileSystemTest.test();
 
-        System.out.println("(Ctrl+C to exit) Starting game loop...");
         registerConsoleCommands();
         registerEvents();
 
@@ -123,10 +148,6 @@ public class game {
         int internalGameRate = 1000;
         long snapshotTimeNanos = System.nanoTime();  // use nano for game timer
         long tickTimeNanos = snapshotTimeNanos;
-
-        long frameMetricTimeMillis = System.currentTimeMillis() + 1000;
-        int framesTotal = 0;
-        int framesMetric = 0;
 
         // GAME LOOP
         while(true) {
@@ -140,25 +161,10 @@ public class game {
                 if(gameFrames >= Integer.MAX_VALUE - 1000)
                     gameFrames = 0;
             }
-
             //do scheduled events
             gSchedulerSystem.doEvents(System.currentTimeMillis());
-
             //game render
-            framesMetric++;
-            framesTotal++;
-            if(System.currentTimeMillis() > frameMetricTimeMillis) {
-                frameMetricTimeMillis = System.currentTimeMillis() + 1000;
-                System.out.println("----------------");
-                System.out.println("Time: " + System.currentTimeMillis());
-                System.out.println("Ticks: " + gameFrames);
-                System.out.println("Frames: " + framesTotal);
-                System.out.println("FPS: " + framesMetric);
-                System.out.println("(Ctrl+C to exit) Enter your command: ");
-                if(framesTotal >= Integer.MAX_VALUE - 1000)
-                    framesTotal = 0;
-                framesMetric = 0;
-            }
+            gGraphicsSystem.update();
         }
     }
 }

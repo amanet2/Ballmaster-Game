@@ -5,40 +5,37 @@ import java.awt.Graphics;
 import java.util.Arrays;
 import java.util.Scanner;
 
-import com.app.engine.settings;
-
+import com.app.engine.cVarSystem;
 import com.app.engine.consoleSystem;
-import com.app.engine.consoleSystem.gConsoleCommand;
+import com.app.engine.engineObjects;
+import com.app.engine.settings;
 import com.app.engine.consoleSystem.gConsoleSystem;
-
-import com.app.engine.schedulerSystem;
+import com.app.engine.consoleSystem.gConsoleCommand;
+import com.app.engine.cVarSystem.gCVar;
+import com.app.engine.cVarSystem.gCVarSystem;
+import com.app.engine.graphicsSystem.gGraphicsSystem;
 import com.app.engine.schedulerSystem.gSchedulerEvent;
 import com.app.engine.schedulerSystem.gSchedulerSystem;
-
-import com.app.engine.graphicsSystem;
-import com.app.engine.graphicsSystem.gGraphicsSystem;
-
-import com.app.engine.spriteSystem;
 import com.app.engine.spriteSystem.gSprite;
 import com.app.engine.spriteSystem.gSpriteSystem;
 
 
-
 public class game {
-    static consoleSystem consoleSystem = new consoleSystem();
-    static gConsoleSystem gConsoleSystem = consoleSystem. new gConsoleSystem();
+    static String testSpritePath = "data/player_pink_03.png";
+    static String testCVarName = "test_cvar";
+    static engineObjects engineObjects = new engineObjects();
 
-    static schedulerSystem schedulerSystem = new schedulerSystem();
-    static gSchedulerSystem gSchedulerSystem = schedulerSystem. new gSchedulerSystem();
+    static gConsoleSystem gConsoleSystem = engineObjects.consoleSystem. new gConsoleSystem();
+    static gCVarSystem gCVarSystem = engineObjects.cVarSystem. new gCVarSystem();
+    static gSchedulerSystem gSchedulerSystem = engineObjects.schedulerSystem. new gSchedulerSystem();
 
-    static spriteSystem spriteSystem = new spriteSystem();
-    static gSpriteSystem gSpriteSystem = spriteSystem. new gSpriteSystem();
-    static gSprite testSprite1 = gSpriteSystem.getScaledSprite("data/player_pink_03.png", 150, 150);
-//    static gSprite testSprite2 = gSpriteSystem.getScaledSprite("data/player_pink_03.png", 300, 300);
-//    static gSprite testSprite3 = gSpriteSystem.getScaledSprite("data/player_pink_03.png", 600, 600);
+    static gSpriteSystem gSpriteSystem = engineObjects.spriteSystem. new gSpriteSystem();
+    static gSprite testSprite1 = gSpriteSystem.getScaledSprite(testSpritePath, 150, 150);
+    static gSprite testSprite2 = gSpriteSystem.getScaledSprite(testSpritePath, 300, 300);
+    static gSprite testSprite3 = gSpriteSystem.getScaledSprite(testSpritePath, 600, 600);
 
-    static graphicsSystem graphicsSystem = new graphicsSystem();
-    static gGraphicsSystem gGraphicsSystem = graphicsSystem.new gGraphicsSystem(graphicsSystem.new gPanel() {
+
+    static gGraphicsSystem gGraphicsSystem = engineObjects.graphicsSystem.new gGraphicsSystem(engineObjects.graphicsSystem.new gPanel() {
         int framesTotal = 0;
         long frameMetricTimeMillis = System.currentTimeMillis() + 1000;
         int fpsMetric = 0;
@@ -66,8 +63,9 @@ public class game {
                 g.drawImage(testSprite1.getImage(), xpos*75, 359 + 150, null);
                 g.drawImage(testSprite1.getImage(), xpos*75, 359 + 225, null);
                 g.drawImage(testSprite1.getImage(), xpos*75, 359 + 300, null);
-//                g.fill3DRect(xpos*150, 359 + 75, 150, 150, true);  // NOTE: this lowers fps considerably
             }
+            g.drawImage(testSprite2.getImage(), 0, 359 - 150, null);
+            g.drawImage(testSprite3.getImage(), 300, 359 - 150, null);
         }
     });
 
@@ -87,8 +85,23 @@ public class game {
         }).start();
     }
 
+    static void registerCVars() {
+        gCVar testCVar = engineObjects.cVarSystem. new gCVar(testCVarName, "foo") {
+            @Override
+            public void onUpdate() {
+                System.out.println(testCVarName + " value was updated!");
+            }
+
+            @Override
+            public void onChange() {
+                System.out.println(testCVarName + " value was changed!");
+            }
+        };
+        gCVarSystem.registerCVar(testCVar);
+    }
+
     static void registerConsoleCommands() {
-        gConsoleCommand gConsoleCommandEcho = consoleSystem. new gConsoleCommand() {
+        gConsoleCommand gConsoleCommandEcho = engineObjects.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
                 StringBuilder echoStrBuilder = new StringBuilder();
@@ -101,7 +114,7 @@ public class game {
             }
         };
 
-        gConsoleCommand gConsoleCommandAdd = consoleSystem. new gConsoleCommand() {
+        gConsoleCommand gConsoleCommandAdd = engineObjects.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
                 try {
@@ -121,31 +134,39 @@ public class game {
     static void registerEvents() {
         final long eventTime = System.currentTimeMillis();
 
-        gSchedulerEvent event1 = schedulerSystem. new gSchedulerEvent(){
+        gSchedulerEvent event1 = engineObjects.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
                 System.out.printf("Did an event scheduled for %d @ %d%n", eventTime, System.currentTimeMillis());
+                gCVarSystem.setCVarValue("test_cvar", "bar");
             }
         };
 
-        gSchedulerEvent event2 = schedulerSystem. new gSchedulerEvent(){
+        gSchedulerEvent event2 = engineObjects.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
                 System.out.printf("Did another event scheduled for %d @ %d%n", eventTime, System.currentTimeMillis());
+                gCVarSystem.setCVarValue("test_cvar", "foo");
             }
         };
 
-        gSchedulerEvent event3 = schedulerSystem. new gSchedulerEvent(){
+        gSchedulerEvent event3 = engineObjects.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
                 System.out.printf("Did an event scheduled for %d @ %d%n", eventTime + 5000, System.currentTimeMillis());
+                gCVarSystem.setCVarValue("test_cvar", "bar");
+                gConsoleSystem.readLine("echo Penultimate Scheduled Event Just Finished!");
             }
         };
 
-        gSchedulerEvent event4 = schedulerSystem. new gSchedulerEvent(){
+        gSchedulerEvent event4 = engineObjects.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
                 System.out.printf("Did an event scheduled for %d @ %d%n", eventTime + 10000, System.currentTimeMillis());
+                gCVarSystem.setCVarValue("test_cvar", "bar");
+                String result = gConsoleSystem.readLine("add 2 2");
+                gConsoleSystem.readLine("echo Last Scheduled Event Just Finished! 2 + 2 is... " + result + "!");
+
             }
         };
 
@@ -159,9 +180,9 @@ public class game {
         System.out.printf("Started Game w/ scale %d, args: %s%n", settings.nativeScale, Arrays.toString(args));
         System.out.println("Testing Game Systems...");
         gameMiscTest.test();
-        gameCVarTest.test();
         gameFileSystemTest.test();
 
+        registerCVars();
         registerConsoleCommands();
         registerEvents();
         createInputThread();

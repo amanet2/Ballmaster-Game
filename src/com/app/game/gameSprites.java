@@ -13,13 +13,13 @@ public class gameSprites {
     }
 
     public static void init() {
-        String basePath = game.basePath.isEmpty() ? game.basePath : game.basePath + "/";
+        String basePath = gameSettings.basePath.isEmpty() ? gameSettings.basePath : gameSettings.basePath + "/";
         String testSpritePath = String.format("%sdata/player_pink_03.png", basePath);
         spriteSystem.gSprite testSprite1 = sprites.getScaledSprite(testSpritePath, 150, 150);
         spriteSystem.gSprite testSprite2 = sprites.getScaledSprite(testSpritePath, 300, 300);
         spriteSystem.gSprite testSprite3 = sprites.getScaledSprite(testSpritePath, 600, 600);
-        game.gSprites.add(testSprite1);
-        game.gSprites.add(testSprite2);
-        game.gSprites.add(testSprite3);
+        gameSettings.gSprites.add(testSprite1);
+        gameSettings.gSprites.add(testSprite2);
+        gameSettings.gSprites.add(testSprite3);
     }
 }

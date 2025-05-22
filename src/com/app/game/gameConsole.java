@@ -33,6 +33,5 @@ public class gameConsole {
         };
         console.registerCmd("echo", gConsoleCommandEcho);
         console.registerCmd("add", gConsoleCommandAdd);
-        gConsoleCommandEcho.doCommand(new String[]{"set up console!"});
     }
 }

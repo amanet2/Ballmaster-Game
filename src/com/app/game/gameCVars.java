@@ -13,18 +13,11 @@ public class gameCVars {
     }
 
     public static void init() {
-        String testCVarName = "test_cvar";
-        cVarSystem.gCVar testCVar = engineInstance.cVarSystem. new gCVar(testCVarName, "foo") {
-            @Override
-            public void onUpdate() {
-                System.out.println(testCVarName + " value was updated!");
-            }
+        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("basepath", gameSettings.basePath) {
             @Override
             public void onChange() {
-                System.out.println(testCVarName + " value was changed!");
+                gameSettings.basePath = this.getValue();
             }
-        };
-        cVars.registerCVar(testCVar);
-        System.out.println("set up cvars!");
+        });
     }
 }

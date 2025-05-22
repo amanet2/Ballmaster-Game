@@ -2,11 +2,11 @@ package com.app.game;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 import com.app.engine.engine;
-import com.app.engine.settings;
 import com.app.engine.consoleSystem.gConsoleSystem;
 import com.app.engine.consoleSystem.gConsoleCommand;
 import com.app.engine.cVarSystem.gCVar;
@@ -19,6 +19,10 @@ import com.app.engine.spriteSystem.gSpriteSystem;
 
 
 public class game {
+    static String basePath = "";
+
+    static engine engine = new engine();
+
     static long frameMetricTimeMillis = System.currentTimeMillis() + 1000;
     static int gameFrames = 0;
     static int gameFramesMetric = 0;
@@ -26,12 +30,8 @@ public class game {
     static int videoFrames = 0;
     static int videoFramesMetric = 0;
     static int videoFramesSnapshot = 0;
-    // TODO: make baseGamePath an arg passed by run.sh ($game_home) to main(args[]). Will need to rearrage things
-    static String baseGamePath = "/Users/Stallion/Code/Ballmaster-Game";
-    static String testSpritePath = String.format("%s/data/player_pink_03.png", baseGamePath);
-    static String testCVarName = "test_cvar";
-
-    static engine engine = new engine();
+    static double radix = 0.0;
+    static int dir = 1;
 
     static gConsoleSystem gConsoleSystem = engine.consoleSystem. new gConsoleSystem();
 
@@ -40,10 +40,7 @@ public class game {
     static gSchedulerSystem gSchedulerSystem = engine.schedulerSystem. new gSchedulerSystem();
 
     static gSpriteSystem gSpriteSystem = engine.spriteSystem. new gSpriteSystem();
-    static gSprite testSprite1 = gSpriteSystem.getScaledSprite(testSpritePath, 150, 150);
-    static gSprite testSprite2 = gSpriteSystem.getScaledSprite(testSpritePath, 300, 300);
-    static gSprite testSprite3 = gSpriteSystem.getScaledSprite(testSpritePath, 600, 600);
-
+    static ArrayList<gSprite> gSprites = new ArrayList<>();
 
     static gGraphicsSystem gGraphicsSystem = engine.graphicsSystem.new gGraphicsSystem(engine.graphicsSystem.new gPanel() {
         public void draw(Graphics g) {
@@ -65,16 +62,16 @@ public class game {
             g.drawString("Game FPS: " + gameFramesSnapshot, 0, 75);
             g.drawString("Video FPS: " + videoFramesSnapshot, 0, 100);
             for(Integer xpos : new int[]{14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1}) {
-                g.drawImage(testSprite1.getImage(), xpos*75, 359 - 150, null);
-                g.drawImage(testSprite1.getImage(), xpos*75, 359 - 75, null);
-                g.drawImage(testSprite1.getImage(), xpos*75, 359, null);
-                g.drawImage(testSprite1.getImage(), xpos*75, 359 + 75, null);
-                g.drawImage(testSprite1.getImage(), xpos*75, 359 + 150, null);
-                g.drawImage(testSprite1.getImage(), xpos*75, 359 + 225, null);
-                g.drawImage(testSprite1.getImage(), xpos*75, 359 + 300, null);
+                g.drawImage(gSprites.getFirst().getImage(), (int)(xpos*75+radix), 359 - 150, null);
+                g.drawImage(gSprites.getFirst().getImage(), (int)(xpos*75+radix), 359 - 75, null);
+                g.drawImage(gSprites.getFirst().getImage(), (int)(xpos*75+radix), 359, null);
+                g.drawImage(gSprites.getFirst().getImage(), (int)(xpos*75+radix), 359 + 75, null);
+                g.drawImage(gSprites.getFirst().getImage(), (int)(xpos*75+radix), 359 + 150, null);
+                g.drawImage(gSprites.getFirst().getImage(), (int)(xpos*75+radix), 359 + 225, null);
+                g.drawImage(gSprites.getFirst().getImage(), (int)(xpos*75+radix), 359 + 300, null);
             }
-            g.drawImage(testSprite2.getImage(), 0, 359 - 150, null);
-            g.drawImage(testSprite3.getImage(), 300, 359 - 150, null);
+            g.drawImage(gSprites.get(1).getImage(), (int)radix, 359 - 150, null);
+            g.drawImage(gSprites.get(2).getImage(), 300 + (int)radix, 359 - 150, null);
         }
     });
 
@@ -92,7 +89,18 @@ public class game {
         }).start();
     }
 
+    static void registerSprites() {
+        String testSpritePath = String.format("%s/data/player_pink_03.png", basePath);
+        gSprite testSprite1 = gSpriteSystem.getScaledSprite(testSpritePath, 150, 150);
+        gSprite testSprite2 = gSpriteSystem.getScaledSprite(testSpritePath, 300, 300);
+        gSprite testSprite3 = gSpriteSystem.getScaledSprite(testSpritePath, 600, 600);
+        gSprites.add(testSprite1);
+        gSprites.add(testSprite2);
+        gSprites.add(testSprite3);
+    }
+
     static void registerCVars() {
+        String testCVarName = "test_cvar";
         gCVar testCVar = engine.cVarSystem. new gCVar(testCVarName, "foo") {
             @Override
             public void onUpdate() {
@@ -122,13 +130,7 @@ public class game {
         gConsoleCommand gConsoleCommandAdd = engine.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
-                try {
-                    return Integer.toString(Integer.parseInt(args[0]) + Integer.parseInt(args[1]));
-                }
-                catch (Exception e) {
-                    e.printStackTrace();
-                }
-                return "null";
+                return Integer.toString(Integer.parseInt(args[0]) + Integer.parseInt(args[1]));
             }
         };
         gConsoleSystem.registerCmd("echo", gConsoleCommandEcho);
@@ -175,15 +177,39 @@ public class game {
         gSchedulerSystem.addEvent(eventTime + 10000, event4);
     }
 
-    public static void main(String[] args) {
-        System.out.printf("Started Game w/ scale %d, args: %s%n", settings.nativeScale, Arrays.toString(args));
-        System.out.println("Testing Game Systems...");
-        gameMiscTest.test();
-        gameFileSystemTest.test();
+    static void parseLaunchArgs(String[] args) {
+        for(int i = 0; i < args.length; i++) {
+            String argname = args[i].toLowerCase();
+            System.out.println("ARG: " + argname);
+            if(argname.equalsIgnoreCase("basepath")) {
+                if(args.length > i+1) {
+                    basePath = args[i + 1];
+                    i += 1;
+                }
+            }
+        }
+    }
 
+    static void updateGame() {
+        if(dir > 0)
+            radix+=0.1;
+        if(dir < 1)
+            radix-=0.1;
+        if(radix > 75)
+            dir = -1;
+        if(radix < -75)
+            dir = 1;
+    }
+
+    public static void main(String[] args) {
+        System.out.printf("Started Game w/ args: %s%n", Arrays.toString(args));
+        System.out.printf("Base Path: %s%n", basePath);
+
+        parseLaunchArgs(args);
         registerCVars();
         registerConsoleCommands();
         registerEvents();
+        registerSprites();
         createInputThread();
 
         int internalGameRate = 1000;
@@ -201,6 +227,7 @@ public class game {
                 gameFramesMetric++;
                 if(gameFrames >= Integer.MAX_VALUE - 1000)
                     gameFrames = 0;
+                updateGame();
             }
 
             gSchedulerSystem.doEvents(System.currentTimeMillis());

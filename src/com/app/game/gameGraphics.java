@@ -30,6 +30,7 @@ public class gameGraphics {
                     gameSettings.videoFramesMetric = 0;
                 }
 
+                g.translate(-(int)gameCamera.get().getCoords()[0], -(int)gameCamera.get().getCoords()[1]);
                 g.setColor(Color.WHITE);
                 g.drawString("Game Frames: " + gameSettings.gameFrames, 0, 25);
                 g.drawString("Video Frames: " + gameSettings.videoFrames, 0, 50);

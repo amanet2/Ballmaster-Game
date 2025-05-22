@@ -19,21 +19,19 @@ public class gameScheduler {
             public void doEvent() {
                 System.out.println("----------------");
                 System.out.printf("Did an event scheduled for %d @ %d%n", eventTime, System.currentTimeMillis());
-                gameCVars.get().setCVarValue("test_cvar", "bar");
             }
         };
         schedulerSystem.gSchedulerEvent event2 = engineInstance.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
                 System.out.printf("Did another event scheduled for %d @ %d%n", eventTime, System.currentTimeMillis());
-                gameCVars.get().setCVarValue("test_cvar", "foo");
             }
         };
         schedulerSystem.gSchedulerEvent event3 = engineInstance.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
                 System.out.println("----------------");
                 System.out.printf("Did an event scheduled for %d @ %d%n", eventTime + 5000, System.currentTimeMillis());
-                gameCVars.get().setCVarValue("test_cvar", "bar");
+                gameCamera.get().snapToWorldCoords(new int[]{-75, -75});
                 gameConsole.get().readLine("echo Penultimate Scheduled Event Just Finished!");
             }
         };
@@ -41,7 +39,7 @@ public class gameScheduler {
             public void doEvent() {
                 System.out.println("----------------");
                 System.out.printf("Did an event scheduled for %d @ %d%n", eventTime + 10000, System.currentTimeMillis());
-                gameCVars.get().setCVarValue("test_cvar", "bar");
+                gameCamera.get().snapToWorldCoords(new int[]{0, 0});
                 String result = gameConsole.get().readLine("add 2 2");
                 gameConsole.get().readLine("echo Last Scheduled Event Just Finished! 2 + 2 is... " + result + "!");
             }

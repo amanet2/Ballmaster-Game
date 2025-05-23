@@ -43,19 +43,19 @@ public class gameGraphics {
                 //WORLD
                 g.translate(-(int)gameCamera.getCamera1().getCoords()[0], -(int)gameCamera.getCamera1().getCoords()[1]);
 
-                if(gameSettings.gSprites.size() < 3)
+                if(gameSprites.gSprites.size() < 3)
                     return;
                 for(Integer xpos : new int[]{14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1}) {
-                    g.drawImage(gameSettings.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 - 150, null);
-                    g.drawImage(gameSettings.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 - 75, null);
-                    g.drawImage(gameSettings.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359, null);
-                    g.drawImage(gameSettings.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 + 75, null);
-                    g.drawImage(gameSettings.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 + 150, null);
-                    g.drawImage(gameSettings.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 + 225, null);
-                    g.drawImage(gameSettings.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 + 300, null);
+                    g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 - 150, null);
+                    g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 - 75, null);
+                    g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359, null);
+                    g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 + 75, null);
+                    g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 + 150, null);
+                    g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 + 225, null);
+                    g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 + 300, null);
                 }
-                g.drawImage(gameSettings.gSprites.get(1).getImage(), (int)gameSettings.radix, 359 - 150, null);
-                g.drawImage(gameSettings.gSprites.get(2).getImage(), 300 + (int)gameSettings.radix, 359 - 150, null);
+                g.drawImage(gameSprites.gSprites.get(1).getImage(), (int)gameSettings.radix, 359 - 150, null);
+                g.drawImage(gameSprites.gSprites.get(2).getImage(), 300 + (int)gameSettings.radix, 359 - 150, null);
             }
         });
     }

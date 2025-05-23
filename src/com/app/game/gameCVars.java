@@ -23,7 +23,7 @@ public class gameCVars {
         if(cVars.getCVarValue(name) == null)
             return String.format("No cvar found for '%s'", name);
         cVars.setCVarValue(name, value);
-        return String.format("Set value of cvar '%s' -> '%s'", name, value);
+        return String.format("Set value of cvar '%s' to '%s'", name, value);
     }
 
     public static cVarSystem.gCVarSystem get() {

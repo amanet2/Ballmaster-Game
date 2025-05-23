@@ -13,9 +13,7 @@ public class gameScheduler {
     }
 
     static void init() {
-        final long initTime = System.currentTimeMillis();
-
-        schedulerSystem.gSchedulerEvent event1 = engineInstance.schedulerSystem. new gSchedulerEvent(){
+        schedulerSystem.gSchedulerEvent infiniteEvent = engineInstance.schedulerSystem. new gSchedulerEvent(){
             schedulerSystem.gSchedulerEvent parentEvent = this;
             public void doEvent() {
                 gameCamera.getCamera1().snapToWorldCoords(new int[]{-75, -75});
@@ -31,6 +29,6 @@ public class gameScheduler {
             }
         };
 
-        scheduler.addEvent(initTime + 5000, event1);
+        scheduler.addEvent(System.currentTimeMillis() + 5000, infiniteEvent);
     }
 }

@@ -1,25 +1,30 @@
 package com.app.game;
 
 import com.app.engine.engine;
-import com.app.engine.spriteSystem;
+import com.app.engine.spriteSystem.gSprite;
+import com.app.engine.spriteSystem.gSpriteSystem;
+
+import java.util.ArrayList;
 
 public class gameSprites {
     private static engine engineInstance = engine.instance();
 
-    private static spriteSystem.gSpriteSystem sprites = engineInstance.spriteSystem.new gSpriteSystem();
+    private static gSpriteSystem gSpriteSystem = engineInstance.spriteSystem.new gSpriteSystem();
 
-    public static spriteSystem.gSpriteSystem get() {
-        return sprites;
+    public static ArrayList<gSprite> gSprites = new ArrayList<>();
+
+    public static gSpriteSystem get() {
+        return gSpriteSystem;
     }
 
     public static void init() {
         String basePath = gameSettings.dataPath.endsWith("/") ? gameSettings.dataPath : gameSettings.dataPath + "/";
         String testSpritePath = String.format("%scharacters/player_pink/a03.png", basePath);
-        spriteSystem.gSprite testSprite1 = sprites.getScaledSprite(testSpritePath, 150, 150);
-        spriteSystem.gSprite testSprite2 = sprites.getScaledSprite(testSpritePath, 300, 300);
-        spriteSystem.gSprite testSprite3 = sprites.getScaledSprite(testSpritePath, 600, 600);
-        gameSettings.gSprites.add(testSprite1);
-        gameSettings.gSprites.add(testSprite2);
-        gameSettings.gSprites.add(testSprite3);
+        gSprite testSprite1 = gSpriteSystem.getScaledSprite(testSpritePath, 150, 150);
+        gSprite testSprite2 = gSpriteSystem.getScaledSprite(testSpritePath, 300, 300);
+        gSprite testSprite3 = gSpriteSystem.getScaledSprite(testSpritePath, 600, 600);
+        gSprites.add(testSprite1);
+        gSprites.add(testSprite2);
+        gSprites.add(testSprite3);
     }
 }

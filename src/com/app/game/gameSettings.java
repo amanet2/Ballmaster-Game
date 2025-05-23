@@ -1,9 +1,5 @@
 package com.app.game;
 
-import com.app.engine.spriteSystem;
-
-import java.util.ArrayList;
-
 public class gameSettings {
     static int gameScale = 2160;
     static String dataPath = "data";
@@ -21,6 +17,4 @@ public class gameSettings {
 
     static double radix = 0.0;
     static int dir = 1;
-
-    static ArrayList<spriteSystem.gSprite> gSprites = new ArrayList<>();
 }

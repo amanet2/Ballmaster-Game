@@ -26,6 +26,10 @@ public class game {
 
     public static void main(String[] args) {
         // TODO: these game pointers should be instances initialized in proper order or made singletons
+        System.out.println("----------------");
+        System.out.println("INITIALIZING GAME SYSTEMS...");
+        System.out.println("----------------");
+
         gameCVars.init();
         parseLaunchArgs(args);
         gameGraphics.init();
@@ -33,6 +37,11 @@ public class game {
         gameScheduler.init();
         gameSprites.init();
         gameInput.init();
+
+        System.out.println("----------------");
+        System.out.println("STARTED GAME SUCCESSFULLY!");
+        System.out.println("YOU MAY BEGIN ENTERING CONSOLE COMMANDS");
+        System.out.println("----------------");
 
         int internalGameRate = 1000;
         long snapshotTimeNanos = System.nanoTime();  // use nano for game timer

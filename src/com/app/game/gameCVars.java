@@ -19,5 +19,17 @@ public class gameCVars {
                 gameSettings.basePath = this.getValue();
             }
         });
+        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("showfps", gameSettings.showfps ? "1" : "0") {
+            @Override
+            public void onChange() {
+                gameSettings.showfps = this.getValue().equalsIgnoreCase("1");
+            }
+        });
+        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("showdebug", gameSettings.showdebug ? "1" : "0") {
+            @Override
+            public void onChange() {
+                gameSettings.showdebug = this.getValue().equalsIgnoreCase("1");
+            }
+        });
     }
 }

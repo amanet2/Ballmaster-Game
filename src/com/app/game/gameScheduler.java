@@ -17,19 +17,12 @@ public class gameScheduler {
 
         schedulerSystem.gSchedulerEvent event1 = engineInstance.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
-                System.out.println("----------------");
-                System.out.printf("Did an event scheduled for %d @ %d%n", initTime + 5000, System.currentTimeMillis());
                 gameCamera.getCamera1().snapToWorldCoords(new int[]{-75, -75});
-                gameConsole.get().readLine("echo Penultimate Scheduled Event Just Finished!");
             }
         };
         schedulerSystem.gSchedulerEvent event2 = engineInstance.schedulerSystem. new gSchedulerEvent(){
             public void doEvent() {
-                System.out.println("----------------");
-                System.out.printf("Did an event scheduled for %d @ %d%n", initTime + 10000, System.currentTimeMillis());
                 gameCamera.getCamera1().snapToWorldCoords(new int[]{0, 0});
-                String result = gameConsole.get().readLine("add 2 2");
-                gameConsole.get().readLine("echo Last Scheduled Event Just Finished! 2 + 2 is... " + result + "!");
             }
         };
         scheduler.addEvent(initTime + 5000, event1);

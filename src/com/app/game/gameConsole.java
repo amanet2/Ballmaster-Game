@@ -13,25 +13,22 @@ public class gameConsole {
     }
 
     public static void init() {
-        consoleSystem.gConsoleCommand gConsoleCommandEcho = engineInstance.consoleSystem. new gConsoleCommand() {
-            @Override
-            public String doCommand(String[] args) {
-                StringBuilder echoStrBuilder = new StringBuilder();
-                for(String tok : args) {
-                    echoStrBuilder.append(" ").append(tok);
-                }
-                String echoString = echoStrBuilder.substring(1);
-                System.out.printf("%s%n", echoString);
-                return echoString;
-            }
-        };
         consoleSystem.gConsoleCommand gConsoleCommandAdd = engineInstance.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
                 return Integer.toString(Integer.parseInt(args[0]) + Integer.parseInt(args[1]));
             }
         };
-        console.registerCmd("echo", gConsoleCommandEcho);
+        consoleSystem.gConsoleCommand gConsoleCommandQuit = engineInstance.consoleSystem. new gConsoleCommand() {
+            @Override
+            public String doCommand(String[] args) {
+                System.exit(0);
+                return "Exited Game";
+            }
+        };
+
         console.registerCmd("add", gConsoleCommandAdd);
+        console.registerCmd("exit", gConsoleCommandQuit);
+        console.registerCmd("quit", gConsoleCommandQuit);
     }
 }

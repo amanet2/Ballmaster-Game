@@ -1,12 +1,14 @@
 package com.app.game;
 
-import com.app.engine.cVarSystem;
+import com.app.engine.cVarSystem.gCVarSystem;
 import com.app.engine.engine;
+
+import java.util.TreeSet;
 
 public class gameCVars {
     private static engine engineInstance = engine.instance();
 
-    private static final cVarSystem.gCVarSystem cVars = engineInstance.cVarSystem. new gCVarSystem();
+    private static final gCVarSystem cVars = engineInstance.cVarSystem. new gCVarSystem();
 
     public static void parseLaunchArgs(String[] args) {
         for(int i = 0; i < args.length; i++) {
@@ -26,8 +28,12 @@ public class gameCVars {
         return String.format("Set value of cvar '%s' to '%s'", name, value);
     }
 
-    public static cVarSystem.gCVarSystem get() {
+    public static gCVarSystem get() {
         return cVars;
+    }
+
+    public static String[] getCVarList() {
+        return new TreeSet<>(cVars.keySet()).toArray(new String[0]);
     }
 
     public static void init() {

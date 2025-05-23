@@ -1,20 +1,21 @@
 package com.app.game;
 
-import com.app.engine.schedulerSystem;
+import com.app.engine.schedulerSystem.gSchedulerEvent;
+import com.app.engine.schedulerSystem.gSchedulerSystem;
 import com.app.engine.engine;
 
 public class gameScheduler {
     private static engine engineInstance = engine.instance();
 
-    private static final schedulerSystem.gSchedulerSystem scheduler = engineInstance.schedulerSystem. new gSchedulerSystem();
+    private static final gSchedulerSystem scheduler = engineInstance.schedulerSystem. new gSchedulerSystem();
 
-    public static schedulerSystem.gSchedulerSystem get() {
+    public static gSchedulerSystem get() {
         return scheduler;
     }
 
     static void init() {
-        schedulerSystem.gSchedulerEvent infiniteEvent = engineInstance.schedulerSystem. new gSchedulerEvent(){
-            schedulerSystem.gSchedulerEvent parentEvent = this;
+        gSchedulerEvent infiniteEvent = engineInstance.schedulerSystem. new gSchedulerEvent(){
+            gSchedulerEvent parentEvent = this;
             public void doEvent() {
                 gameCamera.getCamera1().snapToWorldCoords(new int[]{-75, -75});
                 scheduler.addEvent(

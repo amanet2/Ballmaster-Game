@@ -18,11 +18,14 @@ public class gameSprites {
     }
 
     public static void init() {
-        String basePath = gameSettings.fileSystemDataPath.endsWith("/") ? gameSettings.fileSystemDataPath : gameSettings.fileSystemDataPath + "/";
-        String testSpritePath = String.format("%scharacters/player_pink/a03.png", basePath);
-        gSprite testSprite1 = gSpriteSystem.getScaledSprite(testSpritePath, 150, 150);
-        gSprite testSprite2 = gSpriteSystem.getScaledSprite(testSpritePath, 300, 300);
-        gSprite testSprite3 = gSpriteSystem.getScaledSprite(testSpritePath, 600, 600);
+        String pinkGuyPath = gameFiles.gFilesSprites.get(
+                gameSettings.fileSystemDataPath + "/characters/player_pink/a03.png"
+        ).getName();
+
+        gSprite testSprite1 = gSpriteSystem.getScaledSprite(pinkGuyPath, 150, 150);
+        gSprite testSprite2 = gSpriteSystem.getScaledSprite(pinkGuyPath, 300, 300);
+        gSprite testSprite3 = gSpriteSystem.getScaledSprite(pinkGuyPath, 600, 600);
+
         gSprites.add(testSprite1);
         gSprites.add(testSprite2);
         gSprites.add(testSprite3);

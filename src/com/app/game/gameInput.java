@@ -7,6 +7,7 @@ public class gameInput {
         new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
             while(true) {
+                System.out.print("% ");
                 String input = scanner.nextLine();
                 System.out.println(gameConsole.get().readLine(input));
             }

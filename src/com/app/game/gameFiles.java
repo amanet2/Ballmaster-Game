@@ -1,34 +1,44 @@
 package com.app.game;
 
 import com.app.engine.engine;
-import com.app.engine.fileSystem;
 import com.app.engine.fileSystem.gDirectory;
 import com.app.engine.fileSystem.gFile;
+import com.app.engine.fileSystem.gFileSystem;
 
 import java.util.HashMap;
+import java.util.TreeSet;
 
 public class gameFiles {
     private static engine engineInstance = engine.instance();
 
-    private static fileSystem.gFileSystem fileSystem; // TODO: can we do filesystems for assets, mapfiles, scripts, etc
+    private static gFileSystem fileSystem; // TODO: can we do filesystems for assets, mapfiles, scripts, etc
+    private static gFileSystem spritesFileSystem;
 
     public static HashMap<String, gFile> gFiles = new HashMap<>();
-
-    public static fileSystem.gFileSystem get() {
-        return fileSystem;
-    }
+    public static HashMap<String, gFile> gFilesSprites = new HashMap<>();
 
     public static void init() {
         fileSystem = engineInstance.fileSystem.new gFileSystem(gameSettings.fileSystemFilesPath);
-        parseFiles(fileSystem.getRootDirectory());
+        parseFiles(gFiles, fileSystem.getRootDirectory());
+
+        spritesFileSystem = engineInstance.fileSystem.new gFileSystem(gameSettings.fileSystemDataPath);
+        parseFiles(gFilesSprites, spritesFileSystem.getRootDirectory());
     }
 
-    private static void parseFiles(gDirectory gDir) {
+    public static String[] getFilesList() {
+        return new TreeSet<>(gFiles.keySet()).toArray(new String[0]);
+    }
+
+    public static String[] getSpritesFilesList() {
+        return new TreeSet<>(gFilesSprites.keySet()).toArray(new String[0]);
+    }
+
+    private static void parseFiles(HashMap<String, gFile> map, gDirectory gDir) {
         for(gFile file: gDir.getFiles()) {
-            gFiles.putIfAbsent(file.getName(), file);
+            map.putIfAbsent(file.getName(), file);
         }
         for(gDirectory dir : gDir.getSubDirectories()) {
-            parseFiles(dir);
+            parseFiles(map, dir);
         }
     }
 

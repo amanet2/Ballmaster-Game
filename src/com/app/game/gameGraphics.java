@@ -1,7 +1,7 @@
 package com.app.game;
 
 import com.app.engine.engine;
-import com.app.engine.graphicsSystem;
+import com.app.engine.graphicsSystem.gGraphicsSystem;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -9,9 +9,9 @@ import java.awt.Graphics;
 public class gameGraphics {
     private static engine engineInstance = engine.instance();
 
-    private static graphicsSystem.gGraphicsSystem graphics;
+    private static gGraphicsSystem graphics;
 
-    public static graphicsSystem.gGraphicsSystem get() {
+    public static gGraphicsSystem get() {
         return graphics;
     }
 

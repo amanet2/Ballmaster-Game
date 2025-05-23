@@ -31,10 +31,16 @@ public class gameCVars {
     }
 
     public static void init() {
-        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("basepath", gameSettings.dataPath) {
+        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("fs_datapath", gameSettings.fileSystemDataPath) {
             @Override
             public void onChange() {
-                gameSettings.dataPath = this.getValue();
+                gameSettings.fileSystemDataPath = this.getValue();
+            }
+        });
+        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("fs_filespath", gameSettings.fileSystemFilesPath) {
+            @Override
+            public void onChange() {
+                gameSettings.fileSystemFilesPath = this.getValue();
             }
         });
         cVars.registerCVar(engineInstance.cVarSystem. new gCVar("showfps", gameSettings.showfps ? "1" : "0") {

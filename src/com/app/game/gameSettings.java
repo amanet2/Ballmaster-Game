@@ -2,8 +2,8 @@ package com.app.game;
 
 public class gameSettings {
     static int gameScale = 2160;
-    static String dataPath = "data";
-    static String filesPath = "config";
+    static String fileSystemDataPath = "data";
+    static String fileSystemFilesPath = "config";
     static boolean showfps = false;
     static boolean showdebug = false;
 

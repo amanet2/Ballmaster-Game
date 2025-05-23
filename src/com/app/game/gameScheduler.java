@@ -18,13 +18,13 @@ public class gameScheduler {
             public void doEvent() {
                 gameCamera.getCamera1().snapToWorldCoords(new int[]{-75, -75});
                 scheduler.addEvent(
-                        System.currentTimeMillis() + 5000,
-                        engineInstance.schedulerSystem. new gSchedulerEvent(){
-                            public void doEvent() {
-                                gameCamera.getCamera1().snapToWorldCoords(new int[]{0, 0});
-                                scheduler.addEvent(System.currentTimeMillis() + 5000, parentEvent);
-                            }
+                    System.currentTimeMillis() + 5000,
+                    engineInstance.schedulerSystem. new gSchedulerEvent(){
+                        public void doEvent() {
+                            gameCamera.getCamera1().snapToWorldCoords(new int[]{0, 0});
+                            scheduler.addEvent(System.currentTimeMillis() + 5000, parentEvent);
                         }
+                    }
                 );
             }
         };

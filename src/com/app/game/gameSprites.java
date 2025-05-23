@@ -18,7 +18,7 @@ public class gameSprites {
     }
 
     public static void init() {
-        String basePath = gameSettings.dataPath.endsWith("/") ? gameSettings.dataPath : gameSettings.dataPath + "/";
+        String basePath = gameSettings.fileSystemDataPath.endsWith("/") ? gameSettings.fileSystemDataPath : gameSettings.fileSystemDataPath + "/";
         String testSpritePath = String.format("%scharacters/player_pink/a03.png", basePath);
         gSprite testSprite1 = gSpriteSystem.getScaledSprite(testSpritePath, 150, 150);
         gSprite testSprite2 = gSpriteSystem.getScaledSprite(testSpritePath, 300, 300);

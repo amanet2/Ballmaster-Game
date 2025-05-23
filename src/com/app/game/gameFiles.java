@@ -2,40 +2,41 @@ package com.app.game;
 
 import com.app.engine.engine;
 import com.app.engine.fileSystem;
+import com.app.engine.fileSystem.gDirectory;
+import com.app.engine.fileSystem.gFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.HashMap;
 
 public class gameFiles {
-    // TODO: current engine fileSystem is useless here
     private static engine engineInstance = engine.instance();
 
-    private static fileSystem.gFileSystem fileSystem;
+    private static fileSystem.gFileSystem fileSystem; // TODO: can we do filesystems for assets, mapfiles, scripts, etc
 
-    public static HashMap<String, File> gFiles = new HashMap<>();
+    public static HashMap<String, gFile> gFiles = new HashMap<>();
 
     public static fileSystem.gFileSystem get() {
         return fileSystem;
     }
 
     public static void init() {
-        fileSystem = engineInstance.fileSystem.new gFileSystem(gameSettings.filesPath);
+        fileSystem = engineInstance.fileSystem.new gFileSystem(gameSettings.fileSystemFilesPath);
+        parseFiles(fileSystem.getRootDirectory());
+    }
+
+    private static void parseFiles(gDirectory gDir) {
+        for(gFile file: gDir.getFiles()) {
+            gFiles.putIfAbsent(file.getName(), file);
+        }
+        for(gDirectory dir : gDir.getSubDirectories()) {
+            parseFiles(dir);
+        }
     }
 
     public static String execFile(String name) {
-        try {
-            gFiles.putIfAbsent(name, new File(name));
-            File execFile = gFiles.get(name);
-            String[] lines = Files.readAllLines(execFile.toPath()).toArray(new String[0]);
-            System.out.println("Reading file: " + name);
-            for(String line : lines) {
-                System.out.println("% " + line);
-                System.out.println(gameConsole.get().readLine(line));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        System.out.println("Reading file: " + name);
+        for(String line : gFiles.get(name).getFileLines()) {
+            System.out.println("% " + line);
+            System.out.println(gameConsole.get().readLine(line));
         }
         return "";
     }

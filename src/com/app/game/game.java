@@ -1,5 +1,8 @@
 package com.app.game;
 
+import java.io.File;
+import java.util.Arrays;
+
 public class game {
     static void parseLaunchArgs(String[] args) {
         for(int i = 0; i < args.length; i++) {
@@ -29,6 +32,8 @@ public class game {
         System.out.println("----------------");
 
         gameCVars.init();
+        gameFiles.init();
+        // TODO: set cvars from cfg file(s) before launch args
         parseLaunchArgs(args);
         gameGraphics.init();
         gameConsole.init();

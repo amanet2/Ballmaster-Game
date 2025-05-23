@@ -13,12 +13,6 @@ public class gameCVars {
     }
 
     public static void init() {
-        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("basepath", gameSettings.basePath) {
-            @Override
-            public void onChange() {
-                gameSettings.basePath = this.getValue();
-            }
-        });
         cVars.registerCVar(engineInstance.cVarSystem. new gCVar("showfps", gameSettings.showfps ? "1" : "0") {
             @Override
             public void onChange() {

@@ -4,7 +4,12 @@ public class game {
     static void parseLaunchArgs(String[] args) {
         for(int i = 0; i < args.length; i++) {
             System.out.println("LAUNCH ARG: " + args[i]);
-            if(gameCVars.get().getCVarValue(args[i]) != null && args.length > i+1) {
+            if(args[i].equalsIgnoreCase("path") && args.length > i+1) {
+                System.out.println("LAUNCH ARG VALUE: " + args[i+1]);
+                gameSettings.basePath = args[i+1];
+                i+=1;
+            }
+            else if(gameCVars.get().getCVarValue(args[i]) != null && args.length > i+1) {
                 System.out.println("LAUNCH ARG VALUE: " + args[i+1]);
                 gameCVars.get().setCVarValue(args[i], args[i+1]);
                 i+=1;

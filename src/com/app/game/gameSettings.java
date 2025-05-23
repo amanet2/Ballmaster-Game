@@ -6,7 +6,8 @@ import java.util.ArrayList;
 
 public class gameSettings {
     static int gameScale = 2160;
-    static String basePath = "data";
+    static String dataPath = "data";
+    static String filesPath = "config";
     static boolean showfps = false;
     static boolean showdebug = false;
 

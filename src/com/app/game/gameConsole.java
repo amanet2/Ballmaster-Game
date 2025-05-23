@@ -35,11 +35,8 @@ public class gameConsole {
             @Override
             public String doCommand(String[] args) {
                 if(args.length < 1)
-                    return "Usage: exec CFG_FILE1 <CFG_FILE2> <CFG_FILE3>";
-                for (String name : args) {
-                    System.out.printf("** NEED TO IMPLEMENT ENGINE FILE SYSTEM TO EXEC FILE %s **%n", name);
-                }
-                return "";
+                    return "Usage: exec CFG_FILE";
+                return gameFiles.execFile(args[0]);
             }
         };
         consoleSystem.gConsoleCommand gConsoleCommandListCmds = engineInstance.consoleSystem. new gConsoleCommand() {
@@ -76,12 +73,7 @@ public class gameConsole {
             public String doCommand(String[] args) {
                 if(args.length < 2)
                     return "Usage: set CVAR_NAME CVAR_VALUE";
-                String name = args[0];
-                String value = args[1];
-                if(gameCVars.get().getCVarValue(name) == null)
-                    return String.format("No cvar found for '%s'", name);
-                gameCVars.get().setCVarValue(name, value);
-                return String.format("Set value of cvar '%s' -> '%s'", name, value);
+                return gameCVars.setCVar(args[0], args[1]);
             }
         };
 

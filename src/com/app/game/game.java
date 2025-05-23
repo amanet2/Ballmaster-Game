@@ -1,20 +1,6 @@
 package com.app.game;
 
-import java.io.File;
-import java.util.Arrays;
-
 public class game {
-    static void parseLaunchArgs(String[] args) {
-        for(int i = 0; i < args.length; i++) {
-            System.out.println("LAUNCH ARG: " + args[i]);
-            if(gameCVars.get().getCVarValue(args[i]) != null && args.length > i+1) {
-                System.out.println("LAUNCH ARG VALUE: " + args[i+1]);
-                gameCVars.get().setCVarValue(args[i], args[i+1]);
-                i+=1;
-            }
-        }
-    }
-
     static void updateGame() {
         if(gameSettings.dir > 0)
             gameSettings.radix+=0.1;
@@ -31,12 +17,12 @@ public class game {
         System.out.println("INITIALIZING GAME SYSTEMS...");
         System.out.println("----------------");
 
+        gameConsole.init();
         gameCVars.init();
         gameFiles.init();
-        // TODO: set cvars from cfg file(s) before launch args
-        parseLaunchArgs(args);
+        gameFiles.execFile("config/autoexec.cfg");
+        gameCVars.parseLaunchArgs(args);
         gameGraphics.init();
-        gameConsole.init();
         gameScheduler.init();
         gameSprites.init();
         gameInput.init();

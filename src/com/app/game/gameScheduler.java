@@ -16,16 +16,21 @@ public class gameScheduler {
         final long initTime = System.currentTimeMillis();
 
         schedulerSystem.gSchedulerEvent event1 = engineInstance.schedulerSystem. new gSchedulerEvent(){
+            schedulerSystem.gSchedulerEvent parentEvent = this;
             public void doEvent() {
                 gameCamera.getCamera1().snapToWorldCoords(new int[]{-75, -75});
+                scheduler.addEvent(
+                        System.currentTimeMillis() + 5000,
+                        engineInstance.schedulerSystem. new gSchedulerEvent(){
+                            public void doEvent() {
+                                gameCamera.getCamera1().snapToWorldCoords(new int[]{0, 0});
+                                scheduler.addEvent(System.currentTimeMillis() + 5000, parentEvent);
+                            }
+                        }
+                );
             }
         };
-        schedulerSystem.gSchedulerEvent event2 = engineInstance.schedulerSystem. new gSchedulerEvent(){
-            public void doEvent() {
-                gameCamera.getCamera1().snapToWorldCoords(new int[]{0, 0});
-            }
-        };
+
         scheduler.addEvent(initTime + 5000, event1);
-        scheduler.addEvent(initTime + 10000, event2);
     }
 }

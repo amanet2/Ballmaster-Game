@@ -13,7 +13,7 @@ public class gameSprites {
     }
 
     public static void init() {
-        String basePath = gameSettings.basePath.endsWith("/") ? gameSettings.basePath : gameSettings.basePath + "/";
+        String basePath = gameSettings.dataPath.endsWith("/") ? gameSettings.dataPath : gameSettings.dataPath + "/";
         String testSpritePath = String.format("%scharacters/player_pink/a03.png", basePath);
         spriteSystem.gSprite testSprite1 = sprites.getScaledSprite(testSpritePath, 150, 150);
         spriteSystem.gSprite testSprite2 = sprites.getScaledSprite(testSpritePath, 300, 300);

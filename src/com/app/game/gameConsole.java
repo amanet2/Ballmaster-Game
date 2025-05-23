@@ -13,10 +13,43 @@ public class gameConsole {
     }
 
     public static void init() {
-        consoleSystem.gConsoleCommand gConsoleCommandAdd = engineInstance.consoleSystem. new gConsoleCommand() {
+        consoleSystem.gConsoleCommand gConsoleCommandClear = engineInstance.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
-                return Integer.toString(Integer.parseInt(args[0]) + Integer.parseInt(args[1]));
+                System.out.print("\033\143");
+                return "";
+            }
+        };
+        consoleSystem.gConsoleCommand gConsoleCommandEcho = engineInstance.consoleSystem. new gConsoleCommand() {
+            @Override
+            public String doCommand(String[] args) {
+                StringBuilder echoStrBuilder = new StringBuilder();
+                for(String tok : args) {
+                    echoStrBuilder.append(" ").append(tok);
+                }
+                return echoStrBuilder.substring(1);
+            }
+        };
+        consoleSystem.gConsoleCommand gConsoleCommandListCmds = engineInstance.consoleSystem. new gConsoleCommand() {
+            @Override
+            public String doCommand(String[] args) {
+                System.out.println();
+                String[] cmds = console.listCmds();
+                for(String name : cmds) {
+                    System.out.println(name);
+                }
+                return String.format("---\n%d cmds in System", cmds.length);
+            }
+        };
+        consoleSystem.gConsoleCommand gConsoleCommandListCVars = engineInstance.consoleSystem. new gConsoleCommand() {
+            @Override
+            public String doCommand(String[] args) {
+                System.out.println();
+                String[] cVarNames = gameCVars.get().getCVarList();
+                for(String name : cVarNames) {
+                    System.out.printf("%s -> %s%n", name, gameCVars.get().getCVarValue(name));
+                }
+                return String.format("---\n%d CVars in System", cVarNames.length);
             }
         };
         consoleSystem.gConsoleCommand gConsoleCommandQuit = engineInstance.consoleSystem. new gConsoleCommand() {
@@ -26,9 +59,26 @@ public class gameConsole {
                 return "Exited Game";
             }
         };
+        consoleSystem.gConsoleCommand gConsoleCommandSet = engineInstance.consoleSystem. new gConsoleCommand() {
+            @Override
+            public String doCommand(String[] args) {
+                if(args.length < 2)
+                    return "Usage: set CVAR_NAME CVAR_VALUE";
+                String name = args[0];
+                String value = args[1];
+                if(gameCVars.get().getCVarValue(name) == null)
+                    return String.format("No cvar found for '%s'", name);
+                gameCVars.get().setCVarValue(name, value);
+                return String.format("Set value of cvar '%s' -> '%s'", name, value);
+            }
+        };
 
-        console.registerCmd("add", gConsoleCommandAdd);
+        console.registerCmd("clear", gConsoleCommandClear);
+        console.registerCmd("echo", gConsoleCommandEcho);
         console.registerCmd("exit", gConsoleCommandQuit);
+        console.registerCmd("listCmds", gConsoleCommandListCmds);
+        console.registerCmd("listCVars", gConsoleCommandListCVars);
         console.registerCmd("quit", gConsoleCommandQuit);
+        console.registerCmd("set", gConsoleCommandSet);
     }
 }

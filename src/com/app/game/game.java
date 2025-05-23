@@ -1,12 +1,11 @@
 package com.app.game;
 
-import java.util.Arrays;
-
 public class game {
     static void parseLaunchArgs(String[] args) {
         for(int i = 0; i < args.length; i++) {
-            System.out.println("ARG: " + args[i]);
+            System.out.println("LAUNCH ARG: " + args[i]);
             if(gameCVars.get().getCVarValue(args[i]) != null && args.length > i+1) {
+                System.out.println("LAUNCH ARG VALUE: " + args[i+1]);
                 gameCVars.get().setCVarValue(args[i], args[i+1]);
                 i+=1;
             }
@@ -25,7 +24,6 @@ public class game {
     }
 
     public static void main(String[] args) {
-        // TODO: these game pointers should be instances initialized in proper order or made singletons
         System.out.println("----------------");
         System.out.println("INITIALIZING GAME SYSTEMS...");
         System.out.println("----------------");

@@ -43,45 +43,45 @@ public class gameConsole {
         gConsoleCommand gConsoleCommandListCmds = engineInstance.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
-                System.out.println();
-                String[] cmds = console.listCmds();
-                for(String name : cmds) {
+                String[] names = console.listCmds();
+                System.out.println("total " + names.length);
+                for(String name : names) {
                     System.out.println(name);
                 }
-                return String.format("---\n%d cmds in System", cmds.length);
+                return "";
             }
         };
         gConsoleCommand gConsoleCommandListCVars = engineInstance.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
-                System.out.println();
-                String[] cVarNames = gameCVars.getCVarList();
-                for(String name : cVarNames) {
+                String[] names = gameCVars.getCVarList();
+                System.out.println("total " + names.length);
+                for(String name : names) {
                     System.out.printf("%s = %s%n", name, gameCVars.get().getCVarValue(name));
                 }
-                return String.format("---\n%d CVars in System", cVarNames.length);
+                return "";
             }
         };
         gConsoleCommand gConsoleCommandListFiles = engineInstance.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
-                System.out.println();
-                String[] fileNames = gameFiles.getFilesList();
-                for(String name : fileNames) {
+                String[] names = gameFiles.getFilesList();
+                System.out.println("total " + names.length);
+                for(String name : names) {
                     System.out.println(name);
                 }
-                return String.format("---\n%d Files in System", fileNames.length);
+                return "";
             }
         };
         gConsoleCommand gConsoleCommandListSprites = engineInstance.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
-                System.out.println();
-                String[] spriteNames = gameFiles.getSpritesFilesList();
-                for(String name : spriteNames) {
+                String[] names = gameFiles.getSpritesFilesList();
+                System.out.println("total " + names.length);
+                for(String name : names) {
                     System.out.println(name);
                 }
-                return String.format("---\n%d Sprites in System", spriteNames.length);
+                return "";
             }
         };
         gConsoleCommand gConsoleCommandQuit = engineInstance.consoleSystem. new gConsoleCommand() {

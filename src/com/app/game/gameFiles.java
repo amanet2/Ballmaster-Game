@@ -45,7 +45,7 @@ public class gameFiles {
     public static String execFile(String name) {
         System.out.println("Reading file: " + name);
         for(String line : gFiles.get(name).getFileLines()) {
-            System.out.println("% " + line);
+            System.out.print("% " + line);
             System.out.println(gameConsole.get().readLine(line));
         }
         return "";

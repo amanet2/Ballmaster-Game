@@ -9,7 +9,7 @@ public class gameInput {
             while(true) {
                 System.out.print("% ");
                 String input = scanner.nextLine();
-                System.out.println(gameConsole.get().readLine(input));
+                System.out.print(gameConsole.get().readLine(input));
             }
         }).start();
     }

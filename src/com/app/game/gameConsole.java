@@ -30,6 +30,18 @@ public class gameConsole {
                 return echoStrBuilder.substring(1);
             }
         };
+        // executes a specified cfg file
+        consoleSystem.gConsoleCommand gConsoleCommandExec = engineInstance.consoleSystem. new gConsoleCommand() {
+            @Override
+            public String doCommand(String[] args) {
+                if(args.length < 1)
+                    return "Usage: exec CFG_FILE1 <CFG_FILE2> <CFG_FILE3>";
+                for (String name : args) {
+                    System.out.printf("** NEED TO IMPLEMENT ENGINE FILE SYSTEM TO EXEC FILE %s **%n", name);
+                }
+                return "";
+            }
+        };
         consoleSystem.gConsoleCommand gConsoleCommandListCmds = engineInstance.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
@@ -75,6 +87,7 @@ public class gameConsole {
 
         console.registerCmd("clear", gConsoleCommandClear);
         console.registerCmd("echo", gConsoleCommandEcho);
+        console.registerCmd("exec", gConsoleCommandExec);
         console.registerCmd("exit", gConsoleCommandQuit);
         console.registerCmd("listCmds", gConsoleCommandListCmds);
         console.registerCmd("listCVars", gConsoleCommandListCVars);

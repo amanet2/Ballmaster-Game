@@ -2,6 +2,7 @@ package com.app.game;
 
 import com.app.engine.cVarSystem.gCVarSystem;
 import com.app.engine.engine;
+import com.app.engine.utils.gDict;
 
 import java.util.TreeSet;
 
@@ -34,6 +35,14 @@ public class gameCVars {
 
     public static String[] getCVarList() {
         return new TreeSet<>(cVars.keySet()).toArray(new String[0]);
+    }
+
+    public static gDict toDict() {
+        gDict dict = new gDict();
+        for(String k : cVars.keySet()) {
+            dict.put(k, cVars.getCVarValue(k));
+        }
+        return dict;
     }
 
     public static void init() {

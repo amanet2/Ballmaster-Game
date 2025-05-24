@@ -23,9 +23,9 @@ public class gameCVars {
 
     public static String setCVar(String name, String value) {
         if(cVars.getCVarValue(name) == null)
-            return String.format("No cvar found for '%s'", name);
+            return String.format("No cvar found for '%s'%n", name);
         cVars.setCVarValue(name, value);
-        return String.format("Set value of cvar '%s' to '%s'", name, value);
+        return String.format("Set value of cvar '%s' to '%s'%n", name, value);
     }
 
     public static gCVarSystem get() {
@@ -49,16 +49,22 @@ public class gameCVars {
                 gameSettings.fileSystemFilesPath = this.getValue();
             }
         });
-        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("showfps", gameSettings.showfps ? "1" : "0") {
+        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("showcamerainfo", gameSettings.showCameraInfo ? "1" : "0") {
             @Override
             public void onChange() {
-                gameSettings.showfps = this.getValue().equalsIgnoreCase("1");
+                gameSettings.showCameraInfo = this.getValue().equalsIgnoreCase("1");
             }
         });
-        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("showdebug", gameSettings.showdebug ? "1" : "0") {
+        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("showfps", gameSettings.showFps ? "1" : "0") {
             @Override
             public void onChange() {
-                gameSettings.showdebug = this.getValue().equalsIgnoreCase("1");
+                gameSettings.showFps = this.getValue().equalsIgnoreCase("1");
+            }
+        });
+        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("showframeinfo", gameSettings.showFrameInfo ? "1" : "0") {
+            @Override
+            public void onChange() {
+                gameSettings.showFrameInfo = this.getValue().equalsIgnoreCase("1");
             }
         });
     }

@@ -28,6 +28,7 @@ public class gameConsole {
                 for(String tok : args) {
                     echoStrBuilder.append(" ").append(tok);
                 }
+                echoStrBuilder.append("\n");
                 return echoStrBuilder.substring(1);
             }
         };
@@ -88,14 +89,14 @@ public class gameConsole {
             @Override
             public String doCommand(String[] args) {
                 System.exit(0);
-                return "Exited Game";
+                return "You will never see this la la la!";
             }
         };
         gConsoleCommand gConsoleCommandSet = engineInstance.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
                 if(args.length < 2)
-                    return "Usage: set CVAR_NAME CVAR_VALUE";
+                    return "Usage: set CVAR_NAME CVAR_VALUE\n";
                 return gameCVars.setCVar(args[0], args[1]);
             }
         };

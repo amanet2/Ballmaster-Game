@@ -43,6 +43,8 @@ public class game {
         gameSprites.init();
         gameInput.init();
 
+//        gameUtilsTest.test();  // TODO: test
+
         System.out.println("----------------");
         System.out.println("STARTED GAME SUCCESSFULLY!");
         System.out.println("YOU MAY BEGIN ENTERING CONSOLE COMMANDS");

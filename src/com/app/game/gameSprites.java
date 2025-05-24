@@ -7,9 +7,7 @@ import com.app.engine.spriteSystem.gSpriteSystem;
 import java.util.ArrayList;
 
 public class gameSprites {
-    private static engine engineInstance = engine.instance();
-
-    private static gSpriteSystem gSpriteSystem = engineInstance.gSpriteSystem;
+    private static gSpriteSystem gSpriteSystem = engine.instance().gSpriteSystem;
 
     public static ArrayList<gSprite> gSprites = new ArrayList<>();
 

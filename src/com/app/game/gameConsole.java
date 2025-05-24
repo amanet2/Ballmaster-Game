@@ -5,10 +5,7 @@ import com.app.engine.consoleSystem.gConsoleSystem;
 import com.app.engine.engine;
 
 public class gameConsole {
-    // TODO: look into static classes to make this easier e.g. utils, cvarSystem
-    private static engine engineInstance = engine.instance();
-
-    private static final gConsoleSystem console = engineInstance.gConsoleSystem;
+    private static final gConsoleSystem console = engine.instance().gConsoleSystem;
 
     public static gConsoleSystem get() {
         return console;

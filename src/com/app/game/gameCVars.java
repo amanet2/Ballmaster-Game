@@ -9,8 +9,7 @@ import java.util.Arrays;
 import java.util.TreeSet;
 
 public class gameCVars {
-    private static engine engineInstance = engine.instance();
-    private static final gCVarSystem cVars = engineInstance.gCVarSystem;
+    private static final gCVarSystem cVars = engine.instance().gCVarSystem;
 
     public static void parseLaunchArgs(String[] args) {
         for(int i = 0; i < args.length; i++) {

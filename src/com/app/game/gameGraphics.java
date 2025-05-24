@@ -3,8 +3,8 @@ package com.app.game;
 import com.app.engine.engine;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class gameGraphics {
     private static engine engineInstance = engine.instance();
@@ -19,26 +19,30 @@ public class gameGraphics {
         g.setColor(Color.WHITE);
         int debugInfoY = 0;
         if(gameSettings.showFrameInfo) {
-            g.drawString("Game Frames: " + gameSettings.gameFrames, 0, debugInfoY + 25);
-            g.drawString("Video Frames: " + gameSettings.videoFrames, 0, debugInfoY + 50);
-            g.drawString("Game FPS: " + gameSettings.gameFramesSnapshot, 0, debugInfoY + 75);
-            debugInfoY += 75;
+            g.drawString("Game FPS: " + gameSettings.gameFramesMetricSnapshot, 0, debugInfoY + 25);
+            g.drawString("Game Frames: " + gameSettings.gameFrames, 0, debugInfoY + 50);
+            g.drawString("Game Frametime AVG: " + gameSettings.gameFrametimeMetricSnapshotAvg, 0, debugInfoY + 75);
+            g.drawString("Game Frametime Lowest: " + gameSettings.gameFrametimeMetricSnapshotLowest, 0, debugInfoY + 100);
+            g.drawString("Game Frametime Highest: " + gameSettings.gameFrametimeMetricSnapshotHighest, 0, debugInfoY + 125);
+            debugInfoY += 125;
         }
         if(gameSettings.showFps) {
-            g.drawString("Video FPS: " + gameSettings.videoFramesSnapshot, 0, debugInfoY + 25);
-            g.drawString("Video Frametime AVG: " + gameSettings.videoFrametimeMetricSnapshotAvg, 0, debugInfoY + 50);
-            g.drawString("Video Frametime Lowest: " + gameSettings.videoFrametimeMetricSnapshotLowest, 0, debugInfoY + 75);
-            g.drawString("Video Frametime Highest: " + gameSettings.videoFrametimeMetricSnapshotHighest, 0, debugInfoY + 100);
-            debugInfoY += 100;
+            g.drawString("Video FPS: " + gameSettings.videoFramesMetricSnapshot, 0, debugInfoY + 25);
+            g.drawString("Video Frames: " + gameSettings.videoFrames, 0, debugInfoY + 50);
+            g.drawString("Video Frametime AVG: " + gameSettings.videoFrametimeMetricSnapshotAvg, 0, debugInfoY + 75);
+            g.drawString("Video Frametime Lowest: " + gameSettings.videoFrametimeMetricSnapshotLowest, 0, debugInfoY + 100);
+            g.drawString("Video Frametime Highest: " + gameSettings.videoFrametimeMetricSnapshotHighest, 0, debugInfoY + 125);
+            debugInfoY += 125;
         }
         if(gameSettings.showCameraInfo) {
             double[] camCoords = gameCamera.getCamera1().getCoords();
-            g.drawString(String.format("Camera Coords: %f, %f", camCoords[0], camCoords[1]), 0, debugInfoY + 25);
+            g.drawString("Camera Coords: " + camCoords[0] + ", " + camCoords[1], 0, debugInfoY + 25);
             debugInfoY += 25;
         }
     }
 
     private static void drawWorld(Graphics g) {
+        AffineTransform originalTransform = ((Graphics2D) g).getTransform();
         g.translate(-(int)gameCamera.getCamera1().getCoords()[0], -(int)gameCamera.getCamera1().getCoords()[1]);
 
         if(gameSprites.gSprites.size() < 3)
@@ -54,33 +58,49 @@ public class gameGraphics {
         }
         g.drawImage(gameSprites.gSprites.get(1).getImage(), (int)gameSettings.radix, 359 - 150, null);
         g.drawImage(gameSprites.gSprites.get(2).getImage(), 300 + (int)gameSettings.radix, 359 - 150, null);
+
+        ((Graphics2D) g).setTransform(originalTransform);
     }
 
     private static void getVideoMetrics() {
+//        long currentTimeNanos = System.nanoTime();  // TODO: Use this for video frametime measurements
         long currentTimeMillis = System.currentTimeMillis();
 
-        gameSettings.videoFrametime = currentTimeMillis - gameSettings.videoFrametimeLast;
-        gameSettings.videoFrametimeMetric += gameSettings.videoFrametime;
         gameSettings.videoFramesMetric++;
         gameSettings.videoFrames++;
 
         if(gameSettings.videoFrames >= Integer.MAX_VALUE - 1000)
             gameSettings.videoFrames = 0;
 
+        gameSettings.videoFrametime = currentTimeMillis - gameSettings.videoFrametimeLast;
+        gameSettings.videoFrametimeLast = currentTimeMillis;
+        gameSettings.videoFrametimeMetric += gameSettings.videoFrametime;
+
         if(gameSettings.videoFrametime > gameSettings.videoFrametimeMetricHighest)
             gameSettings.videoFrametimeMetricHighest = gameSettings.videoFrametime;
-        if(gameSettings.videoFrametime > gameSettings.videoFrametimeMetricLowest)
+        if(gameSettings.videoFrametime < gameSettings.videoFrametimeMetricLowest)
             gameSettings.videoFrametimeMetricLowest = gameSettings.videoFrametime;
 
         if(currentTimeMillis > gameSettings.frameMetricTimeMillis) {
             gameSettings.frameMetricTimeMillis = currentTimeMillis + 1000;
-            gameSettings.gameFramesSnapshot = gameSettings.gameFramesMetric;
-            gameSettings.videoFramesSnapshot = gameSettings.videoFramesMetric;
+
+            gameSettings.gameFramesMetricSnapshot = gameSettings.gameFramesMetric;
+            gameSettings.gameFrametimeMetricSnapshotLowest = gameSettings.gameFrametimeMetricLowest;
+            gameSettings.gameFrametimeMetricSnapshotAvg = gameSettings.gameFrametimeMetric/1000;
+            gameSettings.gameFrametimeMetricSnapshotHighest = gameSettings.gameFrametimeMetricHighest;
+
+
+            gameSettings.videoFramesMetricSnapshot = gameSettings.videoFramesMetric;
             gameSettings.videoFrametimeMetricSnapshotLowest = gameSettings.videoFrametimeMetricLowest;
             gameSettings.videoFrametimeMetricSnapshotAvg = gameSettings.videoFrametimeMetric/1000;
             gameSettings.videoFrametimeMetricSnapshotHighest = gameSettings.videoFrametimeMetricHighest;
 
             gameSettings.gameFramesMetric = 0;
+            gameSettings.gameFrametimeMetric = 0;
+            gameSettings.gameFrametimeMetricLowest = 0;
+            gameSettings.gameFrametimeMetricHighest = 0;
+
+
             gameSettings.videoFramesMetric = 0;
             gameSettings.videoFrametimeMetric = 0;
             gameSettings.videoFrametimeMetricLowest = 0;
@@ -93,8 +113,8 @@ public class gameGraphics {
             public void draw(Graphics g) {
                 try {
                     getVideoMetrics();
-                    drawUI(g);
                     drawWorld(g);
+                    drawUI(g);
                 }
                 catch (Exception e) {
                     System.out.println("EXCEPTION IN gameGraphics.draw()");

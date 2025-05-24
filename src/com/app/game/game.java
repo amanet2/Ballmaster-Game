@@ -50,6 +50,15 @@ public class game {
                 gameSettings.gameFramesMetric++;
                 if(gameSettings.gameFrames >= Integer.MAX_VALUE - 1000)
                     gameSettings.gameFrames = 0;
+
+                gameSettings.gameFrametime = System.currentTimeMillis() - gameSettings.gameFrametimeLast;
+                gameSettings.gameFrametimeLast = System.currentTimeMillis();
+                gameSettings.gameFrametimeMetric += gameSettings.gameFrametime;
+
+                if(gameSettings.gameFrametime > gameSettings.gameFrametimeMetricHighest)
+                    gameSettings.gameFrametimeMetricHighest = gameSettings.gameFrametime;
+                if(gameSettings.gameFrametime < gameSettings.gameFrametimeMetricLowest)
+                    gameSettings.gameFrametimeMetricLowest = gameSettings.gameFrametime;
             }
 
             gameScheduler.get().doEvents(System.currentTimeMillis());

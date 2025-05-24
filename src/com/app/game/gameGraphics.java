@@ -39,11 +39,11 @@ public class gameGraphics {
             debugInfoY += 125;
         }
         if(gameSettings.showFps) {
-            g.drawString("Video FPS: " + gameSettings.videoFramesMetricSnapshot, 0, debugInfoY + 25);
+            g.drawString("Video FPS: " + gameSettings.videoFramesPerSecondMetricSnapshot, 0, debugInfoY + 25);
             g.drawString("Video Frames: " + gameSettings.videoFrames, 0, debugInfoY + 50);
-            g.drawString("Video Frametime AVG: " + gameSettings.videoFrametimeMetricSnapshotAvg, 0, debugInfoY + 75);
-            g.drawString("Video Frametime Lowest: " + gameSettings.videoFrametimeMetricSnapshotLowest, 0, debugInfoY + 100);
-            g.drawString("Video Frametime Highest: " + gameSettings.videoFrametimeMetricSnapshotHighest, 0, debugInfoY + 125);
+            g.drawString("Video Frametime AVG: " + gameSettings.videoFrametimeMetricSnapshotAvg + "ms", 0, debugInfoY + 75);
+            g.drawString("Video Frametime Lowest: " + gameSettings.videoFrametimeMetricSnapshotLowest + "ms", 0, debugInfoY + 100);
+            g.drawString("Video Frametime Highest: " + gameSettings.videoFrametimeMetricSnapshotHighest + "ms", 0, debugInfoY + 125);
             debugInfoY += 125;
         }
         if(gameSettings.showCameraInfo) {
@@ -85,17 +85,17 @@ public class gameGraphics {
     }
 
     private static void getVideoMetrics() {
-//        long currentTimeNanos = System.nanoTime();  // TODO: Use this for video frametime measurements
+        long currentTimeNanos = System.nanoTime();  // TODO: Use this for video frametime measurements
         long currentTimeMillis = System.currentTimeMillis();
 
-        gameSettings.videoFramesMetric++;
+        gameSettings.videoFramesPerSecondMetric++;
         gameSettings.videoFrames++;
 
         if(gameSettings.videoFrames >= Integer.MAX_VALUE - 1000)
             gameSettings.videoFrames = 0;
 
-        gameSettings.videoFrametime = currentTimeMillis - gameSettings.videoFrametimeLast;
-        gameSettings.videoFrametimeLast = currentTimeMillis;
+        gameSettings.videoFrametime = currentTimeNanos - gameSettings.videoFrametimeLast;
+        gameSettings.videoFrametimeLast = currentTimeNanos;
         gameSettings.videoFrametimeMetric += gameSettings.videoFrametime;
 
         if(gameSettings.videoFrametime > gameSettings.videoFrametimeMetricHighest)
@@ -111,11 +111,11 @@ public class gameGraphics {
             gameSettings.gameFrametimeMetricSnapshotAvg = gameSettings.gameFrametimeMetric/1000;
             gameSettings.gameFrametimeMetricSnapshotHighest = gameSettings.gameFrametimeMetricHighest;
 
-
-            gameSettings.videoFramesMetricSnapshot = gameSettings.videoFramesMetric;
-            gameSettings.videoFrametimeMetricSnapshotLowest = gameSettings.videoFrametimeMetricLowest;
-            gameSettings.videoFrametimeMetricSnapshotAvg = gameSettings.videoFrametimeMetric/1000;
-            gameSettings.videoFrametimeMetricSnapshotHighest = gameSettings.videoFrametimeMetricHighest;
+            //convert snapshat nano values to ms
+            gameSettings.videoFramesPerSecondMetricSnapshot = gameSettings.videoFramesPerSecondMetric;
+            gameSettings.videoFrametimeMetricSnapshotLowest = gameSettings.videoFrametimeMetricLowest/1000000;
+            gameSettings.videoFrametimeMetricSnapshotAvg = gameSettings.videoFrametimeMetric/1000000000;
+            gameSettings.videoFrametimeMetricSnapshotHighest = gameSettings.videoFrametimeMetricHighest/1000000;
 
             gameSettings.gameFramesMetric = 0;
             gameSettings.gameFrametimeMetric = 0;
@@ -123,7 +123,7 @@ public class gameGraphics {
             gameSettings.gameFrametimeMetricHighest = 0;
 
 
-            gameSettings.videoFramesMetric = 0;
+            gameSettings.videoFramesPerSecondMetric = 0;
             gameSettings.videoFrametimeMetric = 0;
             gameSettings.videoFrametimeMetricLowest = 0;
             gameSettings.videoFrametimeMetricHighest = 0;

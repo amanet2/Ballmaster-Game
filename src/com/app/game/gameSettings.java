@@ -28,8 +28,8 @@ public class gameSettings {
     static double gameFrametimeMetricSnapshotHighest = 0;
 
     static int videoFrames = 0;
-    static int videoFramesMetric = 0;
-    static int videoFramesMetricSnapshot = 0;
+    static int videoFramesPerSecondMetric = 0;
+    static int videoFramesPerSecondMetricSnapshot = 0;
     static double videoFrametime = 0;
     static double videoFrametimeLast = 0;
     static double videoFrametimeMetric = 0;

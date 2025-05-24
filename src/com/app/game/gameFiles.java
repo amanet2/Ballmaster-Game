@@ -1,6 +1,5 @@
 package com.app.game;
 
-import com.app.engine.engine;
 import com.app.engine.fileSystem.gDirectory;
 import com.app.engine.fileSystem.gFile;
 import com.app.engine.fileSystem.gFileSystem;
@@ -9,8 +8,6 @@ import java.util.HashMap;
 import java.util.TreeSet;
 
 public class gameFiles {
-    private static engine engineInstance = engine.instance();
-
     private static gFileSystem fileSystemConfig;
     private static gFileSystem fileSystemScripts;
     private static gFileSystem fileSystemSprites;
@@ -20,13 +17,13 @@ public class gameFiles {
     public static HashMap<String, gFile> gFilesSprites = new HashMap<>();
 
     public static void init() {
-        fileSystemConfig = engineInstance.fileSystem.new gFileSystem(gameSettings.fileSystemConfigPath);
+        fileSystemConfig = new gFileSystem(gameSettings.fileSystemConfigPath);
         parseFiles(gFilesConfig, fileSystemConfig.getRootDirectory());
 
-        fileSystemScripts = engineInstance.fileSystem.new gFileSystem(gameSettings.fileSystemScriptsPath);
+        fileSystemScripts = new gFileSystem(gameSettings.fileSystemScriptsPath);
         parseFiles(gFilesScripts, fileSystemScripts.getRootDirectory());
 
-        fileSystemSprites = engineInstance.fileSystem.new gFileSystem(gameSettings.fileSystemSpritesPath);
+        fileSystemSprites = new gFileSystem(gameSettings.fileSystemSpritesPath);
         parseFiles(gFilesSprites, fileSystemSprites.getRootDirectory());
     }
 

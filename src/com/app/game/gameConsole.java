@@ -15,14 +15,14 @@ public class gameConsole {
     }
 
     public static void init() {
-        gConsoleCommand gConsoleCommandClear = engineInstance.consoleSystem. new gConsoleCommand("clears the console") {
+        gConsoleCommand gConsoleCommandClear = new gConsoleCommand("clears the console") {
             @Override
             public String doCommand(String[] args) {
                 System.out.print("\033\143");
                 return "";
             }
         };
-        gConsoleCommand gConsoleCommandEcho = engineInstance.consoleSystem. new gConsoleCommand("prints text") {
+        gConsoleCommand gConsoleCommandEcho = new gConsoleCommand("prints text") {
             @Override
             public String doCommand(String[] args) {
                 StringBuilder echoStrBuilder = new StringBuilder();
@@ -33,7 +33,7 @@ public class gameConsole {
                 return echoStrBuilder.substring(1);
             }
         };
-        gConsoleCommand gConsoleCommandExec = engineInstance.consoleSystem. new gConsoleCommand("executes a config file") {
+        gConsoleCommand gConsoleCommandExec = new gConsoleCommand("executes a config file") {
             @Override
             public String doCommand(String[] args) {
                 if(args.length < 1 || args[0].trim().isEmpty())
@@ -41,7 +41,7 @@ public class gameConsole {
                 return gameFiles.execFile(args[0]);
             }
         };
-        gConsoleCommand gConsoleCommandListCmds = engineInstance.consoleSystem. new gConsoleCommand("lists commands") {
+        gConsoleCommand gConsoleCommandListCmds = new gConsoleCommand("lists commands") {
             @Override
             public String doCommand(String[] args) {
                 String[] names = console.listCmds();
@@ -52,7 +52,7 @@ public class gameConsole {
                 return "";
             }
         };
-        gConsoleCommand gConsoleCommandListCVars = engineInstance.consoleSystem. new gConsoleCommand("lists Cvars") {
+        gConsoleCommand gConsoleCommandListCVars = new gConsoleCommand("lists Cvars") {
             @Override
             public String doCommand(String[] args) {
                 String[] names = gameCVars.getCVarList();
@@ -63,7 +63,7 @@ public class gameConsole {
                 return "";
             }
         };
-        gConsoleCommand gConsoleCommandListFiles = engineInstance.consoleSystem. new gConsoleCommand("lists cfg files") {
+        gConsoleCommand gConsoleCommandListFiles = new gConsoleCommand("lists cfg files") {
             @Override
             public String doCommand(String[] args) {
                 String[] names = gameFiles.getFilesListConfig();
@@ -74,7 +74,7 @@ public class gameConsole {
                 return "";
             }
         };
-        gConsoleCommand gConsoleCommandListFilesScripts = engineInstance.consoleSystem. new gConsoleCommand("lists script files") {
+        gConsoleCommand gConsoleCommandListFilesScripts = new gConsoleCommand("lists script files") {
             @Override
             public String doCommand(String[] args) {
                 String[] names = gameFiles.getFilesListScripts();
@@ -85,7 +85,7 @@ public class gameConsole {
                 return "";
             }
         };
-        gConsoleCommand gConsoleCommandListSprites = engineInstance.consoleSystem. new gConsoleCommand("lists sprite files") {
+        gConsoleCommand gConsoleCommandListSprites = new gConsoleCommand("lists sprite files") {
             @Override
             public String doCommand(String[] args) {
                 String[] names = gameFiles.getFilesListSprites();
@@ -96,14 +96,14 @@ public class gameConsole {
                 return "";
             }
         };
-        gConsoleCommand gConsoleCommandQuit = engineInstance.consoleSystem. new gConsoleCommand("quits the game") {
+        gConsoleCommand gConsoleCommandQuit = new gConsoleCommand("quits the game") {
             @Override
             public String doCommand(String[] args) {
                 System.exit(0);
                 return "You will never see this la la la!";
             }
         };
-        gConsoleCommand gConsoleCommandScript = engineInstance.consoleSystem. new gConsoleCommand("executes a line of script") {
+        gConsoleCommand gConsoleCommandScript = new gConsoleCommand("executes a line of script") {
             @Override
             public String doCommand(String[] args) {
                 if(args.length < 1 || args[0].trim().isEmpty())
@@ -111,7 +111,7 @@ public class gameConsole {
                 return gameFiles.scriptFile(args[0]);
             }
         };
-        gConsoleCommand gConsoleCommandScriptFile = engineInstance.consoleSystem. new gConsoleCommand("executes a script file") {
+        gConsoleCommand gConsoleCommandScriptFile = new gConsoleCommand("executes a script file") {
             @Override
             public String doCommand(String[] args) {
                 if(args.length < 1 || args[0].trim().isEmpty())
@@ -119,7 +119,7 @@ public class gameConsole {
                 return gameFiles.scriptFile(args[0]);
             }
         };
-        gConsoleCommand gConsoleCommandSet = engineInstance.consoleSystem. new gConsoleCommand("sets a cvar") {
+        gConsoleCommand gConsoleCommandSet = new gConsoleCommand("sets a cvar") {
             @Override
             public String doCommand(String[] args) {
                 if(args.length < 2)

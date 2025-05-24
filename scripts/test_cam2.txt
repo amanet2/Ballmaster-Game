@@ -1,0 +1,2 @@
+set cam_xy 0,0
+set cam_zoom 1

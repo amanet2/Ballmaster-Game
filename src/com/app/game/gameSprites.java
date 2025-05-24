@@ -22,12 +22,12 @@ public class gameSprites {
                 gameSettings.fileSystemDataPath + "/characters/player_pink/a03.png"
         ).getName();
 
-        gSprite testSprite1 = gSpriteSystem.getScaledSprite(pinkGuyPath, 150, 150);
-        gSprite testSprite2 = gSpriteSystem.getScaledSprite(pinkGuyPath, 300, 300);
-        gSprite testSprite3 = gSpriteSystem.getScaledSprite(pinkGuyPath, 600, 600);
+        gSprite pinkGuySprite = gSpriteSystem.getScaledSprite(pinkGuyPath, 150, 150);
+        gSprite pinkGuySpriteBig = gSpriteSystem.getScaledSprite(pinkGuyPath, 300, 300);
+        gSprite pinkGuySpriteHuge = gSpriteSystem.getScaledSprite(pinkGuyPath, 600, 600);
 
-        gSprites.add(testSprite1);
-        gSprites.add(testSprite2);
-        gSprites.add(testSprite3);
+        gSprites.add(pinkGuySprite);
+        gSprites.add(pinkGuySpriteBig);
+        gSprites.add(pinkGuySpriteHuge);
     }
 }

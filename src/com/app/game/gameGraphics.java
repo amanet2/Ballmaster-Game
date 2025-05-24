@@ -1,9 +1,12 @@
 package com.app.game;
 
 import com.app.engine.engine;
+import com.app.engine.settings;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 
 public class gameGraphics {
@@ -16,6 +19,10 @@ public class gameGraphics {
     }
 
     private static void drawUI(Graphics g) {
+        g.translate(settings.width / 2, settings.height / 2);
+        ((Graphics2D) g).scale(1.0/gameCamera.getCamera1().getZoom(), 1.0/gameCamera.getCamera1().getZoom());
+        g.translate(- settings.width / 2, - settings.height / 2);
+
         g.setColor(Color.WHITE);
         int debugInfoY = 0;
         if(gameSettings.showFrameInfo) {
@@ -42,6 +49,10 @@ public class gameGraphics {
     }
 
     private static void drawWorld(Graphics g) {
+        g.translate(settings.width / 2, settings.height / 2);
+        ((Graphics2D) g).scale(gameCamera.getCamera1().getZoom(), gameCamera.getCamera1().getZoom());
+        g.translate(- settings.width / 2, - settings.height / 2);
+
         AffineTransform originalTransform = ((Graphics2D) g).getTransform();
         g.translate(-(int)gameCamera.getCamera1().getCoords()[0], -(int)gameCamera.getCamera1().getCoords()[1]);
 

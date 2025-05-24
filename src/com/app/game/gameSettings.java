@@ -14,7 +14,9 @@ public class gameSettings {
     static boolean showFps = false;
     static boolean showFrameInfo = false;
 
+    // longtime to get snapshots for ALL metrics
     static long frameMetricTimeMillis = System.currentTimeMillis() + 1000;
+
     static int gameFrames = 0;
     static int gameFramesPerSecondMetric = 0;
     static int gameFramesPerSecondMetricSnapshot = 0;

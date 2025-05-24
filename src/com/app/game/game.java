@@ -10,12 +10,12 @@ public class game {
         gameSettings.timeElapsedMillis = System.currentTimeMillis() - gameSettings.timeStartMillis;
 
         if(gameSettings.dir > 0)
-            gameSettings.radix+=0.1;
+            gameSettings.radix+=0.2;
         if(gameSettings.dir < 1)
-            gameSettings.radix-=0.1;
-        if(gameSettings.radix > 75)
+            gameSettings.radix-=0.2;
+        if(gameSettings.radix > 300)
             gameSettings.dir = -1;
-        if(gameSettings.radix < -75)
+        if(gameSettings.radix < -300)
             gameSettings.dir = 1;
     }
 

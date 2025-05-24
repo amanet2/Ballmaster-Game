@@ -85,7 +85,7 @@ public class gameGraphics {
     }
 
     private static void getVideoMetrics() {
-        long currentTimeNanos = System.nanoTime();  // TODO: Use this for video frametime measurements
+//        long currentTimeNanos = System.nanoTime();  // TODO: Use this for video frametime measurements
         long currentTimeMillis = System.currentTimeMillis();
 
         gameSettings.videoFramesPerSecondMetric++;
@@ -94,8 +94,8 @@ public class gameGraphics {
         if(gameSettings.videoFrames >= Integer.MAX_VALUE - 1000)
             gameSettings.videoFrames = 0;
 
-        gameSettings.videoFrametime = currentTimeNanos - gameSettings.videoFrametimeLast;
-        gameSettings.videoFrametimeLast = currentTimeNanos;
+        gameSettings.videoFrametime = currentTimeMillis - gameSettings.videoFrametimeLast;
+        gameSettings.videoFrametimeLast = currentTimeMillis;
         gameSettings.videoFrametimeMetric += gameSettings.videoFrametime;
 
         if(gameSettings.videoFrametime > gameSettings.videoFrametimeMetricHighest)
@@ -118,14 +118,13 @@ public class gameGraphics {
             gameSettings.gameFrametimeMetricLowest = 0;
             gameSettings.gameFrametimeMetricHighest = 0;
 
-            //convert snapshat nano values to ms
             gameSettings.videoFramesPerSecondMetricSnapshot = gameSettings.videoFramesPerSecondMetric;
 
             gameSettings.videoFramesPerSecondMetric = 0;
 
-            gameSettings.videoFrametimeMetricSnapshotLowest = gameSettings.videoFrametimeMetricLowest/1000000;
-            gameSettings.videoFrametimeMetricSnapshotAvg = gameSettings.videoFrametimeMetric/1000000000;
-            gameSettings.videoFrametimeMetricSnapshotHighest = gameSettings.videoFrametimeMetricHighest/1000000;
+            gameSettings.videoFrametimeMetricSnapshotLowest = gameSettings.videoFrametimeMetricLowest;
+            gameSettings.videoFrametimeMetricSnapshotAvg = gameSettings.videoFrametimeMetric/1000;
+            gameSettings.videoFrametimeMetricSnapshotHighest = gameSettings.videoFrametimeMetricHighest;
 
             gameSettings.videoFrametimeMetric = 0;
             gameSettings.videoFrametimeMetricLowest = 0;

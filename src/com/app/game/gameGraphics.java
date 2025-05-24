@@ -31,7 +31,7 @@ public class gameGraphics {
         }
 
         if(gameSettings.showFrameInfo) {
-            g.drawString("Game FPS: " + gameSettings.gameFramesMetricSnapshot, 0, debugInfoY + 25);
+            g.drawString("Game FPS: " + gameSettings.gameFramesPerSecondMetricSnapshot, 0, debugInfoY + 25);
             g.drawString("Game Frames: " + gameSettings.gameFrames, 0, debugInfoY + 50);
             g.drawString("Game Frametime AVG: " + gameSettings.gameFrametimeMetricSnapshotAvg, 0, debugInfoY + 75);
             g.drawString("Game Frametime Lowest: " + gameSettings.gameFrametimeMetricSnapshotLowest, 0, debugInfoY + 100);
@@ -106,24 +106,27 @@ public class gameGraphics {
         if(currentTimeMillis > gameSettings.frameMetricTimeMillis) {
             gameSettings.frameMetricTimeMillis = currentTimeMillis + 1000;
 
-            gameSettings.gameFramesMetricSnapshot = gameSettings.gameFramesMetric;
+            gameSettings.gameFramesPerSecondMetricSnapshot = gameSettings.gameFramesPerSecondMetric;
+
+            gameSettings.gameFramesPerSecondMetric = 0;
+
             gameSettings.gameFrametimeMetricSnapshotLowest = gameSettings.gameFrametimeMetricLowest;
             gameSettings.gameFrametimeMetricSnapshotAvg = gameSettings.gameFrametimeMetric/1000;
             gameSettings.gameFrametimeMetricSnapshotHighest = gameSettings.gameFrametimeMetricHighest;
 
-            //convert snapshat nano values to ms
-            gameSettings.videoFramesPerSecondMetricSnapshot = gameSettings.videoFramesPerSecondMetric;
-            gameSettings.videoFrametimeMetricSnapshotLowest = gameSettings.videoFrametimeMetricLowest/1000000;
-            gameSettings.videoFrametimeMetricSnapshotAvg = gameSettings.videoFrametimeMetric/1000000000;
-            gameSettings.videoFrametimeMetricSnapshotHighest = gameSettings.videoFrametimeMetricHighest/1000000;
-
-            gameSettings.gameFramesMetric = 0;
             gameSettings.gameFrametimeMetric = 0;
             gameSettings.gameFrametimeMetricLowest = 0;
             gameSettings.gameFrametimeMetricHighest = 0;
 
+            //convert snapshat nano values to ms
+            gameSettings.videoFramesPerSecondMetricSnapshot = gameSettings.videoFramesPerSecondMetric;
 
             gameSettings.videoFramesPerSecondMetric = 0;
+
+            gameSettings.videoFrametimeMetricSnapshotLowest = gameSettings.videoFrametimeMetricLowest/1000000;
+            gameSettings.videoFrametimeMetricSnapshotAvg = gameSettings.videoFrametimeMetric/1000000000;
+            gameSettings.videoFrametimeMetricSnapshotHighest = gameSettings.videoFrametimeMetricHighest/1000000;
+
             gameSettings.videoFrametimeMetric = 0;
             gameSettings.videoFrametimeMetricLowest = 0;
             gameSettings.videoFrametimeMetricHighest = 0;

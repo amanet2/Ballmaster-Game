@@ -21,7 +21,7 @@ public class game {
 
     static void getGameMetrics() {
         gameSettings.gameFrames++;
-        gameSettings.gameFramesMetric++;
+        gameSettings.gameFramesPerSecondMetric++;
         if(gameSettings.gameFrames >= Integer.MAX_VALUE - 1000)
             gameSettings.gameFrames = 0;
 

@@ -16,10 +16,10 @@ public class gameSettings {
 
     static long frameMetricTimeMillis = System.currentTimeMillis() + 1000;
     static int gameFrames = 0;
-    static int gameFramesMetric = 0;
-    static int gameFramesMetricSnapshot = 0;
+    static int gameFramesPerSecondMetric = 0;
+    static int gameFramesPerSecondMetricSnapshot = 0;
     static double gameFrametime = 0;
-    static double gameFrametimeLast = 0;
+    static long gameFrametimeLast = 0;
     static double gameFrametimeMetric = 0;
     static double gameFrametimeMetricLowest = 0;
     static double gameFrametimeMetricSnapshotLowest = 0;
@@ -31,7 +31,7 @@ public class gameSettings {
     static int videoFramesPerSecondMetric = 0;
     static int videoFramesPerSecondMetricSnapshot = 0;
     static double videoFrametime = 0;
-    static double videoFrametimeLast = 0;
+    static long videoFrametimeLast = 0;
     static double videoFrametimeMetric = 0;
     static double videoFrametimeMetricLowest = 0;
     static double videoFrametimeMetricSnapshotLowest = 0;

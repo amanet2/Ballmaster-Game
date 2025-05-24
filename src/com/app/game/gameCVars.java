@@ -82,6 +82,13 @@ public class gameCVars {
             }
         };
 
+        gCVar cVarComShowTimeElapsed = new gCVar(gameSettings.showTimeElapsed ? " 1" : "0") {
+            @Override
+            public void onChange() {
+                gameSettings.showTimeElapsed =  this.getValue().equalsIgnoreCase("1");
+            }
+        };
+
         gCVar cVarFsSpriteFilesPath = new gCVar(gameSettings.fileSystemSpritesPath) {
             @Override
             public void onChange() {
@@ -101,6 +108,7 @@ public class gameCVars {
         cVars.registerCVar("com_showcamerainfo", cVarShowCamInfo);
         cVars.registerCVar("com_showfps", cVarShowFps);
         cVars.registerCVar("com_showframeinfo", cVarShowFrameInfo);
+        cVars.registerCVar("com_showtimeelapsed", cVarComShowTimeElapsed);
         cVars.registerCVar("fs_spritespath", cVarFsSpriteFilesPath);
         cVars.registerCVar("fs_cfgpath", cVarFcCfgFilesPath);
     }

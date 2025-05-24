@@ -25,6 +25,11 @@ public class gameGraphics {
 
         g.setColor(Color.WHITE);
         int debugInfoY = 0;
+        if(gameSettings.showTimeElapsed) {
+            g.drawString("Time Elapsed: " + gDate.getTimerString(gameSettings.timeElapsedMillis), 0, debugInfoY + 25);
+            debugInfoY += 25;
+        }
+
         if(gameSettings.showFrameInfo) {
             g.drawString("Game FPS: " + gameSettings.gameFramesMetricSnapshot, 0, debugInfoY + 25);
             g.drawString("Game Frames: " + gameSettings.gameFrames, 0, debugInfoY + 50);
@@ -47,8 +52,6 @@ public class gameGraphics {
             g.drawString("Camera Scale: " + gameCamera.getCamera1().getZoom(), 0, debugInfoY + 50);
             debugInfoY += 50;
         }
-
-        g.drawString("Time Elapsed: " + gDate.getTimerString(gameSettings.timeElapsedMillis), 0, 700);
     }
 
     private static void drawWorld(Graphics g) {

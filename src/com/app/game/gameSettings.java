@@ -5,6 +5,7 @@ public class gameSettings {
     static String fileSystemScriptsPath = "scripts";
     static String fileSystemSpritesPath = "data";
 
+    static boolean showTimeElapsed = false;
     static boolean showCameraInfo = false;
     static boolean showFps = false;
     static boolean showFrameInfo = false;

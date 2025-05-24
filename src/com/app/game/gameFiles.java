@@ -30,15 +30,15 @@ public class gameFiles {
         parseFiles(gFilesSprites, fileSystemSprites.getRootDirectory());
     }
 
-    public static String[] getFilesList() {
+    public static String[] getFilesListConfig() {
         return new TreeSet<>(gFilesConfig.keySet()).toArray(new String[0]);
     }
 
-    public static String[] getScriptFilesList() {
+    public static String[] getFilesListScripts() {
         return new TreeSet<>(gFilesScripts.keySet()).toArray(new String[0]);
     }
 
-    public static String[] getSpritesFilesList() {
+    public static String[] getFilesListSprites() {
         return new TreeSet<>(gFilesSprites.keySet()).toArray(new String[0]);
     }
 
@@ -62,10 +62,7 @@ public class gameFiles {
 
     public static String scriptFile(String name) {
         System.out.println("Reading script file: " + name);
-        for(String line : gFilesScripts.get(name).getFileLines()) {
-            System.out.println("% " + line);
-            System.out.print(gameConsole.get().readLine(line));
-        }
+        System.out.println("TO BE CONTINUED...");
         return "";
     }
 }

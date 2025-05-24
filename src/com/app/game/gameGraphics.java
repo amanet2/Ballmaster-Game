@@ -48,7 +48,7 @@ public class gameGraphics {
             debugInfoY += 50;
         }
 
-        g.drawString("Time Elapsed: " + new gDate(gameSettings.timeElapsedMillis).getTimerString(), 0, 700);
+        g.drawString("Time Elapsed: " + gDate.getTimerString(gameSettings.timeElapsedMillis), 0, 700);
     }
 
     private static void drawWorld(Graphics g) {

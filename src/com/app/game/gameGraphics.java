@@ -1,7 +1,6 @@
 package com.app.game;
 
 import com.app.engine.engine;
-import com.app.engine.settings;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
 
 import java.awt.Color;
@@ -19,9 +18,9 @@ public class gameGraphics {
     }
 
     private static void drawUI(Graphics g) {
-        g.translate(settings.width / 2, settings.height / 2);
+        g.translate(graphics.getWidth() / 2, graphics.getHeight() / 2);
         ((Graphics2D) g).scale(1.0/gameCamera.getCamera1().getZoom(), 1.0/gameCamera.getCamera1().getZoom());
-        g.translate(- settings.width / 2, - settings.height / 2);
+        g.translate(- graphics.getWidth() / 2, - graphics.getHeight() / 2);
 
         g.setColor(Color.WHITE);
         int debugInfoY = 0;
@@ -44,14 +43,15 @@ public class gameGraphics {
         if(gameSettings.showCameraInfo) {
             double[] camCoords = gameCamera.getCamera1().getCoords();
             g.drawString("Camera Coords: " + camCoords[0] + ", " + camCoords[1], 0, debugInfoY + 25);
-            debugInfoY += 25;
+            g.drawString("Camera Scale: " + gameCamera.getCamera1().getZoom(), 0, debugInfoY + 50);
+            debugInfoY += 50;
         }
     }
 
     private static void drawWorld(Graphics g) {
-        g.translate(settings.width / 2, settings.height / 2);
+        g.translate(graphics.getWidth() / 2, graphics.getHeight() / 2);
         ((Graphics2D) g).scale(gameCamera.getCamera1().getZoom(), gameCamera.getCamera1().getZoom());
-        g.translate(- settings.width / 2, - settings.height / 2);
+        g.translate(- graphics.getWidth() / 2, - graphics.getHeight() / 2);
 
         AffineTransform originalTransform = ((Graphics2D) g).getTransform();
         g.translate(-(int)gameCamera.getCamera1().getCoords()[0], -(int)gameCamera.getCamera1().getCoords()[1]);
@@ -120,18 +120,22 @@ public class gameGraphics {
     }
 
     public static void init() {
-        graphics = engineInstance.graphicsSystem.new gGraphicsSystem(engineInstance.graphicsSystem.new gPanel() {
-            public void draw(Graphics g) {
-                try {
-                    getVideoMetrics();
-                    drawWorld(g);
-                    drawUI(g);
-                }
-                catch (Exception e) {
-                    System.out.println("EXCEPTION IN gameGraphics.draw()");
-                    e.printStackTrace();
-                }
-            }
-        });
+        graphics = engineInstance.graphicsSystem.new gGraphicsSystem(
+                engineInstance.graphicsSystem.new gPanel() {
+                    public void draw(Graphics g) {
+                        try {
+                            getVideoMetrics();
+                            drawWorld(g);
+                            drawUI(g);
+                        }
+                        catch (Exception e) {
+                            System.out.println("EXCEPTION IN gameGraphics.draw()");
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                1024,
+                768
+        );
     }
 }

@@ -12,6 +12,22 @@ public class game {
             gameSettings.dir = 1;
     }
 
+    static void getGameMetrics() {
+        gameSettings.gameFrames++;
+        gameSettings.gameFramesMetric++;
+        if(gameSettings.gameFrames >= Integer.MAX_VALUE - 1000)
+            gameSettings.gameFrames = 0;
+
+        gameSettings.gameFrametime = System.currentTimeMillis() - gameSettings.gameFrametimeLast;
+        gameSettings.gameFrametimeLast = System.currentTimeMillis();
+        gameSettings.gameFrametimeMetric += gameSettings.gameFrametime;
+
+        if(gameSettings.gameFrametime > gameSettings.gameFrametimeMetricHighest)
+            gameSettings.gameFrametimeMetricHighest = gameSettings.gameFrametime;
+        if(gameSettings.gameFrametime < gameSettings.gameFrametimeMetricLowest)
+            gameSettings.gameFrametimeMetricLowest = gameSettings.gameFrametime;
+    }
+
     public static void main(String[] args) {
         System.out.println("----------------");
         System.out.println("INITIALIZING GAME SYSTEMS...");
@@ -46,19 +62,7 @@ public class game {
 
                 updateGame();
 
-                gameSettings.gameFrames++;
-                gameSettings.gameFramesMetric++;
-                if(gameSettings.gameFrames >= Integer.MAX_VALUE - 1000)
-                    gameSettings.gameFrames = 0;
-
-                gameSettings.gameFrametime = System.currentTimeMillis() - gameSettings.gameFrametimeLast;
-                gameSettings.gameFrametimeLast = System.currentTimeMillis();
-                gameSettings.gameFrametimeMetric += gameSettings.gameFrametime;
-
-                if(gameSettings.gameFrametime > gameSettings.gameFrametimeMetricHighest)
-                    gameSettings.gameFrametimeMetricHighest = gameSettings.gameFrametime;
-                if(gameSettings.gameFrametime < gameSettings.gameFrametimeMetricLowest)
-                    gameSettings.gameFrametimeMetricLowest = gameSettings.gameFrametime;
+                getGameMetrics();
             }
 
             gameScheduler.get().doEvents(System.currentTimeMillis());

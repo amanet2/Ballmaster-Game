@@ -46,48 +46,62 @@ public class gameCVars {
     }
 
     public static void init() {
-        cVars.registerCVar(new gCVar("cam_xy", Arrays.toString(gameCamera.getCamera1().getCoords())) {
+        gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.getCamera1().getCoords())) {
             @Override
             public void onChange() {
                 String[] args = this.getValue().split(",");
                 gameCamera.getCamera1().setCoords(new double[]{Double.parseDouble(args[0]), Double.parseDouble(args[1])});
             }
-        });
-        cVars.registerCVar(new gCVar("cam_zoom", Double.toString(gameCamera.getCamera1().getZoom())) {
+        };
+
+        gCVar cVarCamZoon = new gCVar(Double.toString(gameCamera.getCamera1().getZoom())) {
             @Override
             public void onChange() {
                 gameCamera.getCamera1().setZoom(Double.parseDouble(this.getValue()));
             }
-        });
-        cVars.registerCVar(new gCVar("com_showcamerainfo", gameSettings.showCameraInfo ? "1" : "0") {
+        };
+
+        gCVar cVarShowCamInfo = new gCVar(gameSettings.showCameraInfo ? "1" : "0") {
             @Override
             public void onChange() {
                 gameSettings.showCameraInfo = this.getValue().equalsIgnoreCase("1");
             }
-        });
-        cVars.registerCVar(new gCVar("com_showfps", gameSettings.showFps ? "1" : "0") {
+        };
+
+        gCVar cVarShowFps = new gCVar(gameSettings.showFps ? "1" : "0") {
             @Override
             public void onChange() {
                 gameSettings.showFps = this.getValue().equalsIgnoreCase("1");
             }
-        });
-        cVars.registerCVar(new gCVar("com_showframeinfo", gameSettings.showFrameInfo ? "1" : "0") {
+        };
+
+        gCVar cVarShowFrameInfo = new gCVar(gameSettings.showFrameInfo ? "1" : "0") {
             @Override
             public void onChange() {
                 gameSettings.showFrameInfo = this.getValue().equalsIgnoreCase("1");
             }
-        });
-        cVars.registerCVar(new gCVar("fs_datapath", gameSettings.fileSystemSpritesPath) {
+        };
+
+        gCVar cVarFsSpriteFilesPath = new gCVar(gameSettings.fileSystemSpritesPath) {
             @Override
             public void onChange() {
                 gameSettings.fileSystemSpritesPath = this.getValue();
             }
-        });
-        cVars.registerCVar(new gCVar("fs_filespath", gameSettings.fileSystemConfigPath) {
+        };
+
+        gCVar cVarFcCfgFilesPath = new gCVar(gameSettings.fileSystemConfigPath) {
             @Override
             public void onChange() {
                 gameSettings.fileSystemConfigPath = this.getValue();
             }
-        });
+        };
+
+        cVars.registerCVar("cam_xy", cVarCamXY);
+        cVars.registerCVar("cam_zoom", cVarCamZoon);
+        cVars.registerCVar("com_showcamerainfo", cVarShowCamInfo);
+        cVars.registerCVar("com_showfps", cVarShowFps);
+        cVars.registerCVar("com_showframeinfo", cVarShowFrameInfo);
+        cVars.registerCVar("fs_spritespath", cVarFsSpriteFilesPath);
+        cVars.registerCVar("fs_cfgpath", cVarFcCfgFilesPath);
     }
 }

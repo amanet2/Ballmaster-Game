@@ -5,6 +5,8 @@ import com.app.engine.consoleSystem.gConsoleSystem;
 import com.app.engine.engine;
 
 public class gameConsole {
+    // TODO: need to use interfaces as headers for game files too
+    // TODO: e.g. we need an interface for console to list out commands
     private static final gConsoleSystem console = engine.instance().gConsoleSystem;
 
     public static gConsoleSystem get() {

@@ -36,4 +36,7 @@ public class gameSettings {
 
     static double radix = 0.0;
     static int dir = 1;
+
+    static long timeStartMillis = 0;
+    static long timeElapsedMillis = 0;
 }

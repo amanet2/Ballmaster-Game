@@ -2,6 +2,7 @@ package com.app.game;
 
 import com.app.engine.engine;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
+import com.app.engine.utils.gDate;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -46,6 +47,8 @@ public class gameGraphics {
             g.drawString("Camera Scale: " + gameCamera.getCamera1().getZoom(), 0, debugInfoY + 50);
             debugInfoY += 50;
         }
+
+        g.drawString("Time Elapsed: " + new gDate(gameSettings.timeElapsedMillis).getTimerString(), 0, 700);
     }
 
     private static void drawWorld(Graphics g) {

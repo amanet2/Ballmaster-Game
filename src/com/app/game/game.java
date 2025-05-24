@@ -1,7 +1,14 @@
 package com.app.game;
 
 public class game {
+    // TODO: need to use interfaces as headers for game files too
+    // TODO: e.g. we need an interface for console to list out commands
     static void updateGame() {
+        if(gameSettings.timeStartMillis < 1)
+            gameSettings.timeStartMillis = System.currentTimeMillis() ;
+
+        gameSettings.timeElapsedMillis = System.currentTimeMillis() - gameSettings.timeStartMillis;
+
         if(gameSettings.dir > 0)
             gameSettings.radix+=0.1;
         if(gameSettings.dir < 1)

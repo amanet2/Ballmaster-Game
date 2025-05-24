@@ -1,9 +1,10 @@
 package com.app.game;
 
 public class gameSettings {
-    static int gameScale = 2160;
-    static String fileSystemDataPath = "data";
-    static String fileSystemFilesPath = "config";
+    static String fileSystemConfigPath = "config";
+    static String fileSystemScriptsPath = "scripts";
+    static String fileSystemSpritesPath = "data";
+
     static boolean showCameraInfo = false;
     static boolean showFps = false;
     static boolean showFrameInfo = false;

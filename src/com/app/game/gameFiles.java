@@ -11,22 +11,31 @@ import java.util.TreeSet;
 public class gameFiles {
     private static engine engineInstance = engine.instance();
 
-    private static gFileSystem fileSystem; // TODO: can we do filesystems for assets, mapfiles, scripts, etc
-    private static gFileSystem spritesFileSystem;
+    private static gFileSystem fileSystemConfig;
+    private static gFileSystem fileSystemScripts;
+    private static gFileSystem fileSystemSprites;
 
-    public static HashMap<String, gFile> gFiles = new HashMap<>();
+    public static HashMap<String, gFile> gFilesConfig = new HashMap<>();
+    public static HashMap<String, gFile> gFilesScripts = new HashMap<>();
     public static HashMap<String, gFile> gFilesSprites = new HashMap<>();
 
     public static void init() {
-        fileSystem = engineInstance.fileSystem.new gFileSystem(gameSettings.fileSystemFilesPath);
-        parseFiles(gFiles, fileSystem.getRootDirectory());
+        fileSystemConfig = engineInstance.fileSystem.new gFileSystem(gameSettings.fileSystemConfigPath);
+        parseFiles(gFilesConfig, fileSystemConfig.getRootDirectory());
 
-        spritesFileSystem = engineInstance.fileSystem.new gFileSystem(gameSettings.fileSystemDataPath);
-        parseFiles(gFilesSprites, spritesFileSystem.getRootDirectory());
+        fileSystemScripts = engineInstance.fileSystem.new gFileSystem(gameSettings.fileSystemScriptsPath);
+        parseFiles(gFilesScripts, fileSystemScripts.getRootDirectory());
+
+        fileSystemSprites = engineInstance.fileSystem.new gFileSystem(gameSettings.fileSystemSpritesPath);
+        parseFiles(gFilesSprites, fileSystemSprites.getRootDirectory());
     }
 
     public static String[] getFilesList() {
-        return new TreeSet<>(gFiles.keySet()).toArray(new String[0]);
+        return new TreeSet<>(gFilesConfig.keySet()).toArray(new String[0]);
+    }
+
+    public static String[] getScriptFilesList() {
+        return new TreeSet<>(gFilesScripts.keySet()).toArray(new String[0]);
     }
 
     public static String[] getSpritesFilesList() {
@@ -43,8 +52,17 @@ public class gameFiles {
     }
 
     public static String execFile(String name) {
-        System.out.println("Reading file: " + name);
-        for(String line : gFiles.get(name).getFileLines()) {
+        System.out.println("Reading config file: " + name);
+        for(String line : gFilesConfig.get(name).getFileLines()) {
+            System.out.println("% " + line);
+            System.out.print(gameConsole.get().readLine(line));
+        }
+        return "";
+    }
+
+    public static String scriptFile(String name) {
+        System.out.println("Reading script file: " + name);
+        for(String line : gFilesScripts.get(name).getFileLines()) {
             System.out.println("% " + line);
             System.out.print(gameConsole.get().readLine(line));
         }

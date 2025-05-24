@@ -32,7 +32,6 @@ public class gameConsole {
                 return echoStrBuilder.substring(1);
             }
         };
-        // executes a specified cfg file
         gConsoleCommand gConsoleCommandExec = engineInstance.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
@@ -74,6 +73,17 @@ public class gameConsole {
                 return "";
             }
         };
+        gConsoleCommand gConsoleCommandListFilesScripts = engineInstance.consoleSystem. new gConsoleCommand() {
+            @Override
+            public String doCommand(String[] args) {
+                String[] names = gameFiles.getScriptFilesList();
+                System.out.println("total " + names.length);
+                for(String name : names) {
+                    System.out.println(name);
+                }
+                return "";
+            }
+        };
         gConsoleCommand gConsoleCommandListSprites = engineInstance.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
@@ -92,6 +102,14 @@ public class gameConsole {
                 return "You will never see this la la la!";
             }
         };
+        gConsoleCommand gConsoleCommandScript = engineInstance.consoleSystem. new gConsoleCommand() {
+            @Override
+            public String doCommand(String[] args) {
+                if(args.length < 1 || args[0].trim().isEmpty())
+                    return "Usage: script SCRIPT_FILE";
+                return gameFiles.scriptFile(args[0]);
+            }
+        };
         gConsoleCommand gConsoleCommandSet = engineInstance.consoleSystem. new gConsoleCommand() {
             @Override
             public String doCommand(String[] args) {
@@ -107,9 +125,11 @@ public class gameConsole {
         console.registerCmd("exit", gConsoleCommandQuit);
         console.registerCmd("listCmds", gConsoleCommandListCmds);
         console.registerCmd("listCVars", gConsoleCommandListCVars);
-        console.registerCmd("listFiles", gConsoleCommandListFiles);
-        console.registerCmd("listSprites", gConsoleCommandListSprites);
+        console.registerCmd("listFilesCfg", gConsoleCommandListFiles);
+        console.registerCmd("listFilesScripts", gConsoleCommandListFilesScripts);
+        console.registerCmd("listFilesSprites", gConsoleCommandListSprites);
         console.registerCmd("quit", gConsoleCommandQuit);
+        console.registerCmd("script", gConsoleCommandScript);
         console.registerCmd("set", gConsoleCommandSet);
     }
 }

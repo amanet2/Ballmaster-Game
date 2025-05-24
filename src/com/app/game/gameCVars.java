@@ -96,10 +96,24 @@ public class gameCVars {
             }
         };
 
-        gCVar cVarFcCfgFilesPath = new gCVar(gameSettings.fileSystemConfigPath) {
+        gCVar cVarFsCfgFilesPath = new gCVar(gameSettings.fileSystemConfigPath) {
             @Override
             public void onChange() {
                 gameSettings.fileSystemConfigPath = this.getValue();
+            }
+        };
+
+        gCVar cVarRCustomHeight = new gCVar(Integer.toString(gameSettings.screenHeight)) {
+            @Override
+            public void onChange() {
+                gameSettings.screenHeight = Integer.parseInt(this.getValue());
+            }
+        };
+
+        gCVar cVarRCustomWidth = new gCVar(Integer.toString(gameSettings.screenWidth)) {
+            @Override
+            public void onChange() {
+                gameSettings.screenWidth = Integer.parseInt(this.getValue());
             }
         };
 
@@ -110,6 +124,8 @@ public class gameCVars {
         cVars.registerCVar("com_showframeinfo", cVarShowFrameInfo);
         cVars.registerCVar("com_showtimeelapsed", cVarComShowTimeElapsed);
         cVars.registerCVar("fs_spritespath", cVarFsSpriteFilesPath);
-        cVars.registerCVar("fs_cfgpath", cVarFcCfgFilesPath);
+        cVars.registerCVar("fs_cfgpath", cVarFsCfgFilesPath);
+        cVars.registerCVar("r_customHeight", cVarRCustomHeight);
+        cVars.registerCVar("r_customWidth", cVarRCustomWidth);
     }
 }

@@ -59,23 +59,28 @@ public class gameGraphics {
         ((Graphics2D) g).scale(gameCamera.getCamera1().getZoom(), gameCamera.getCamera1().getZoom());
         g.translate(- graphics.getWidth() / 2, - graphics.getHeight() / 2);
 
+        // scale to world
+        ((Graphics2D) g).scale(
+                1.0 / gameSettings.gameScale * (double) gameSettings.screenHeight,
+                1.0 / gameSettings.gameScale * (double) gameSettings.screenHeight
+        );
+
         AffineTransform originalTransform = ((Graphics2D) g).getTransform();
         g.translate(-(int)gameCamera.getCamera1().getCoords()[0], -(int)gameCamera.getCamera1().getCoords()[1]);
 
-        if(gameSprites.gSprites.size() < 3)
-            return;
-        for(Integer xpos : new int[]{14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0, -1}) {
-            g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 - 150, null);
-            g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 - 75, null);
-            g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359, null);
-            g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 + 75, null);
-            g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 + 150, null);
-            g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 + 225, null);
-            g.drawImage(gameSprites.gSprites.getFirst().getImage(), (int)(xpos*75+gameSettings.radix), 359 + 300, null);
-        }
-        g.drawImage(gameSprites.gSprites.get(1).getImage(), (int)gameSettings.radix, 359 - 150, null);
-        g.drawImage(gameSprites.gSprites.get(2).getImage(), 300 + (int)gameSettings.radix, 359 - 150, null);
+        if(gameSprites.gSprites.size() > 2)
+            g.drawImage(
+                    gameSprites.gSprites.get(2).getImage(),
+                    graphics.getWidth()/2 - 300 + (int)gameSettings.radix,
+                    graphics.getHeight()/2 - 300,
+                    null
+            );
 
+        //reset scale and transform
+        ((Graphics2D) g).scale(
+                gameSettings.gameScale / (double) gameSettings.screenHeight,
+                gameSettings.gameScale / (double) gameSettings.screenHeight
+        );
         ((Graphics2D) g).setTransform(originalTransform);
     }
 
@@ -140,8 +145,8 @@ public class gameGraphics {
                         }
                     }
                 },
-                1024,
-                768
+                gameSettings.screenWidth,
+                gameSettings.screenHeight
         );
     }
 }

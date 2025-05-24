@@ -45,10 +45,10 @@ public class game {
         gameFiles.init();
         gameFiles.execFile("config/autoexec.cfg");
         gameCVars.parseLaunchArgs(args);
-        gameGraphics.init();
         gameScheduler.init();
-        gameSprites.init();
+        gameGraphics.init();
         gameInput.init();
+        gameSprites.init();
 
         System.out.println("----------------");
         System.out.println("STARTED GAME SUCCESSFULLY!");

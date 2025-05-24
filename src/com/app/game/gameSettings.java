@@ -1,6 +1,10 @@
 package com.app.game;
 
 public class gameSettings {
+    static int screenWidth = 1024;
+    static int screenHeight = 768;
+    static double gameScale = 768.0;
+
     static String fileSystemConfigPath = "config";
     static String fileSystemScriptsPath = "scripts";
     static String fileSystemSpritesPath = "data";

@@ -26,7 +26,10 @@ public class gameGraphics {
         }
         if(gameSettings.showFps) {
             g.drawString("Video FPS: " + gameSettings.videoFramesSnapshot, 0, debugInfoY + 25);
-            debugInfoY += 25;
+            g.drawString("Video Frametime AVG: " + gameSettings.videoFrametimeMetricSnapshotAvg, 0, debugInfoY + 50);
+            g.drawString("Video Frametime Lowest: " + gameSettings.videoFrametimeMetricSnapshotLowest, 0, debugInfoY + 75);
+            g.drawString("Video Frametime Highest: " + gameSettings.videoFrametimeMetricSnapshotHighest, 0, debugInfoY + 100);
+            debugInfoY += 100;
         }
         if(gameSettings.showCameraInfo) {
             double[] camCoords = gameCamera.getCamera1().getCoords();
@@ -53,22 +56,43 @@ public class gameGraphics {
         g.drawImage(gameSprites.gSprites.get(2).getImage(), 300 + (int)gameSettings.radix, 359 - 150, null);
     }
 
+    private static void getVideoMetrics() {
+        long currentTimeMillis = System.currentTimeMillis();
+
+        gameSettings.videoFrametime = currentTimeMillis - gameSettings.videoFrametimeLast;
+        gameSettings.videoFrametimeMetric += gameSettings.videoFrametime;
+        gameSettings.videoFramesMetric++;
+        gameSettings.videoFrames++;
+
+        if(gameSettings.videoFrames >= Integer.MAX_VALUE - 1000)
+            gameSettings.videoFrames = 0;
+
+        if(gameSettings.videoFrametime > gameSettings.videoFrametimeMetricHighest)
+            gameSettings.videoFrametimeMetricHighest = gameSettings.videoFrametime;
+        if(gameSettings.videoFrametime > gameSettings.videoFrametimeMetricLowest)
+            gameSettings.videoFrametimeMetricLowest = gameSettings.videoFrametime;
+
+        if(currentTimeMillis > gameSettings.frameMetricTimeMillis) {
+            gameSettings.frameMetricTimeMillis = currentTimeMillis + 1000;
+            gameSettings.gameFramesSnapshot = gameSettings.gameFramesMetric;
+            gameSettings.videoFramesSnapshot = gameSettings.videoFramesMetric;
+            gameSettings.videoFrametimeMetricSnapshotLowest = gameSettings.videoFrametimeMetricLowest;
+            gameSettings.videoFrametimeMetricSnapshotAvg = gameSettings.videoFrametimeMetric/1000;
+            gameSettings.videoFrametimeMetricSnapshotHighest = gameSettings.videoFrametimeMetricHighest;
+
+            gameSettings.gameFramesMetric = 0;
+            gameSettings.videoFramesMetric = 0;
+            gameSettings.videoFrametimeMetric = 0;
+            gameSettings.videoFrametimeMetricLowest = 0;
+            gameSettings.videoFrametimeMetricHighest = 0;
+        }
+    }
+
     public static void init() {
         graphics = engineInstance.graphicsSystem.new gGraphicsSystem(engineInstance.graphicsSystem.new gPanel() {
             public void draw(Graphics g) {
                 try {
-                    gameSettings.videoFramesMetric++;
-                    gameSettings.videoFrames++;
-                    if(gameSettings.videoFrames >= Integer.MAX_VALUE - 1000)
-                        gameSettings.videoFrames = 0;
-                    if(System.currentTimeMillis() > gameSettings.frameMetricTimeMillis) {
-                        gameSettings.frameMetricTimeMillis = System.currentTimeMillis() + 1000;
-                        gameSettings.gameFramesSnapshot = gameSettings.gameFramesMetric;
-                        gameSettings.gameFramesMetric = 0;
-                        gameSettings.videoFramesSnapshot = gameSettings.videoFramesMetric;
-                        gameSettings.videoFramesMetric = 0;
-                    }
-
+                    getVideoMetrics();
                     drawUI(g);
                     drawWorld(g);
                 }

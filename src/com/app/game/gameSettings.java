@@ -15,6 +15,14 @@ public class gameSettings {
     static int videoFrames = 0;
     static int videoFramesMetric = 0;
     static int videoFramesSnapshot = 0;
+    static double videoFrametime = 0;
+    static double videoFrametimeLast = 0;
+    static double videoFrametimeMetric = 0;
+    static double videoFrametimeMetricLowest = 0;
+    static double videoFrametimeMetricSnapshotLowest = 0;
+    static double videoFrametimeMetricSnapshotAvg = 0;
+    static double videoFrametimeMetricHighest = 0;
+    static double videoFrametimeMetricSnapshotHighest = 0;
 
     static double radix = 0.0;
     static int dir = 1;

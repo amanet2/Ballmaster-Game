@@ -4,7 +4,7 @@ java_out="$game_home/tmp"
 java_src="$game_home/src/com/app/game/*.java"
 jar_game="$game_home/game.jar"
 jar_engine="$game_home/engine.jar"
-manifest="$game_home/debug/MANIFEST.MF"
+manifest="$game_home/MANIFEST.MF"
 
 
 #prep() {

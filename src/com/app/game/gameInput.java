@@ -1,9 +1,24 @@
 package com.app.game;
 
+import com.app.engine.engine;
+import com.app.engine.inputSystem;
+import com.app.engine.inputSystem.gKeyboard;
+import com.app.engine.inputSystem.gMouse;
+
 import java.util.Scanner;
 
 public class gameInput {
+    private static engine engineInstance = engine.instance();
+
+    private static final gKeyboard keyboard = new gKeyboard();
+    private static final gMouse mouse =  new gMouse();
+
+    public gKeyboard getKeyboard() {
+        return keyboard;
+    }
+
     public static void init() {
+        // Thread to listen to terminal window inputs
         new Thread(() -> {
             Scanner scanner = new Scanner(System.in);
             while(true) {

@@ -1,5 +1,6 @@
 package com.app.game;
 
+import com.app.engine.cVarSystem.gCVar;
 import com.app.engine.cVarSystem.gCVarSystem;
 import com.app.engine.engine;
 import com.app.engine.utils.gDict;
@@ -9,8 +10,7 @@ import java.util.TreeSet;
 
 public class gameCVars {
     private static engine engineInstance = engine.instance();
-
-    private static final gCVarSystem cVars = engineInstance.cVarSystem. new gCVarSystem();
+    private static final gCVarSystem cVars = engineInstance.gCVarSystem;
 
     public static void parseLaunchArgs(String[] args) {
         for(int i = 0; i < args.length; i++) {
@@ -47,44 +47,44 @@ public class gameCVars {
     }
 
     public static void init() {
-        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("cam_xy", Arrays.toString(gameCamera.getCamera1().getCoords())) {
+        cVars.registerCVar(new gCVar("cam_xy", Arrays.toString(gameCamera.getCamera1().getCoords())) {
             @Override
             public void onChange() {
                 String[] args = this.getValue().split(",");
                 gameCamera.getCamera1().setCoords(new double[]{Double.parseDouble(args[0]), Double.parseDouble(args[1])});
             }
         });
-        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("cam_zoom", Double.toString(gameCamera.getCamera1().getZoom())) {
+        cVars.registerCVar(new gCVar("cam_zoom", Double.toString(gameCamera.getCamera1().getZoom())) {
             @Override
             public void onChange() {
                 gameCamera.getCamera1().setZoom(Double.parseDouble(this.getValue()));
             }
         });
-        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("com_showcamerainfo", gameSettings.showCameraInfo ? "1" : "0") {
+        cVars.registerCVar(new gCVar("com_showcamerainfo", gameSettings.showCameraInfo ? "1" : "0") {
             @Override
             public void onChange() {
                 gameSettings.showCameraInfo = this.getValue().equalsIgnoreCase("1");
             }
         });
-        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("com_showfps", gameSettings.showFps ? "1" : "0") {
+        cVars.registerCVar(new gCVar("com_showfps", gameSettings.showFps ? "1" : "0") {
             @Override
             public void onChange() {
                 gameSettings.showFps = this.getValue().equalsIgnoreCase("1");
             }
         });
-        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("com_showframeinfo", gameSettings.showFrameInfo ? "1" : "0") {
+        cVars.registerCVar(new gCVar("com_showframeinfo", gameSettings.showFrameInfo ? "1" : "0") {
             @Override
             public void onChange() {
                 gameSettings.showFrameInfo = this.getValue().equalsIgnoreCase("1");
             }
         });
-        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("fs_datapath", gameSettings.fileSystemSpritesPath) {
+        cVars.registerCVar(new gCVar("fs_datapath", gameSettings.fileSystemSpritesPath) {
             @Override
             public void onChange() {
                 gameSettings.fileSystemSpritesPath = this.getValue();
             }
         });
-        cVars.registerCVar(engineInstance.cVarSystem. new gCVar("fs_filespath", gameSettings.fileSystemConfigPath) {
+        cVars.registerCVar(new gCVar("fs_filespath", gameSettings.fileSystemConfigPath) {
             @Override
             public void onChange() {
                 gameSettings.fileSystemConfigPath = this.getValue();

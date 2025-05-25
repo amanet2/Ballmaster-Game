@@ -9,11 +9,14 @@ import com.app.engine.utils.gMath;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.geom.AffineTransform;
 
 public class gameGraphics {
     private static engine engineInstance = engine.instance();
 
     private static gGraphicsSystem graphics;
+
+    private static AffineTransform savedTransformation;
 
     public static gGraphicsSystem get() {
         return graphics;
@@ -39,25 +42,43 @@ public class gameGraphics {
         }
     }
 
-    private static void transformWorldCameraAndScale(Graphics g) {
+    private static void transformWorld(Graphics g) {
+        savedTransformation = ((Graphics2D) g).getTransform();
+
+        // center the screen over 0,0
+        g.translate((int)((double)graphics.getWidth()/2.0), (int)((double)graphics.getHeight()/2.0));
+
+        // scale the world according to screen height
         double scaleFactor = gMath.scaleDoubleToWindowHeight(1.0, gameSettings.gameScale, gameSettings.screenHeight);
         ((Graphics2D) g).scale(scaleFactor, scaleFactor);
 
-        ((Graphics2D) g).scale(gameCamera.getCamera1().getZoom(), gameCamera.getCamera1().getZoom());
+        // move world to match camera coords
         g.translate(-(int)gameCamera.getCamera1().getCoords()[0], -(int)gameCamera.getCamera1().getCoords()[1]);
+
+        //zoom in or out depending on camera setting
+        double cameraZoom = gameCamera.getCamera1().getZoom();
+        ((Graphics2D) g).scale(cameraZoom, cameraZoom);
     }
 
-    private static void resetWorldCameraAndScale(Graphics g) {
-        g.translate((int)gameCamera.getCamera1().getCoords()[0], (int)gameCamera.getCamera1().getCoords()[1]);
-        ((Graphics2D) g).scale(1.0/gameCamera.getCamera1().getZoom(), 1.0/gameCamera.getCamera1().getZoom());
+    private static void resetTransformWorld(Graphics g) {
+        ((Graphics2D) g).setTransform(savedTransformation);
+
+        // scale ui text according to window screen height
+        double scaleFactor = gMath.scaleDoubleToWindowHeight(1.0, gameSettings.gameScale, gameSettings.screenHeight);
+        ((Graphics2D) g).scale(scaleFactor, scaleFactor);
     }
 
     private static void drawWorld(Graphics g) {
         int spriteId = 2;
-        int spriteWorldX = 300 + (int)gameSettings.radix;
-        int spriteWorldY = 0;
+        int spriteWidth = 600;
+        int spriteWorldCoordX = (int) (0.0 - spriteWidth/2.0) + (int) gameSettings.radix;
+        int spriteWorldCoordY = (int) (0.0 - spriteWidth/2.0);
         if(gameSprites.gSprites.size() > spriteId)
-            g.drawImage(gameSprites.gSprites.get(spriteId).getImage(), spriteWorldX, spriteWorldY,null);
+            g.drawImage(gameSprites.gSprites.get(spriteId).getImage(), spriteWorldCoordX, spriteWorldCoordY,null);
+
+        g.setColor(Color.YELLOW);
+        g.drawLine(600, -1000, 600, 1000);
+        g.drawLine(-600, -1000, -600, 1000);
     }
 
     private static void drawUI(Graphics g) {
@@ -92,9 +113,9 @@ public class gameGraphics {
                             super.draw(g);  // required to collect video metrics
                             getGameMetrics();
 
-                            transformWorldCameraAndScale(g);
+                            transformWorld(g);
                             drawWorld(g);
-                            resetWorldCameraAndScale(g);
+                            resetTransformWorld(g);
 
                             drawUI(g);
                         }

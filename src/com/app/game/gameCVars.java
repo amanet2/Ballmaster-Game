@@ -127,5 +127,16 @@ public class gameCVars {
         cVars.registerCVar("fs_cfgpath", cVarFsCfgFilesPath);
         cVars.registerCVar("r_customHeight", cVarRCustomHeight);
         cVars.registerCVar("r_customWidth", cVarRCustomWidth);
+
+        System.out.println("----------------");
+        System.out.println("CREATED CVARMAP: " + toDict());
+        gDict toStringDict = new gDict();
+        gDict toStringDictInner = new gDict();
+        toStringDictInner.put("qaz", "yaz");
+        toStringDict.put("foo", "bar");
+        toStringDict.put("baz", toStringDictInner);
+        System.out.printf("TEST TOSTR DICT: " + toStringDict);
+        gDict testDict = new gDict("{foo=bar, baz={qaz=yaz}}");
+        System.out.println("----------------");
     }
 }

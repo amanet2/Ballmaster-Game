@@ -132,6 +132,8 @@ public class gameCVars {
         System.out.println("----------------");
         System.out.println("CVAR SYSTEM INITIALIZED");
         System.out.println(toDict());
+        double foo = 3.0 / 4.0 * 2.0;
+        System.out.println(foo);
         System.out.println("----------------");
     }
 }

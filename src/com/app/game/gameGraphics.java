@@ -40,33 +40,36 @@ public class gameGraphics {
     }
 
     private static void transformWorldCameraAndScale(Graphics g) {
-        g.translate(graphics.getWidth() / 2, graphics.getHeight() / 2);
-        ((Graphics2D) g).scale(gameCamera.getCamera1().getZoom(), gameCamera.getCamera1().getZoom());
-        g.translate(- graphics.getWidth() / 2, - graphics.getHeight() / 2);
+//        g.translate(graphics.getWidth() / 2, graphics.getHeight() / 2);
+//        ((Graphics2D) g).scale(gameCamera.getCamera1().getZoom(), gameCamera.getCamera1().getZoom());
+//        g.translate(- graphics.getWidth() / 2, - graphics.getHeight() / 2);
+
 
         double scaleFactor = gMath.scaleDoubleToWindowHeight(1.0, gameSettings.gameScale, gameSettings.screenHeight);
         ((Graphics2D) g).scale(scaleFactor, scaleFactor);
 
         g.translate(-(int)gameCamera.getCamera1().getCoords()[0], -(int)gameCamera.getCamera1().getCoords()[1]);
+
     }
 
     private static void resetWorldCameraAndScale(Graphics g) {
         g.translate((int)gameCamera.getCamera1().getCoords()[0], (int)gameCamera.getCamera1().getCoords()[1]);
 
+//        g.translate(graphics.getWidth() / 2, graphics.getHeight() / 2);
+//        ((Graphics2D) g).scale(1.0/gameCamera.getCamera1().getZoom(), 1.0/gameCamera.getCamera1().getZoom());
+
 //        double scaleFactor = gMath.unscaleDoubleToWindowHeight(1.0, gameSettings.gameScale, gameSettings.screenHeight);
 //        ((Graphics2D) g).scale(scaleFactor, scaleFactor);
 
-        g.translate(graphics.getWidth() / 2, graphics.getHeight() / 2);
-        ((Graphics2D) g).scale(1.0/gameCamera.getCamera1().getZoom(), 1.0/gameCamera.getCamera1().getZoom());
-        g.translate(- graphics.getWidth() / 2, - graphics.getHeight() / 2);
+//        g.translate(- graphics.getWidth() / 2, - graphics.getHeight() / 2);
     }
 
     private static void drawWorld(Graphics g) {
         int spriteId = 2;
-        int spriteX = 300 + (int)gameSettings.radix;
-        int spriteY = 300;
+        int spriteWorldX = 300 + (int)gameSettings.radix;
+        int spriteWorldY = 0;
         if(gameSprites.gSprites.size() > spriteId)
-            g.drawImage(gameSprites.gSprites.get(spriteId).getImage(), spriteX, spriteY,null);
+            g.drawImage(gameSprites.gSprites.get(spriteId).getImage(), spriteWorldX, spriteWorldY,null);
     }
 
     private static void drawUI(Graphics g) {

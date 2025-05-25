@@ -53,8 +53,8 @@ public class gameGraphics {
     private static void resetWorldCameraAndScale(Graphics g) {
         g.translate((int)gameCamera.getCamera1().getCoords()[0], (int)gameCamera.getCamera1().getCoords()[1]);
 
-        double scaleFactor = gMath.unscaleDoubleToWindowHeight(1.0, gameSettings.gameScale, gameSettings.screenHeight);
-        ((Graphics2D) g).scale(scaleFactor, scaleFactor);
+//        double scaleFactor = gMath.unscaleDoubleToWindowHeight(1.0, gameSettings.gameScale, gameSettings.screenHeight);
+//        ((Graphics2D) g).scale(scaleFactor, scaleFactor);
 
         g.translate(graphics.getWidth() / 2, graphics.getHeight() / 2);
         ((Graphics2D) g).scale(1.0/gameCamera.getCamera1().getZoom(), 1.0/gameCamera.getCamera1().getZoom());
@@ -63,8 +63,8 @@ public class gameGraphics {
 
     private static void drawWorld(Graphics g) {
         int spriteId = 2;
-        int spriteX = graphics.getWidth()/2 - 300 + (int)gameSettings.radix;
-        int spriteY = graphics.getHeight()/2 - 300;
+        int spriteX = 300 + (int)gameSettings.radix;
+        int spriteY = 300;
         if(gameSprites.gSprites.size() > spriteId)
             g.drawImage(gameSprites.gSprites.get(spriteId).getImage(), spriteX, spriteY,null);
     }
@@ -76,7 +76,6 @@ public class gameGraphics {
             g.drawString("Time Elapsed: " + gDate.getTimerString(gameSettings.timeElapsedMillis), 0, debugInfoY + 25);
             debugInfoY += 25;
         }
-
         if(gameSettings.showFrameInfo) {
             g.drawString("Game FPS: " + gameSettings.gameFramesPerSecondMetricSnapshot, 0, debugInfoY + 25);
             g.drawString("Game Frames: " + gameSettings.gameFrames, 0, debugInfoY + 50);

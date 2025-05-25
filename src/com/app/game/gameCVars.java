@@ -130,15 +130,8 @@ public class gameCVars {
         cVars.registerCVar("r_customWidth", cVarRCustomWidth);
 
         System.out.println("----------------");
-        System.out.println("CREATED CVARMAP: " + toDict());
-//        String testDictString = "{}";
-//        String testDictString = "{foo={}}";
-//        String testDictString = "{foo={}, bar={baz=qaz}}";
-        String testDictString = "{foo=bar, baz={foo=bar^} bzy, qaz={yaz=^pzaz}}, zaz={abz=bzaz}}";
-        gDict testDict = new gDict(testDictString);
-        System.out.println("TEST DICT STRING: " + testDictString);
-        System.out.println("TEST DICT FROM STRING: " + testDict);
-        System.out.println("TEST DICT GET(baz.foo): " + ((gDict) testDict.get("baz")).get("foo"));
+        System.out.println("CVAR SYSTEM INITIALIZED");
+        System.out.println(toDict());
         System.out.println("----------------");
     }
 }

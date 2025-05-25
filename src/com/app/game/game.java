@@ -54,6 +54,7 @@ public class game {
         System.out.println("STARTED GAME SUCCESSFULLY!");
         System.out.println("YOU MAY BEGIN ENTERING CONSOLE COMMANDS");
         System.out.println("----------------");
+        System.out.print("% ");
 
         int internalGameRate = 1000;
         long snapshotTimeNanos = System.nanoTime();  // use nano for game timer

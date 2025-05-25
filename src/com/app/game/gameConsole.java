@@ -29,7 +29,8 @@ public class gameConsole {
                     echoStrBuilder.append(" ").append(tok);
                 }
                 echoStrBuilder.append("\n");
-                return echoStrBuilder.substring(1);
+                System.out.print(echoStrBuilder.substring(1));
+                return "";
             }
         };
         gConsoleCommand gConsoleCommandExec = new gConsoleCommand("executes a config file") {

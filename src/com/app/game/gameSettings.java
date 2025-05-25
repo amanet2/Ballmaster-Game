@@ -11,7 +11,6 @@ public class gameSettings {
 
     static boolean showTimeElapsed = false;
     static boolean showCameraInfo = false;
-    static boolean showFps = false;
     static boolean showFrameInfo = false;
 
     // longtime to get snapshots for ALL metrics
@@ -28,18 +27,6 @@ public class gameSettings {
     static double gameFrametimeMetricSnapshotAvg = 0;
     static double gameFrametimeMetricHighest = 0;
     static double gameFrametimeMetricSnapshotHighest = 0;
-
-    static int videoFrames = 0;
-    static int videoFramesPerSecondMetric = 0;
-    static int videoFramesPerSecondMetricSnapshot = 0;
-    static double videoFrametime = 0;
-    static long videoFrametimeLast = 0;
-    static double videoFrametimeMetric = 0;
-    static double videoFrametimeMetricLowest = 0;
-    static double videoFrametimeMetricSnapshotLowest = 0;
-    static double videoFrametimeMetricSnapshotAvg = 0;
-    static double videoFrametimeMetricHighest = 0;
-    static double videoFrametimeMetricSnapshotHighest = 0;
 
     static double radix = 0.0;
     static int dir = 1;

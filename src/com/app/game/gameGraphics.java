@@ -2,6 +2,7 @@ package com.app.game;
 
 import com.app.engine.engine;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
+import com.app.engine.settings;
 import com.app.engine.utils.gDate;
 import com.app.engine.utils.gMath;
 
@@ -11,30 +12,16 @@ import java.awt.Graphics2D;
 
 public class gameGraphics {
     private static engine engineInstance = engine.instance();
+
     private static gGraphicsSystem graphics;
 
     public static gGraphicsSystem get() {
         return graphics;
     }
 
-    private static void getVideoMetrics() {
-//        long currentTimeNanos = System.nanoTime();  // TODO: Use this for video frametime measurements
+    private static void getGameMetrics() {
+        // TODO: move metrics, time elapsed, and camera info into the engine
         long currentTimeMillis = System.currentTimeMillis();
-
-        gameSettings.videoFramesPerSecondMetric++;
-        gameSettings.videoFrames++;
-
-        if(gameSettings.videoFrames >= Integer.MAX_VALUE - 1000)
-            gameSettings.videoFrames = 0;
-
-        gameSettings.videoFrametime = currentTimeMillis - gameSettings.videoFrametimeLast;
-        gameSettings.videoFrametimeLast = currentTimeMillis;
-        gameSettings.videoFrametimeMetric += gameSettings.videoFrametime;
-
-        if(gameSettings.videoFrametime > gameSettings.videoFrametimeMetricHighest)
-            gameSettings.videoFrametimeMetricHighest = gameSettings.videoFrametime;
-        if(gameSettings.videoFrametime < gameSettings.videoFrametimeMetricLowest)
-            gameSettings.videoFrametimeMetricLowest = gameSettings.videoFrametime;
 
         if(currentTimeMillis > gameSettings.frameMetricTimeMillis) {
             gameSettings.frameMetricTimeMillis = currentTimeMillis + 1000;
@@ -50,18 +37,6 @@ public class gameGraphics {
             gameSettings.gameFrametimeMetric = 0;
             gameSettings.gameFrametimeMetricLowest = 0;
             gameSettings.gameFrametimeMetricHighest = 0;
-
-            gameSettings.videoFramesPerSecondMetricSnapshot = gameSettings.videoFramesPerSecondMetric;
-
-            gameSettings.videoFramesPerSecondMetric = 0;
-
-            gameSettings.videoFrametimeMetricSnapshotLowest = gameSettings.videoFrametimeMetricLowest;
-            gameSettings.videoFrametimeMetricSnapshotAvg = gameSettings.videoFrametimeMetric/1000;
-            gameSettings.videoFrametimeMetricSnapshotHighest = gameSettings.videoFrametimeMetricHighest;
-
-            gameSettings.videoFrametimeMetric = 0;
-            gameSettings.videoFrametimeMetricLowest = 0;
-            gameSettings.videoFrametimeMetricHighest = 0;
         }
     }
 
@@ -111,12 +86,12 @@ public class gameGraphics {
             g.drawString("Game Frametime Highest: " + gameSettings.gameFrametimeMetricSnapshotHighest, 0, debugInfoY + 125);
             debugInfoY += 125;
         }
-        if(gameSettings.showFps) {
-            g.drawString("Video FPS: " + gameSettings.videoFramesPerSecondMetricSnapshot, 0, debugInfoY + 25);
-            g.drawString("Video Frames: " + gameSettings.videoFrames, 0, debugInfoY + 50);
-            g.drawString("Video Frametime AVG: " + gameSettings.videoFrametimeMetricSnapshotAvg + "ms", 0, debugInfoY + 75);
-            g.drawString("Video Frametime Lowest: " + gameSettings.videoFrametimeMetricSnapshotLowest + "ms", 0, debugInfoY + 100);
-            g.drawString("Video Frametime Highest: " + gameSettings.videoFrametimeMetricSnapshotHighest + "ms", 0, debugInfoY + 125);
+        if(settings.showMetricsVideo) {
+            g.drawString("Video FPS: " + graphics.videoFramesPerSecondMetricSnapshot, 0, debugInfoY + 25);
+            g.drawString("Video Frames: " + graphics.videoFrames, 0, debugInfoY + 50);
+            g.drawString("Video Frametime AVG: " + graphics.videoFrametimeMetricSnapshotAvg + "ms", 0, debugInfoY + 75);
+            g.drawString("Video Frametime Lowest: " + graphics.videoFrametimeMetricSnapshotLowest + "ms", 0, debugInfoY + 100);
+            g.drawString("Video Frametime Highest: " + graphics.videoFrametimeMetricSnapshotHighest + "ms", 0, debugInfoY + 125);
             debugInfoY += 125;
         }
         if(gameSettings.showCameraInfo) {
@@ -128,11 +103,13 @@ public class gameGraphics {
     }
 
     public static void init() {
+        // TODO: window needs to be resizable for cVars to work
         graphics = engineInstance.graphicsSystem.new gGraphicsSystem(
                 engineInstance.graphicsSystem.new gPanel() {
                     public void draw(Graphics g) {
                         try {
-                            getVideoMetrics();
+                            super.draw(g);
+                            getGameMetrics();
 
                             transformWorldCameraAndScale(g);
                             drawWorld(g);

@@ -3,6 +3,7 @@ package com.app.game;
 import com.app.engine.cVarSystem.gCVar;
 import com.app.engine.cVarSystem.gCVarSystem;
 import com.app.engine.engine;
+import com.app.engine.settings;
 import com.app.engine.utils.gDict;
 
 import java.util.Arrays;
@@ -68,10 +69,10 @@ public class gameCVars {
             }
         };
 
-        gCVar cVarShowFps = new gCVar(gameSettings.showFps ? "1" : "0") {
+        gCVar cVarShowFps = new gCVar(settings.showMetricsVideo ? "1" : "0") {
             @Override
             public void onChange() {
-                gameSettings.showFps = this.getValue().equalsIgnoreCase("1");
+                settings.showMetricsVideo = this.getValue().equalsIgnoreCase("1");
             }
         };
 
@@ -127,5 +128,17 @@ public class gameCVars {
         cVars.registerCVar("fs_cfgpath", cVarFsCfgFilesPath);
         cVars.registerCVar("r_customHeight", cVarRCustomHeight);
         cVars.registerCVar("r_customWidth", cVarRCustomWidth);
+
+        System.out.println("----------------");
+        System.out.println("CREATED CVARMAP: " + toDict());
+//        String testDictString = "{}";
+//        String testDictString = "{foo={}}";
+//        String testDictString = "{foo={}, bar={baz=qaz}}";
+        String testDictString = "{foo=bar, baz={foo=bar^} bzy, qaz={yaz=^pzaz}}, zaz={abz=bzaz}}";
+        gDict testDict = new gDict(testDictString);
+        System.out.println("TEST DICT STRING: " + testDictString);
+        System.out.println("TEST DICT FROM STRING: " + testDict);
+        System.out.println("TEST DICT GET(baz.foo): " + ((gDict) testDict.get("baz")).get("foo"));
+        System.out.println("----------------");
     }
 }

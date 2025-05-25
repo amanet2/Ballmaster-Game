@@ -128,12 +128,14 @@ public class gameCVars {
         cVars.registerCVar("r_customHeight", cVarRCustomHeight);
         cVars.registerCVar("r_customWidth", cVarRCustomWidth);
 
-        System.out.println("----------------");
-        System.out.println("CREATED CVARMAP: " + toDict());
-        String testDictString = "{foo=bar, baz={foo=bar, qaz={yaz=pzaz}}, zaz={abz=bzaz}}";
-        gDict testDict = new gDict(testDictString);
-        System.out.println("TEST DICT STRING: " + testDictString);
-        System.out.println("TEST DICT FROM STRING: " + testDict);
-        System.out.println("----------------");
+//        System.out.println("----------------");
+//        System.out.println("CREATED CVARMAP: " + toDict());
+//        String testDictString = "{}";
+////        String testDictString = "{foo=bar, baz={qaz=pzz}}";
+////        String testDictString = "{foo=bar, baz={foo=bar, qaz={yaz=pzaz}}, zaz={abz=bzaz}}";
+//        gDict testDict = new gDict(testDictString);
+//        System.out.println("TEST DICT STRING: " + testDictString);
+//        System.out.println("TEST DICT FROM STRING: " + testDict);
+//        System.out.println("----------------");
     }
 }

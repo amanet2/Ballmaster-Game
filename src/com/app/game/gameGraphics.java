@@ -40,28 +40,16 @@ public class gameGraphics {
     }
 
     private static void transformWorldCameraAndScale(Graphics g) {
-//        g.translate(graphics.getWidth() / 2, graphics.getHeight() / 2);
-//        ((Graphics2D) g).scale(gameCamera.getCamera1().getZoom(), gameCamera.getCamera1().getZoom());
-//        g.translate(- graphics.getWidth() / 2, - graphics.getHeight() / 2);
-
-
         double scaleFactor = gMath.scaleDoubleToWindowHeight(1.0, gameSettings.gameScale, gameSettings.screenHeight);
         ((Graphics2D) g).scale(scaleFactor, scaleFactor);
 
+        ((Graphics2D) g).scale(gameCamera.getCamera1().getZoom(), gameCamera.getCamera1().getZoom());
         g.translate(-(int)gameCamera.getCamera1().getCoords()[0], -(int)gameCamera.getCamera1().getCoords()[1]);
-
     }
 
     private static void resetWorldCameraAndScale(Graphics g) {
         g.translate((int)gameCamera.getCamera1().getCoords()[0], (int)gameCamera.getCamera1().getCoords()[1]);
-
-//        g.translate(graphics.getWidth() / 2, graphics.getHeight() / 2);
-//        ((Graphics2D) g).scale(1.0/gameCamera.getCamera1().getZoom(), 1.0/gameCamera.getCamera1().getZoom());
-
-//        double scaleFactor = gMath.unscaleDoubleToWindowHeight(1.0, gameSettings.gameScale, gameSettings.screenHeight);
-//        ((Graphics2D) g).scale(scaleFactor, scaleFactor);
-
-//        g.translate(- graphics.getWidth() / 2, - graphics.getHeight() / 2);
+        ((Graphics2D) g).scale(1.0/gameCamera.getCamera1().getZoom(), 1.0/gameCamera.getCamera1().getZoom());
     }
 
     private static void drawWorld(Graphics g) {

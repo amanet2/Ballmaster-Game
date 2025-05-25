@@ -135,8 +135,10 @@ public class gameCVars {
         toStringDictInner.put("qaz", "yaz");
         toStringDict.put("foo", "bar");
         toStringDict.put("baz", toStringDictInner);
-        System.out.printf("TEST TOSTR DICT: " + toStringDict);
-        gDict testDict = new gDict("{foo=bar, baz={qaz=yaz}}");
+        System.out.println("TEST TOSTR DICT: " + toStringDict);
+        gDict testDict = new gDict("{foo=bar, baz={qaz=yaz}, zaz={abz=bzaz}}");
+//        gDict testDict = new gDict("{foo=bar}");
+        System.out.println("TEST DICT TOSTRING: " + testDict);
         System.out.println("----------------");
     }
 }

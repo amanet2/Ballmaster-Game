@@ -20,7 +20,6 @@ public class gameGraphics {
     }
 
     private static void getGameMetrics() {
-        // TODO: move metrics, time elapsed, and camera info into the engine
         long currentTimeMillis = System.currentTimeMillis();
 
         if(currentTimeMillis > gameSettings.frameMetricTimeMillis) {
@@ -72,7 +71,7 @@ public class gameGraphics {
 
     private static void drawUI(Graphics g) {
         g.setColor(Color.WHITE);
-        int debugInfoY = 0;
+        int debugInfoY = settings.showMetricsVideo ? 125 : 0;
         if(gameSettings.showTimeElapsed) {
             g.drawString("Time Elapsed: " + gDate.getTimerString(gameSettings.timeElapsedMillis), 0, debugInfoY + 25);
             debugInfoY += 25;
@@ -84,14 +83,6 @@ public class gameGraphics {
             g.drawString("Game Frametime AVG: " + gameSettings.gameFrametimeMetricSnapshotAvg, 0, debugInfoY + 75);
             g.drawString("Game Frametime Lowest: " + gameSettings.gameFrametimeMetricSnapshotLowest, 0, debugInfoY + 100);
             g.drawString("Game Frametime Highest: " + gameSettings.gameFrametimeMetricSnapshotHighest, 0, debugInfoY + 125);
-            debugInfoY += 125;
-        }
-        if(settings.showMetricsVideo) {
-            g.drawString("Video FPS: " + graphics.videoFramesPerSecondMetricSnapshot, 0, debugInfoY + 25);
-            g.drawString("Video Frames: " + graphics.videoFrames, 0, debugInfoY + 50);
-            g.drawString("Video Frametime AVG: " + graphics.videoFrametimeMetricSnapshotAvg + "ms", 0, debugInfoY + 75);
-            g.drawString("Video Frametime Lowest: " + graphics.videoFrametimeMetricSnapshotLowest + "ms", 0, debugInfoY + 100);
-            g.drawString("Video Frametime Highest: " + graphics.videoFrametimeMetricSnapshotHighest + "ms", 0, debugInfoY + 125);
             debugInfoY += 125;
         }
         if(gameSettings.showCameraInfo) {
@@ -108,7 +99,7 @@ public class gameGraphics {
                 engineInstance.graphicsSystem.new gPanel() {
                     public void draw(Graphics g) {
                         try {
-                            super.draw(g);
+                            super.draw(g);  // required to collect video metrics
                             getGameMetrics();
 
                             transformWorldCameraAndScale(g);

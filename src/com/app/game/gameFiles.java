@@ -49,10 +49,13 @@ public class gameFiles {
     }
 
     public static String execFile(String name) {
+        // TODO: apply lexing & parsing so comments '#' can be anywhere in the line
         System.out.println("Reading config file: " + name);
         for(String line : gFilesConfig.get(name).getFileLines()) {
-            System.out.println("% " + line);
-            System.out.print(gameConsole.get().readLine(line));
+            if(!line.trim().startsWith(("#"))) {
+                System.out.println("% " + line);
+                System.out.print(gameConsole.get().readLine(line));
+            }
         }
         return "";
     }

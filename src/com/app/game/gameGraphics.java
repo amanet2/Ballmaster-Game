@@ -65,7 +65,7 @@ public class gameGraphics {
         }
     }
 
-    private static void transformWorldToCameraAndScale(Graphics g) {
+    private static void transformWorldCameraAndScale(Graphics g) {
         g.translate(graphics.getWidth() / 2, graphics.getHeight() / 2);
         ((Graphics2D) g).scale(gameCamera.getCamera1().getZoom(), gameCamera.getCamera1().getZoom());
         g.translate(- graphics.getWidth() / 2, - graphics.getHeight() / 2);
@@ -77,11 +77,11 @@ public class gameGraphics {
     }
 
     private static void resetWorldCameraAndScale(Graphics g) {
+        g.translate((int)gameCamera.getCamera1().getCoords()[0], (int)gameCamera.getCamera1().getCoords()[1]);
+
         double scaleFactor = gMath.unscaleDoubleToWindowHeight(1.0, gameSettings.gameScale, gameSettings.screenHeight);
         ((Graphics2D) g).scale(scaleFactor, scaleFactor);
-    }
 
-    private static void transformUItoCameraAndScale(Graphics g) {
         g.translate(graphics.getWidth() / 2, graphics.getHeight() / 2);
         ((Graphics2D) g).scale(1.0/gameCamera.getCamera1().getZoom(), 1.0/gameCamera.getCamera1().getZoom());
         g.translate(- graphics.getWidth() / 2, - graphics.getHeight() / 2);
@@ -134,11 +134,10 @@ public class gameGraphics {
                         try {
                             getVideoMetrics();
 
-                            transformWorldToCameraAndScale(g);
+                            transformWorldCameraAndScale(g);
                             drawWorld(g);
                             resetWorldCameraAndScale(g);
 
-                            transformUItoCameraAndScale(g);
                             drawUI(g);
                         }
                         catch (Exception e) {

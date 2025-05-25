@@ -130,15 +130,10 @@ public class gameCVars {
 
         System.out.println("----------------");
         System.out.println("CREATED CVARMAP: " + toDict());
-        gDict toStringDict = new gDict();
-        gDict toStringDictInner = new gDict();
-        toStringDictInner.put("qaz", "yaz");
-        toStringDict.put("foo", "bar");
-        toStringDict.put("baz", toStringDictInner);
-        System.out.println("TEST TOSTR DICT: " + toStringDict);
-        gDict testDict = new gDict("{foo=bar, baz={qaz=yaz}, zaz={abz=bzaz}}");
-//        gDict testDict = new gDict("{foo=bar}");
-        System.out.println("TEST DICT TOSTRING: " + testDict);
+        String testDictString = "{foo=bar, baz={foo=bar, qaz={yaz=pzaz}}, zaz={abz=bzaz}}";
+        gDict testDict = new gDict(testDictString);
+        System.out.println("TEST DICT STRING: " + testDictString);
+        System.out.println("TEST DICT FROM STRING: " + testDict);
         System.out.println("----------------");
     }
 }

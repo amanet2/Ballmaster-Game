@@ -1,20 +1,7 @@
 package com.app.game;
 
 public class game {
-    private static int dir = 1;
-
-    private static void updateGame() {
-        if(dir > 0)
-            gameSettings.testSpriteX += 0.2;
-        if(dir < 1)
-            gameSettings.testSpriteX -= 0.2;
-        if(gameSettings.testSpriteX > 300)
-            dir = -1;
-        if(gameSettings.testSpriteX < -300)
-            dir = 1;
-    }
-
-    public static void main(String[] args) {
+    private static void init(String[] args) {
         System.out.println("----------------");
         System.out.println("INITIALIZING GAME SYSTEMS...");
         System.out.println("----------------");
@@ -35,10 +22,13 @@ public class game {
         System.out.println("YOU MAY BEGIN ENTERING CONSOLE COMMANDS");
         System.out.println("----------------");
         System.out.print("% ");
+    }
 
+    public static void main(String[] args) {
+        init(args);
 
         int internalGameRate = 1000;
-        long snapshotTimeNanos = System.nanoTime();  // use nano for game timer
+        long snapshotTimeNanos = System.nanoTime();  // use nano for game timer in case we want >1000 fps
         long tickTimeNanos = snapshotTimeNanos;
 
         // GAME LOOP
@@ -49,9 +39,9 @@ public class game {
             while (tickTimeNanos < snapshotTimeNanos) {
                 tickTimeNanos += (1000000000 / internalGameRate);
 
-                updateGame();
+                gameState.update();
 
-                gameMetrics.getGameMetrics();
+                gameMetrics.update();
             }
 
             gameScheduler.instance().doEvents(System.currentTimeMillis());

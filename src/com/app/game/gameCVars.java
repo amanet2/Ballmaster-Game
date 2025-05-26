@@ -7,8 +7,6 @@ import com.app.engine.engine;
 import java.util.Arrays;
 
 public class gameCVars {
-    // TODO: much of this functionality can be moved to engine
-    // TODO: e.g. parseLaunchArgs can become parseFromArray, setCVar can go in engine and still sys.print errors, etc
     private static engine engineInstance = engine.instance();
     private static final gCVarSystem cVars = engineInstance.gCVarSystem;
 
@@ -18,7 +16,6 @@ public class gameCVars {
 
     public static void init() {
         // TODO: register game-specific cvars here
-        // TODO: set up relevant cvars to work at engine level
         gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.camera1.getCoords())) {
             @Override
             public void onChange() {
@@ -86,8 +83,8 @@ public class gameCVars {
         cVars.registerCVar("fs_cfgpath", cVarFsCfgFilesPath);
 
         System.out.println("----------------");
-        System.out.println("CVAR SYSTEM INITIALIZED");
         System.out.println(cVars.toDict());
+        System.out.println("CVAR SYSTEM INITIALIZED");
         System.out.println("----------------");
     }
 }

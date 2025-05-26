@@ -49,7 +49,7 @@ public class gameMetrics {
         return gameFrametimeMetricSnapshotHighest;
     }
 
-    public static void getGameMetrics() {
+    public static void update() {
         currentTimeMillis = System.currentTimeMillis();
 
         timeElapsedMillis = currentTimeMillis - timeStartedMillis;

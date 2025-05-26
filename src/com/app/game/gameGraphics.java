@@ -20,8 +20,8 @@ public class gameGraphics {
     private static void drawWorld(Graphics g) {
         int spriteId = 2;
         int spriteWidth = 600;
-        int spriteWorldCoordX = (int) (0.0 - spriteWidth/2.0) + (int) gameSettings.testSpriteX;
-        int spriteWorldCoordY = (int) (0.0 - spriteWidth/2.0) + (int) gameSettings.testSpriteY;
+        int spriteWorldCoordX = (int) (0.0 - spriteWidth/2.0) + (int) gameState.testSpriteX;
+        int spriteWorldCoordY = (int) (0.0 - spriteWidth/2.0) + (int) gameState.testSpriteY;
         if(gameSprites.gSprites.size() > spriteId)
             g.drawImage(gameSprites.gSprites.get(spriteId).getImage(), spriteWorldCoordX, spriteWorldCoordY,null);
 
@@ -54,7 +54,6 @@ public class gameGraphics {
     }
 
     public static void init() {
-        // TODO: window needs to be resizable for cVars to work
         engineInstance.gGraphicsSystem.setPanel(new gPanel() {
                 public void draw(Graphics g) {
                     try {

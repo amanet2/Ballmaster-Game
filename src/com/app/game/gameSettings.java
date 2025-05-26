@@ -24,7 +24,8 @@ public class gameSettings {
     static double gameFrametimeMetricHighest = 0;
     static double gameFrametimeMetricSnapshotHighest = 0;
 
-    static double radix = 0.0;
+    static double testSpriteX = 0.0;
+    static double testSpriteY = 0.0;
     static int dir = 1;
 
     static long timeStartMillis = 0;

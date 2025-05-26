@@ -10,12 +10,12 @@ public class game {
         gameSettings.timeElapsedMillis = System.currentTimeMillis() - gameSettings.timeStartMillis;
 
         if(gameSettings.dir > 0)
-            gameSettings.radix+=0.2;
+            gameSettings.testSpriteX += 0.2;
         if(gameSettings.dir < 1)
-            gameSettings.radix-=0.2;
-        if(gameSettings.radix > 300)
+            gameSettings.testSpriteX -= 0.2;
+        if(gameSettings.testSpriteX > 300)
             gameSettings.dir = -1;
-        if(gameSettings.radix < -300)
+        if(gameSettings.testSpriteX < -300)
             gameSettings.dir = 1;
     }
 
@@ -44,7 +44,7 @@ public class game {
         gameCVars.init();
         gameFiles.init();
         gameFiles.execFile("config/autoexec.cfg");
-        gameCVars.parseLaunchArgs(args);
+        gameCVars.instance().parseArgs(args);
         gameScheduler.init();
         gameGraphics.init();
         gameInput.init();

@@ -124,7 +124,7 @@ public class gameConsole {
             public String doCommand(String[] args) {
                 if(args.length < 2)
                     return "Usage: set CVAR_NAME CVAR_VALUE\n";
-                return gameCVars.setCVar(args[0], args[1]);
+                return gameCVars.instance().setCVarValue(args[0], args[1]);
             }
         };
 

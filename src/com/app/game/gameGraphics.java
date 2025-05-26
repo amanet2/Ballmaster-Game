@@ -40,8 +40,8 @@ public class gameGraphics {
     private static void drawWorld(Graphics g) {
         int spriteId = 2;
         int spriteWidth = 600;
-        int spriteWorldCoordX = (int) (0.0 - spriteWidth/2.0) + (int) gameSettings.radix;
-        int spriteWorldCoordY = (int) (0.0 - spriteWidth/2.0);
+        int spriteWorldCoordX = (int) (0.0 - spriteWidth/2.0) + (int) gameSettings.testSpriteX;
+        int spriteWorldCoordY = (int) (0.0 - spriteWidth/2.0) + (int) gameSettings.testSpriteY;
         if(gameSprites.gSprites.size() > spriteId)
             g.drawImage(gameSprites.gSprites.get(spriteId).getImage(), spriteWorldCoordX, spriteWorldCoordY,null);
 
@@ -53,10 +53,6 @@ public class gameGraphics {
     private static void drawUI(Graphics g) {
         g.setColor(Color.WHITE);
         int debugInfoY = engine.showMetricsVideo ? 125 : 0;
-        if(gameSettings.showTimeElapsed) {
-            g.drawString("Time Elapsed: " + gDate.getTimerString(gameSettings.timeElapsedMillis), 0, debugInfoY + 25);
-            debugInfoY += 25;
-        }
         if(gameSettings.showFrameInfo) {
             g.drawString("Game FPS: " + gameSettings.gameFramesPerSecondMetricSnapshot, 0, debugInfoY + 25);
             g.drawString("Game Frames: " + gameSettings.gameFrames, 0, debugInfoY + 50);
@@ -70,6 +66,10 @@ public class gameGraphics {
             g.drawString("Camera Coords: " + camCoords[0] + ", " + camCoords[1], 0, debugInfoY + 25);
             g.drawString("Camera Scale: " + gameCamera.camera1.getZoom(), 0, debugInfoY + 50);
             debugInfoY += 50;
+        }
+        if(gameSettings.showTimeElapsed) {
+            g.drawString("Time Elapsed: " + gDate.getTimerString(gameSettings.timeElapsedMillis), 0, debugInfoY + 25);
+            debugInfoY += 25;
         }
     }
 

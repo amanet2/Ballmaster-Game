@@ -38,15 +38,6 @@ public class gameGraphics {
         }
     }
 
-    private static void transformWorld(Graphics g) {
-        // move world to match camera coords
-        g.translate(-(int)gameCamera.getCamera1().getCoords()[0], -(int)gameCamera.getCamera1().getCoords()[1]);
-
-        //zoom in or out depending on camera setting
-        double cameraZoom = gameCamera.getCamera1().getZoom();
-        ((Graphics2D) g).scale(cameraZoom, cameraZoom);
-    }
-
     private static void drawWorld(Graphics g) {
         int spriteId = 2;
         int spriteWidth = 600;
@@ -89,9 +80,11 @@ public class gameGraphics {
                 public void draw(Graphics g) {
                     try {
                         super.draw(g);  // required to collect video metrics
+
                         getGameMetrics();
 
-                        transformWorld(g);
+                        this.setCameraTransform(g, gameCamera.getCamera1());
+
                         drawWorld(g);
 
                         this.restoreScaledTransform(g);

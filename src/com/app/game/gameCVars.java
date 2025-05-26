@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.TreeSet;
 
 public class gameCVars {
+    // TODO: much of this functionality can be moved to engine
+    // TODO: e.g. parseLaunchArgs can become parseFromArray, setCVar can go in engine and still sys.print errors, etc
     private static engine engineInstance = engine.instance();
     private static final gCVarSystem cVars = engineInstance.gCVarSystem;
 

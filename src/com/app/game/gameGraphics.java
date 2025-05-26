@@ -1,8 +1,8 @@
 package com.app.game;
 
 import com.app.engine.engine;
+import com.app.engine.graphicsSystem.gPanel;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
-import com.app.engine.settings;
 import com.app.engine.utils.gDate;
 import com.app.engine.utils.gMath;
 
@@ -14,7 +14,7 @@ import java.awt.geom.AffineTransform;
 public class gameGraphics {
     private static engine engineInstance = engine.instance();
 
-    private static gGraphicsSystem graphics;
+    private static gGraphicsSystem graphics = engineInstance.gGraphicsSystem;
 
     private static AffineTransform savedTransformation;
 
@@ -49,7 +49,7 @@ public class gameGraphics {
         g.translate((int)((double)graphics.getWidth()/2.0), (int)((double)graphics.getHeight()/2.0));
 
         // scale the world according to screen height
-        double scaleFactor = gMath.scaleDoubleToWindowHeight(1.0, gameSettings.gameScale, gameSettings.screenHeight);
+        double scaleFactor = gMath.scaleDoubleToWindowHeight(1.0, gameSettings.gameScale, graphics.getHeight());
         ((Graphics2D) g).scale(scaleFactor, scaleFactor);
 
         // move world to match camera coords
@@ -64,7 +64,7 @@ public class gameGraphics {
         ((Graphics2D) g).setTransform(savedTransformation);
 
         // scale ui text according to window screen height
-        double scaleFactor = gMath.scaleDoubleToWindowHeight(1.0, gameSettings.gameScale, gameSettings.screenHeight);
+        double scaleFactor = gMath.scaleDoubleToWindowHeight(1.0, gameSettings.gameScale, graphics.getHeight());
         ((Graphics2D) g).scale(scaleFactor, scaleFactor);
     }
 
@@ -83,7 +83,7 @@ public class gameGraphics {
 
     private static void drawUI(Graphics g) {
         g.setColor(Color.WHITE);
-        int debugInfoY = settings.showMetricsVideo ? 125 : 0;
+        int debugInfoY = engine.showMetricsVideo ? 125 : 0;
         if(gameSettings.showTimeElapsed) {
             g.drawString("Time Elapsed: " + gDate.getTimerString(gameSettings.timeElapsedMillis), 0, debugInfoY + 25);
             debugInfoY += 25;
@@ -106,27 +106,23 @@ public class gameGraphics {
 
     public static void init() {
         // TODO: window needs to be resizable for cVars to work
-        graphics = engineInstance.graphicsSystem.new gGraphicsSystem(
-                engineInstance.graphicsSystem.new gPanel() {
-                    public void draw(Graphics g) {
-                        try {
-                            super.draw(g);  // required to collect video metrics
-                            getGameMetrics();
+        engineInstance.gGraphicsSystem.setPanel(new gPanel() {
+                public void draw(Graphics g) {
+                    try {
+                        super.draw(g);  // required to collect video metrics
+                        getGameMetrics();
 
-                            transformWorld(g);
-                            drawWorld(g);
-                            resetTransformWorld(g);
+                        transformWorld(g);
+                        drawWorld(g);
+                        resetTransformWorld(g);
 
-                            drawUI(g);
-                        }
-                        catch (Exception e) {
-                            System.out.println("EXCEPTION IN gameGraphics.draw()");
-                            e.printStackTrace();
-                        }
+                        drawUI(g);
                     }
-                },
-                gameSettings.screenWidth,
-                gameSettings.screenHeight
-        );
+                    catch (Exception e) {
+                        System.out.println("EXCEPTION IN gameGraphics.draw()");
+                        e.printStackTrace();
+                    }
+                }
+        });
     }
 }

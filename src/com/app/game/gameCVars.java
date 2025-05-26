@@ -3,14 +3,14 @@ package com.app.game;
 import com.app.engine.cVarSystem.gCVar;
 import com.app.engine.cVarSystem.gCVarSystem;
 import com.app.engine.engine;
-import com.app.engine.settings;
 import com.app.engine.utils.gDict;
 
 import java.util.Arrays;
 import java.util.TreeSet;
 
 public class gameCVars {
-    private static final gCVarSystem cVars = engine.instance().gCVarSystem;
+    private static engine engineInstance = engine.instance();
+    private static final gCVarSystem cVars = engineInstance.gCVarSystem;
 
     public static void parseLaunchArgs(String[] args) {
         for(int i = 0; i < args.length; i++) {
@@ -69,10 +69,10 @@ public class gameCVars {
             }
         };
 
-        gCVar cVarShowFps = new gCVar(settings.showMetricsVideo ? "1" : "0") {
+        gCVar cVarShowFps = new gCVar(engine.showMetricsVideo ? "1" : "0") {
             @Override
             public void onChange() {
-                settings.showMetricsVideo = this.getValue().equalsIgnoreCase("1");
+                engine.showMetricsVideo = this.getValue().equalsIgnoreCase("1");
             }
         };
 
@@ -104,17 +104,17 @@ public class gameCVars {
             }
         };
 
-        gCVar cVarRCustomHeight = new gCVar(Integer.toString(gameSettings.screenHeight)) {
+        gCVar cVarRCustomHeight = new gCVar(Integer.toString(engineInstance.gGraphicsSystem.getHeight())) {
             @Override
             public void onChange() {
-                gameSettings.screenHeight = Integer.parseInt(this.getValue());
+                engineInstance.gGraphicsSystem.setHeight(Integer.parseInt(this.getValue()));
             }
         };
 
-        gCVar cVarRCustomWidth = new gCVar(Integer.toString(gameSettings.screenWidth)) {
+        gCVar cVarRCustomWidth = new gCVar(Integer.toString(engineInstance.gGraphicsSystem.getWidth())) {
             @Override
             public void onChange() {
-                gameSettings.screenWidth = Integer.parseInt(this.getValue());
+                engineInstance.gGraphicsSystem.setWidth(Integer.parseInt(this.getValue()));
             }
         };
 

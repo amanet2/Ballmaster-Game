@@ -1,17 +1,17 @@
 package com.app.game;
 
 public class game {
-    // TODO: need to use interfaces as headers for game files too
-    // TODO: e.g. we need an interface for console to list out commands
+    private static int dir = 1;
+
     private static void updateGame() {
-        if(gameSettings.dir > 0)
+        if(dir > 0)
             gameSettings.testSpriteX += 0.2;
-        if(gameSettings.dir < 1)
+        if(dir < 1)
             gameSettings.testSpriteX -= 0.2;
         if(gameSettings.testSpriteX > 300)
-            gameSettings.dir = -1;
+            dir = -1;
         if(gameSettings.testSpriteX < -300)
-            gameSettings.dir = 1;
+            dir = 1;
     }
 
     public static void main(String[] args) {

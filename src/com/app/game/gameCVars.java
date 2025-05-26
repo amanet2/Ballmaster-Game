@@ -55,6 +55,13 @@ public class gameCVars {
             }
         };
 
+        gCVar cVarFsScriptFilesPath = new gCVar(gameSettings.fileSystemScriptsPath) {
+            @Override
+            public void onChange() {
+                gameSettings.fileSystemScriptsPath = this.getValue();
+            }
+        };
+
         gCVar cVarFsSpriteFilesPath = new gCVar(gameSettings.fileSystemSpritesPath) {
             @Override
             public void onChange() {
@@ -74,6 +81,7 @@ public class gameCVars {
         cVars.registerCVar("com_showcamerainfo", cVarShowCamInfo);
         cVars.registerCVar("com_showframeinfo", cVarShowFrameInfo);
         cVars.registerCVar("com_showtimeelapsed", cVarComShowTimeElapsed);
+        cVars.registerCVar("fs_scriptspath", cVarFsScriptFilesPath);
         cVars.registerCVar("fs_spritespath", cVarFsSpriteFilesPath);
         cVars.registerCVar("fs_cfgpath", cVarFsCfgFilesPath);
 

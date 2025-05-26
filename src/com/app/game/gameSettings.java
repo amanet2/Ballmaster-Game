@@ -11,5 +11,4 @@ public class gameSettings {
 
     static double testSpriteX = 0.0;
     static double testSpriteY = 0.0;
-    static int dir = 1;
 }

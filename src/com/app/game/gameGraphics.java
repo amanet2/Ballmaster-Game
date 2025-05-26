@@ -34,11 +34,11 @@ public class gameGraphics {
         g.setColor(Color.WHITE);
         int debugInfoY = engine.showMetricsVideo ? 125 : 0;
         if(gameSettings.showFrameInfo) {
-            g.drawString("Game FPS: " + gameSettings.gameFramesPerSecondMetricSnapshot, 0, debugInfoY + 25);
-            g.drawString("Game Frames: " + gameSettings.gameFrames, 0, debugInfoY + 50);
-            g.drawString("Game Frametime AVG: " + gameSettings.gameFrametimeMetricSnapshotAvg, 0, debugInfoY + 75);
-            g.drawString("Game Frametime Lowest: " + gameSettings.gameFrametimeMetricSnapshotLowest, 0, debugInfoY + 100);
-            g.drawString("Game Frametime Highest: " + gameSettings.gameFrametimeMetricSnapshotHighest, 0, debugInfoY + 125);
+            g.drawString("Game FPS: " + gameMetrics.getGameFramesPerSecondMetricSnapshot(), 0, debugInfoY + 25);
+            g.drawString("Game Frames: " + gameMetrics.getGameFrames(), 0, debugInfoY + 50);
+            g.drawString("Game Frametime AVG: " + gameMetrics.getGameFrametimeMetricSnapshotAvg(), 0, debugInfoY + 75);
+            g.drawString("Game Frametime Lowest: " + gameMetrics.getGameFrametimeMetricSnapshotLowest(), 0, debugInfoY + 100);
+            g.drawString("Game Frametime Highest: " + gameMetrics.getGameFrametimeMetricSnapshotHighest(), 0, debugInfoY + 125);
             debugInfoY += 125;
         }
         if(gameSettings.showCameraInfo) {
@@ -48,7 +48,7 @@ public class gameGraphics {
             debugInfoY += 50;
         }
         if(gameSettings.showTimeElapsed) {
-            g.drawString("Time Elapsed: " + gDate.getTimerString(gameSettings.timeElapsedMillis), 0, debugInfoY + 25);
+            g.drawString("Time Elapsed: " + gDate.getTimerString(gameMetrics.getTimeElapsedMillis()), 0, debugInfoY + 25);
             debugInfoY += 25;
         }
     }

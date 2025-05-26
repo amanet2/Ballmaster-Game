@@ -54,7 +54,7 @@ public class gameFiles {
         for(String line : gFilesConfig.get(name).getFileLines()) {
             if(!line.trim().startsWith(("#"))) {
                 System.out.println("% " + line);
-                System.out.print(gameConsole.get().readLine(line));
+                System.out.print(gameConsole.instance().readLine(line));
             }
         }
         return "";

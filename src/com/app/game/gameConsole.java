@@ -9,7 +9,7 @@ public class gameConsole {
     // TODO: e.g. we need an interface for console to list out commands
     private static final gConsoleSystem console = engine.instance().gConsoleSystem;
 
-    public static gConsoleSystem get() {
+    public static gConsoleSystem instance() {
         return console;
     }
 
@@ -58,7 +58,7 @@ public class gameConsole {
                 String[] names = gameCVars.getCVarList();
                 System.out.println("total " + names.length);
                 for(String name : names) {
-                    System.out.printf("%s = %s%n", name, gameCVars.get().getCVarValue(name));
+                    System.out.printf("%s = %s%n", name, gameCVars.instance().getCVarValue(name));
                 }
                 return "";
             }

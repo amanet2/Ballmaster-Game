@@ -7,14 +7,13 @@ import com.app.engine.utils.gDate;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 
 public class gameGraphics {
     private static engine engineInstance = engine.instance();
 
     private static gGraphicsSystem graphics = engineInstance.gGraphicsSystem;
 
-    public static gGraphicsSystem get() {
+    public static gGraphicsSystem instance() {
         return graphics;
     }
 
@@ -67,9 +66,9 @@ public class gameGraphics {
             debugInfoY += 125;
         }
         if(gameSettings.showCameraInfo) {
-            double[] camCoords = gameCamera.getCamera1().getCoords();
+            double[] camCoords = gameCamera.camera1.getCoords();
             g.drawString("Camera Coords: " + camCoords[0] + ", " + camCoords[1], 0, debugInfoY + 25);
-            g.drawString("Camera Scale: " + gameCamera.getCamera1().getZoom(), 0, debugInfoY + 50);
+            g.drawString("Camera Scale: " + gameCamera.camera1.getZoom(), 0, debugInfoY + 50);
             debugInfoY += 50;
         }
     }
@@ -83,7 +82,7 @@ public class gameGraphics {
 
                         getGameMetrics();
 
-                        this.setCameraTransform(g, gameCamera.getCamera1());
+                        this.setCameraTransform(g, gameCamera.camera1);
 
                         drawWorld(g);
 

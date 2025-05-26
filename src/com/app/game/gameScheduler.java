@@ -7,7 +7,7 @@ import com.app.engine.engine;
 public class gameScheduler {
     private static final gSchedulerSystem scheduler = engine.instance().gSchedulerSystem;
 
-    public static gSchedulerSystem get() {
+    public static gSchedulerSystem instance() {
         return scheduler;
     }
 

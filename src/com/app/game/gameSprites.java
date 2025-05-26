@@ -11,7 +11,7 @@ public class gameSprites {
 
     public static ArrayList<gSprite> gSprites = new ArrayList<>();
 
-    public static gSpriteSystem get() {
+    public static gSpriteSystem instance() {
         return gSpriteSystem;
     }
 

@@ -30,7 +30,7 @@ public class gameCVars {
         return String.format("Set value of cvar '%s' to '%s'%n", name, value);
     }
 
-    public static gCVarSystem get() {
+    public static gCVarSystem instance() {
         return cVars;
     }
 
@@ -47,18 +47,18 @@ public class gameCVars {
     }
 
     public static void init() {
-        gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.getCamera1().getCoords())) {
+        gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.camera1.getCoords())) {
             @Override
             public void onChange() {
                 String[] args = this.getValue().split(",");
-                gameCamera.getCamera1().setCoords(new double[]{Double.parseDouble(args[0]), Double.parseDouble(args[1])});
+                gameCamera.camera1.setCoords(new double[]{Double.parseDouble(args[0]), Double.parseDouble(args[1])});
             }
         };
 
-        gCVar cVarCamZoon = new gCVar(Double.toString(gameCamera.getCamera1().getZoom())) {
+        gCVar cVarCamZoon = new gCVar(Double.toString(gameCamera.camera1.getZoom())) {
             @Override
             public void onChange() {
-                gameCamera.getCamera1().setZoom(Double.parseDouble(this.getValue()));
+                gameCamera.camera1.setZoom(Double.parseDouble(this.getValue()));
             }
         };
 
@@ -132,8 +132,6 @@ public class gameCVars {
         System.out.println("----------------");
         System.out.println("CVAR SYSTEM INITIALIZED");
         System.out.println(toDict());
-        double foo = 3.0 / 4.0 * 2.0;
-        System.out.println(foo);
         System.out.println("----------------");
     }
 }

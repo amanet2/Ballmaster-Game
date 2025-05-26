@@ -73,9 +73,9 @@ public class game {
                 getGameMetrics();
             }
 
-            gameScheduler.get().doEvents(System.currentTimeMillis());
+            gameScheduler.instance().doEvents(System.currentTimeMillis());
 
-            gameGraphics.get().update();
+            gameGraphics.instance().update();
         }
     }
 }

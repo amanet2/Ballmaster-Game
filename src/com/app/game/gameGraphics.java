@@ -4,19 +4,15 @@ import com.app.engine.engine;
 import com.app.engine.graphicsSystem.gPanel;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
 import com.app.engine.utils.gDate;
-import com.app.engine.utils.gMath;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
 
 public class gameGraphics {
     private static engine engineInstance = engine.instance();
 
     private static gGraphicsSystem graphics = engineInstance.gGraphicsSystem;
-
-    private static AffineTransform savedTransformation;
 
     public static gGraphicsSystem get() {
         return graphics;
@@ -43,29 +39,12 @@ public class gameGraphics {
     }
 
     private static void transformWorld(Graphics g) {
-        savedTransformation = ((Graphics2D) g).getTransform();
-
-        // center the screen over 0,0
-        g.translate((int)((double)graphics.getWidth()/2.0), (int)((double)graphics.getHeight()/2.0));
-
-        // scale the world according to screen height
-        double scaleFactor = gMath.scaleDoubleToWindowHeight(1.0, gameSettings.gameScale, graphics.getHeight());
-        ((Graphics2D) g).scale(scaleFactor, scaleFactor);
-
         // move world to match camera coords
         g.translate(-(int)gameCamera.getCamera1().getCoords()[0], -(int)gameCamera.getCamera1().getCoords()[1]);
 
         //zoom in or out depending on camera setting
         double cameraZoom = gameCamera.getCamera1().getZoom();
         ((Graphics2D) g).scale(cameraZoom, cameraZoom);
-    }
-
-    private static void resetTransformWorld(Graphics g) {
-        ((Graphics2D) g).setTransform(savedTransformation);
-
-        // scale ui text according to window screen height
-        double scaleFactor = gMath.scaleDoubleToWindowHeight(1.0, gameSettings.gameScale, graphics.getHeight());
-        ((Graphics2D) g).scale(scaleFactor, scaleFactor);
     }
 
     private static void drawWorld(Graphics g) {
@@ -114,7 +93,8 @@ public class gameGraphics {
 
                         transformWorld(g);
                         drawWorld(g);
-                        resetTransformWorld(g);
+
+                        this.restoreScaledTransform(g);
 
                         drawUI(g);
                     }

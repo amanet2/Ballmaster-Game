@@ -1,8 +1,6 @@
 package com.app.game;
 
 public class gameSettings {
-    static double gameScale = 768.0;
-
     static String fileSystemConfigPath = "config";
     static String fileSystemScriptsPath = "scripts";
     static String fileSystemSpritesPath = "data";

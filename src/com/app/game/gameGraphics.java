@@ -17,26 +17,6 @@ public class gameGraphics {
         return graphics;
     }
 
-    private static void getGameMetrics() {
-        long currentTimeMillis = System.currentTimeMillis();
-
-        if(currentTimeMillis > gameSettings.frameMetricTimeMillis) {
-            gameSettings.frameMetricTimeMillis = currentTimeMillis + 1000;
-
-            gameSettings.gameFramesPerSecondMetricSnapshot = gameSettings.gameFramesPerSecondMetric;
-
-            gameSettings.gameFramesPerSecondMetric = 0;
-
-            gameSettings.gameFrametimeMetricSnapshotLowest = gameSettings.gameFrametimeMetricLowest;
-            gameSettings.gameFrametimeMetricSnapshotAvg = gameSettings.gameFrametimeMetric/1000;
-            gameSettings.gameFrametimeMetricSnapshotHighest = gameSettings.gameFrametimeMetricHighest;
-
-            gameSettings.gameFrametimeMetric = 0;
-            gameSettings.gameFrametimeMetricLowest = 0;
-            gameSettings.gameFrametimeMetricHighest = 0;
-        }
-    }
-
     private static void drawWorld(Graphics g) {
         int spriteId = 2;
         int spriteWidth = 600;
@@ -79,8 +59,6 @@ public class gameGraphics {
                 public void draw(Graphics g) {
                     try {
                         super.draw(g);  // required to collect video metrics
-
-                        getGameMetrics();
 
                         this.setCameraTransform(g, gameCamera.camera1);
 

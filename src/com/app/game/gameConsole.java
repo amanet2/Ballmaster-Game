@@ -21,7 +21,7 @@ public class gameConsole {
             public String doCommand(String[] args) {
                 if(args.length < 1 || args[0].trim().isEmpty())
                     return "For executing a cfg file. Usage: exec CFG_FILE";
-                return gameFiles.execFile(args[0]);
+                return gameFiles.execCfgFile(args[0]);
             }
         };
         gConsoleCommand gConsoleCommandListFiles = new gConsoleCommand("lists cfg files") {

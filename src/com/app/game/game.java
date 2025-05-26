@@ -3,7 +3,7 @@ package com.app.game;
 public class game {
     // TODO: need to use interfaces as headers for game files too
     // TODO: e.g. we need an interface for console to list out commands
-    static void updateGame() {
+    private static void updateGame() {
         if(gameSettings.timeStartMillis < 1)
             gameSettings.timeStartMillis = System.currentTimeMillis() ;
 
@@ -19,7 +19,9 @@ public class game {
             gameSettings.dir = 1;
     }
 
-    static void getGameMetrics() {
+    private static void getGameMetrics() {
+        long currentTimeMillis = System.currentTimeMillis();
+
         gameSettings.gameFrames++;
         gameSettings.gameFramesPerSecondMetric++;
         if(gameSettings.gameFrames >= Integer.MAX_VALUE - 1000)
@@ -33,6 +35,22 @@ public class game {
             gameSettings.gameFrametimeMetricHighest = gameSettings.gameFrametime;
         if(gameSettings.gameFrametime < gameSettings.gameFrametimeMetricLowest)
             gameSettings.gameFrametimeMetricLowest = gameSettings.gameFrametime;
+
+        if(currentTimeMillis > gameSettings.frameMetricTimeMillis) {
+            gameSettings.frameMetricTimeMillis = currentTimeMillis + 1000;
+
+            gameSettings.gameFramesPerSecondMetricSnapshot = gameSettings.gameFramesPerSecondMetric;
+
+            gameSettings.gameFramesPerSecondMetric = 0;
+
+            gameSettings.gameFrametimeMetricSnapshotLowest = gameSettings.gameFrametimeMetricLowest;
+            gameSettings.gameFrametimeMetricSnapshotAvg = gameSettings.gameFrametimeMetric/1000;
+            gameSettings.gameFrametimeMetricSnapshotHighest = gameSettings.gameFrametimeMetricHighest;
+
+            gameSettings.gameFrametimeMetric = 0;
+            gameSettings.gameFrametimeMetricLowest = 0;
+            gameSettings.gameFrametimeMetricHighest = 0;
+        }
     }
 
     public static void main(String[] args) {
@@ -43,7 +61,7 @@ public class game {
         gameConsole.init();
         gameCVars.init();
         gameFiles.init();
-        gameFiles.execFile("config/autoexec.cfg");
+        gameFiles.execCfgFile("config/autoexec.cfg");
         gameCVars.instance().parseArgs(args);
         gameScheduler.init();
         gameGraphics.init();

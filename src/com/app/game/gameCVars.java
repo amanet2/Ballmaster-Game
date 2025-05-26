@@ -3,10 +3,8 @@ package com.app.game;
 import com.app.engine.cVarSystem.gCVar;
 import com.app.engine.cVarSystem.gCVarSystem;
 import com.app.engine.engine;
-import com.app.engine.utils.gDict;
 
 import java.util.Arrays;
-import java.util.TreeSet;
 
 public class gameCVars {
     // TODO: much of this functionality can be moved to engine
@@ -18,19 +16,9 @@ public class gameCVars {
         return cVars;
     }
 
-    public static String[] getCVarList() {
-        return cVars.keySet().toArray(new String[0]);
-    }
-
-    public static gDict toDict() {
-        gDict dict = new gDict();
-        for(String k : cVars.keySet()) {
-            dict.put(k, cVars.getCVarValue(k));
-        }
-        return dict;
-    }
-
     public static void init() {
+        // TODO: register game-specific cvars here
+        // TODO: set up relevant cvars to work at engine level
         gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.camera1.getCoords())) {
             @Override
             public void onChange() {
@@ -50,13 +38,6 @@ public class gameCVars {
             @Override
             public void onChange() {
                 gameSettings.showCameraInfo = this.getValue().equalsIgnoreCase("1");
-            }
-        };
-
-        gCVar cVarShowFps = new gCVar(engine.showMetricsVideo ? "1" : "0") {
-            @Override
-            public void onChange() {
-                engine.showMetricsVideo = this.getValue().equalsIgnoreCase("1");
             }
         };
 
@@ -88,34 +69,17 @@ public class gameCVars {
             }
         };
 
-        gCVar cVarRCustomHeight = new gCVar(Integer.toString(engineInstance.gGraphicsSystem.getHeight())) {
-            @Override
-            public void onChange() {
-                engineInstance.gGraphicsSystem.setHeight(Integer.parseInt(this.getValue()));
-            }
-        };
-
-        gCVar cVarRCustomWidth = new gCVar(Integer.toString(engineInstance.gGraphicsSystem.getWidth())) {
-            @Override
-            public void onChange() {
-                engineInstance.gGraphicsSystem.setWidth(Integer.parseInt(this.getValue()));
-            }
-        };
-
         cVars.registerCVar("cam_xy", cVarCamXY);
         cVars.registerCVar("cam_zoom", cVarCamZoon);
         cVars.registerCVar("com_showcamerainfo", cVarShowCamInfo);
-        cVars.registerCVar("com_showfps", cVarShowFps);
         cVars.registerCVar("com_showframeinfo", cVarShowFrameInfo);
         cVars.registerCVar("com_showtimeelapsed", cVarComShowTimeElapsed);
         cVars.registerCVar("fs_spritespath", cVarFsSpriteFilesPath);
         cVars.registerCVar("fs_cfgpath", cVarFsCfgFilesPath);
-        cVars.registerCVar("r_customHeight", cVarRCustomHeight);
-        cVars.registerCVar("r_customWidth", cVarRCustomWidth);
 
         System.out.println("----------------");
         System.out.println("CVAR SYSTEM INITIALIZED");
-        System.out.println(toDict());
+        System.out.println(cVars.toDict());
         System.out.println("----------------");
     }
 }

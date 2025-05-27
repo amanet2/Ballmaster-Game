@@ -27,5 +27,7 @@ public class gameSprites {
         gSprites.add(pinkGuySprite);
         gSprites.add(pinkGuySpriteBig);
         gSprites.add(pinkGuySpriteHuge);
+
+        System.out.println("SPRITES SYSTEM INITIALIZED");
     }
 }

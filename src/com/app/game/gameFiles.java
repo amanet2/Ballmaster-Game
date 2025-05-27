@@ -25,6 +25,8 @@ public class gameFiles {
 
         fileSystemSprites = new gFileSystem(gameSettings.fileSystemSpritesPath);
         parseFiles(gFilesSprites, fileSystemSprites.getRootDirectory());
+
+        System.out.println("FILE SYSTEM INITIALIZED");
     }
 
     public static String[] getFilesListConfig() {
@@ -54,7 +56,7 @@ public class gameFiles {
         for(String line : gFilesConfig.get(name).getFileLines()) {
             if(!line.trim().startsWith(("#"))) {
                 System.out.println("% " + line);
-                System.out.print(gameConsole.instance().readLine(line));
+                System.out.println(gameConsole.instance().readLine(line));
             }
         }
         return "";

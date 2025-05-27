@@ -27,7 +27,8 @@ public class gameInput {
             while(true) {
                 System.out.print("% ");
                 String input = scanner.nextLine();
-                System.out.print(gameConsole.instance().readLine(input));
+                String output = gameConsole.instance().readLine(input);
+                System.out.print(output + (!output.isEmpty() ? "\n" : ""));
             }
         }).start();
     }

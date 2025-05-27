@@ -28,5 +28,7 @@ public class gameScheduler {
 //                );
 //            }
 //        });
+
+        System.out.println("SCHEDULER SYSTEM INITIALIZED");
     }
 }

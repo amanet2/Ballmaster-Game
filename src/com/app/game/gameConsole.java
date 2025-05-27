@@ -80,5 +80,7 @@ public class gameConsole {
         console.registerCmd("listFilesSprites", gConsoleCommandListSprites);
         console.registerCmd("script", gConsoleCommandScript);
         console.registerCmd("scriptFile", gConsoleCommandScriptFile);
+
+        System.out.println("CONSOLE SYSTEM INITIALIZED");
     }
 }

@@ -82,9 +82,6 @@ public class gameCVars {
         cVars.registerCVar("fs_spritespath", cVarFsSpriteFilesPath);
         cVars.registerCVar("fs_cfgpath", cVarFsCfgFilesPath);
 
-        System.out.println("----------------");
-        System.out.println(cVars.toDict());
         System.out.println("CVAR SYSTEM INITIALIZED");
-        System.out.println("----------------");
     }
 }

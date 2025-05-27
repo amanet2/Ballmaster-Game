@@ -73,14 +73,14 @@ public class gameCVars {
             }
         };
 
-        cVars.registerCVar("cam_xy", cVarCamXY);
-        cVars.registerCVar("cam_zoom", cVarCamZoon);
-        cVars.registerCVar("com_showcamerainfo", cVarShowCamInfo);
         cVars.registerCVar("com_showframeinfo", cVarShowFrameInfo);
         cVars.registerCVar("com_showtimeelapsed", cVarComShowTimeElapsed);
         cVars.registerCVar("fs_scriptspath", cVarFsScriptFilesPath);
         cVars.registerCVar("fs_spritespath", cVarFsSpriteFilesPath);
         cVars.registerCVar("fs_cfgpath", cVarFsCfgFilesPath);
+        cVars.registerCVar("g_showcamerainfo", cVarShowCamInfo);
+        cVars.registerCVar("g_camXY", cVarCamXY);
+        cVars.registerCVar("g_camZoom", cVarCamZoon);
 
         System.out.println("CVAR SYSTEM INITIALIZED");
     }

@@ -17,7 +17,7 @@ public class gameSystems {
         gameSprites.init();
         gameMetrics.init();
 
-        String testString = "{foo=bar, baz={foo=bar, qaz={yaz=\\=pzaz}}, zaz={abz=bzaz}}";
+        String testString = "{foo=bar, baz={foo=bar, qaz={yaz=p\\}zaz}}, zaz={abz=bzaz}}";
         gDict testDict = new gDict(testString);
         System.out.println("TEST GDICT STRING: " + testString);
         System.out.println("TEST GDICT: " + testDict);

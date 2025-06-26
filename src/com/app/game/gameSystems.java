@@ -1,5 +1,7 @@
 package com.app.game;
 
+import com.app.engine.utils.gDict;
+
 public class gameSystems {
     public static void init(String[] args) {
         System.out.println("----------------");
@@ -14,6 +16,11 @@ public class gameSystems {
         gameGraphics.init();
         gameSprites.init();
         gameMetrics.init();
+
+        String testString = "{foo=bar, baz={foo=bar, qaz={yaz=\\=pzaz}}, zaz={abz=bzaz}}";
+        gDict testDict = new gDict(testString);
+        System.out.println("TEST GDICT STRING: " + testString);
+        System.out.println("TEST GDICT: " + testDict);
 
         System.out.println("----------------");
         System.out.println("----------------");

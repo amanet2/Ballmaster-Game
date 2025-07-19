@@ -2,6 +2,8 @@ package com.app.game;
 
 import com.app.engine.utils.gDict;
 
+import java.util.ArrayList;
+
 public class gameSystems {
     public static void init(String[] args) {
         System.out.println("----------------");
@@ -21,6 +23,7 @@ public class gameSystems {
         gDict testDict = new gDict(testString);
         System.out.println("TEST GDICT STRING: " + testString);
         System.out.println("TEST GDICT: " + testDict);
+        System.out.println(((ArrayList<String>) testDict.get("laz")).get(1));
 
         System.out.println("----------------");
         System.out.println("----------------");

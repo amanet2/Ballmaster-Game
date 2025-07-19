@@ -32,24 +32,25 @@ public class gameGraphics {
 
     private static void drawUI(Graphics g) {
         g.setColor(Color.WHITE);
-        int debugInfoY = engine.showMetricsVideo ? 125 : 0;
+        int debugInfoY = engine.showMetricsVideo ? 150 : 0;
+        int debugInfoSeparation = 25;
         if(gameSettings.showFrameInfo) {
-            g.drawString("Game FPS: " + gameMetrics.getGameFramesPerSecondMetricSnapshot(), 0, debugInfoY + 25);
-            g.drawString("Game Frames: " + gameMetrics.getGameFrames(), 0, debugInfoY + 50);
-            g.drawString("Game Frametime AVG: " + gameMetrics.getGameFrametimeMetricSnapshotAvg(), 0, debugInfoY + 75);
-            g.drawString("Game Frametime Lowest: " + gameMetrics.getGameFrametimeMetricSnapshotLowest(), 0, debugInfoY + 100);
-            g.drawString("Game Frametime Highest: " + gameMetrics.getGameFrametimeMetricSnapshotHighest(), 0, debugInfoY + 125);
-            debugInfoY += 125;
+            g.drawString("Game FPS: " + gameMetrics.getGameFramesPerSecondMetricSnapshot(), 0, debugInfoY + debugInfoSeparation);
+            g.drawString("Game Frames: " + gameMetrics.getGameFrames(), 0, debugInfoY + debugInfoSeparation*2);
+            g.drawString("Game Frametime AVG: " + gameMetrics.getGameFrametimeMetricSnapshotAvg(), 0, debugInfoY + debugInfoSeparation*3);
+            g.drawString("Game Frametime Lowest: " + gameMetrics.getGameFrametimeMetricSnapshotLowest(), 0, debugInfoY + debugInfoSeparation*4);
+            g.drawString("Game Frametime Highest: " + gameMetrics.getGameFrametimeMetricSnapshotHighest(), 0, debugInfoY + debugInfoSeparation*5);
+            debugInfoY += debugInfoSeparation*5;
         }
         if(gameSettings.showCameraInfo) {
             double[] camCoords = gameCamera.camera1.getCoords();
-            g.drawString("Camera Coords: " + camCoords[0] + ", " + camCoords[1], 0, debugInfoY + 25);
-            g.drawString("Camera Scale: " + gameCamera.camera1.getZoom(), 0, debugInfoY + 50);
-            debugInfoY += 50;
+            g.drawString("Camera Coords: " + camCoords[0] + ", " + camCoords[1], 0, debugInfoY + debugInfoSeparation);
+            g.drawString("Camera Scale: " + gameCamera.camera1.getZoom(), 0, debugInfoY + debugInfoSeparation*2);
+            debugInfoY += debugInfoSeparation*2;
         }
         if(gameSettings.showTimeElapsed) {
-            g.drawString("Time Elapsed: " + gDate.getTimerString(gameMetrics.getTimeElapsedMillis()), 0, debugInfoY + 25);
-            debugInfoY += 25;
+            g.drawString("Time Elapsed: " + gDate.getTimerString(gameMetrics.getTimeElapsedMillis()), 0, debugInfoY + debugInfoSeparation);
+            debugInfoY += debugInfoSeparation;
         }
     }
 

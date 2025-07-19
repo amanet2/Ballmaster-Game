@@ -2,6 +2,7 @@ package com.app.game;
 
 public class game {
     public static void main(String[] args) {
+//        System.setProperty("sun.java2d.opengl", "true");
         gameSystems.init(args);
 
         int internalGameRate = 1000;
@@ -24,6 +25,7 @@ public class game {
             gameScheduler.instance().doEvents(System.currentTimeMillis());
 
             gameGraphics.instance().update();
+            gameGraphics.instance().finish();
         }
     }
 }

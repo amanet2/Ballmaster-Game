@@ -74,12 +74,26 @@ public class gameConsole {
             }
         };
 
+        gConsoleCommand gConsoleCommandUseCamera = new gConsoleCommand("change active camera") {
+            @Override
+            public String doCommand(String[] args) {
+                if(args.length < 1 || args[0].trim().isEmpty())
+                    return "Usage: useCam NUMBER";
+                int index = Integer.parseInt(args[0]);
+                if(index < 0 || gameCamera.cameras.length < index)
+                    return "camera does not exist";
+                gameCamera.activeCamera = gameCamera.cameras[index];
+                return "using camera %d".formatted(index);
+            }
+        };
+
         console.registerCmd("exec", gConsoleCommandExec);
         console.registerCmd("listFilesCfg", gConsoleCommandListFiles);
         console.registerCmd("listFilesScripts", gConsoleCommandListFilesScripts);
         console.registerCmd("listFilesSprites", gConsoleCommandListSprites);
         console.registerCmd("script", gConsoleCommandScript);
         console.registerCmd("scriptFile", gConsoleCommandScriptFile);
+        console.registerCmd("useCam", gConsoleCommandUseCamera);
 
         System.out.println("CONSOLE SYSTEM INITIALIZED");
     }

@@ -42,9 +42,9 @@ public class gameGraphics {
             debugInfoY += 125;
         }
         if(gameSettings.showCameraInfo) {
-            double[] camCoords = gameCamera.camera1.getCoords();
+            double[] camCoords = gameCamera.activeCamera.getCoords();
             g.drawString("Camera Coords: " + camCoords[0] + ", " + camCoords[1], 0, debugInfoY + 25);
-            g.drawString("Camera Scale: " + gameCamera.camera1.getZoom(), 0, debugInfoY + 50);
+            g.drawString("Camera Scale: " + gameCamera.activeCamera.getZoom(), 0, debugInfoY + 50);
             debugInfoY += 50;
         }
         if(gameSettings.showTimeElapsed) {
@@ -59,7 +59,7 @@ public class gameGraphics {
                     try {
                         super.draw(g);  // required to collect video metrics
 
-                        this.setCameraTransform(g, gameCamera.camera1);
+                        this.setCameraTransform(g, gameCamera.activeCamera);
 
                         drawWorld(g);
 

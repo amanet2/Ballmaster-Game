@@ -1,6 +1,8 @@
 package com.app.game;
 
 import com.app.engine.engine;
+import com.app.engine.graphicsSystem;
+import com.app.engine.graphicsSystem.gCanvas;
 import com.app.engine.graphicsSystem.gPanel;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
 import com.app.engine.utils.gDate;
@@ -18,8 +20,8 @@ public class gameGraphics {
     }
 
     private static void drawWorld(Graphics g) {
-        int spriteId = 2;
-        int spriteWidth = 600;
+        int spriteId = 1;
+        int spriteWidth = 300;
         int spriteWorldCoordX = (int) (0.0 - spriteWidth/2.0) + (int) gameState.testSpriteX;
         int spriteWorldCoordY = (int) (0.0 - spriteWidth/2.0) + (int) gameState.testSpriteY;
         if(gameSprites.gSprites.size() > spriteId)
@@ -42,9 +44,9 @@ public class gameGraphics {
             debugInfoY += 125;
         }
         if(gameSettings.showCameraInfo) {
-            double[] camCoords = gameCamera.activeCamera.getCoords();
+            double[] camCoords = gameCamera.gameCamera.getCoords();
             g.drawString("Camera Coords: " + camCoords[0] + ", " + camCoords[1], 0, debugInfoY + 25);
-            g.drawString("Camera Scale: " + gameCamera.activeCamera.getZoom(), 0, debugInfoY + 50);
+            g.drawString("Camera Scale: " + gameCamera.gameCamera.getZoom(), 0, debugInfoY + 50);
             debugInfoY += 50;
         }
         if(gameSettings.showTimeElapsed) {
@@ -54,25 +56,31 @@ public class gameGraphics {
     }
 
     public static void init() {
-        engineInstance.gGraphicsSystem.setPanel(new gPanel() {
-                public void draw(Graphics g) {
-                    try {
-                        super.draw(g);  // required to collect video metrics
-
-                        this.setCameraTransform(g, gameCamera.activeCamera);
-
-                        drawWorld(g);
-
-                        this.restoreScaledTransform(g);
-
-                        drawUI(g);
-                    }
-                    catch (Exception e) {
-                        System.out.println("EXCEPTION IN gameGraphics.draw()");
-                        e.printStackTrace();
-                    }
-                }
+        engineInstance.gGraphicsSystem.init(new gCanvas() {
+            public void render() {
+                super.render();
+            }
         });
+//        engineInstance.gGraphicsSystem.setPanel(new gPanel() {
+//                public void draw(Graphics g) {
+//                    try {
+//                        // TODO make it so I dont have to call restoreTransform
+//                        super.draw(g);  // required to collect video metric
+//
+//                        this.setCameraTransform(g, gameCamera.gameCamera);
+//                        drawWorld(g);
+//
+//                        this.restoreScaledTransform(g);
+//
+//                        this.setCameraTransform(g, gameCamera.uiCamera);
+//                        drawUI(g);
+//                    }
+//                    catch (Exception e) {
+//                        System.out.println("EXCEPTION IN gameGraphics.draw()");
+//                        e.printStackTrace();
+//                    }
+//                }
+//        });
         System.out.println("GRAPHICS SYSTEM INITIALIZED");
     }
 }

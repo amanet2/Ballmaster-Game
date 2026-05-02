@@ -80,9 +80,9 @@ public class gameConsole {
                 if(args.length < 1 || args[0].trim().isEmpty())
                     return "Usage: useCam NUMBER";
                 int index = Integer.parseInt(args[0]);
-                if(index < 0 || gameCamera.cameras.length < index)
+                if(index < 0 || gameCamera.gameCameras.length < index)
                     return "camera does not exist";
-                gameCamera.activeCamera = gameCamera.cameras[index];
+                gameCamera.gameCamera = gameCamera.gameCameras[index];
                 return "using camera %d".formatted(index);
             }
         };

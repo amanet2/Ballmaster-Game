@@ -16,18 +16,18 @@ public class gameCVars {
 
     public static void init() {
         // TODO: register game-specific cvars here
-        gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.activeCamera.getCoords())) {
+        gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.gameCamera.getCoords())) {
             @Override
             public void onChange() {
                 String[] args = this.getValue().split(",");
-                gameCamera.activeCamera.setCoords(new double[]{Double.parseDouble(args[0]), Double.parseDouble(args[1])});
+                gameCamera.gameCamera.setCoords(new double[]{Double.parseDouble(args[0]), Double.parseDouble(args[1])});
             }
         };
 
-        gCVar cVarCamZoon = new gCVar(Double.toString(gameCamera.activeCamera.getZoom())) {
+        gCVar cVarCamZoon = new gCVar(Double.toString(gameCamera.gameCamera.getZoom())) {
             @Override
             public void onChange() {
-                gameCamera.activeCamera.setZoom(Double.parseDouble(this.getValue()));
+                gameCamera.gameCamera.setZoom(Double.parseDouble(this.getValue()));
             }
         };
 

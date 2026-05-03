@@ -9,6 +9,7 @@ import com.app.engine.utils.gDate;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.HashMap;
 
 public class gameGraphics {
     private static engine engineInstance = engine.instance();
@@ -34,7 +35,16 @@ public class gameGraphics {
 
     private static void drawUI(Graphics g) {
         g.setColor(Color.WHITE);
-        int debugInfoY = engine.showMetricsVideo ? 125 : 0;
+        int debugInfoY = 0;
+        if(gameSettings.showVideoInfo) {
+            HashMap<String, Number> videoMetrics = engineInstance.gGraphicsSystem.getVideoMetrics();
+            g.drawString("Video FPS: " + videoMetrics.get("videoFramesPerSecondMetricSnapshot"), 0, debugInfoY + 25);
+            g.drawString("Video Frames: " + videoMetrics.get("videoFrames"), 0, debugInfoY + 50);
+            g.drawString("Video Frametime AVG: " + videoMetrics.get("videoFrametimeMetricSnapshotAvg") + "ms", 0, debugInfoY + 75);
+            g.drawString("Video Frametime Lowest: " + videoMetrics.get("videoFrametimeMetricSnapshotLowest") + "ms", 0, debugInfoY + 100);
+            g.drawString("Video Frametime Highest: " + videoMetrics.get("videoFrametimeMetricSnapshotHighest") + "ms", 0, debugInfoY + 125);
+            debugInfoY += 125;
+        }
         if(gameSettings.showFrameInfo) {
             g.drawString("Game FPS: " + gameMetrics.getGameFramesPerSecondMetricSnapshot(), 0, debugInfoY + 25);
             g.drawString("Game Frames: " + gameMetrics.getGameFrames(), 0, debugInfoY + 50);
@@ -58,6 +68,10 @@ public class gameGraphics {
     public static void init() {
         engineInstance.gGraphicsSystem.init(new gCanvas() {
             public void render() {
+                super.draw();
+                Graphics g = this.getGraphics();
+                drawUI(g);
+
                 super.render();
             }
         });

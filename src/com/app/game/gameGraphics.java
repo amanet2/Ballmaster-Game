@@ -67,13 +67,19 @@ public class gameGraphics {
     public static void init() {
         instance().init(new gCanvas() {
             public void render() {
-                super.clear();
+                try {
+                    super.clear();
 
-                drawWorld();
+                    drawWorld();
 
-                drawUI();
+                    drawUI();
 
-                super.render();
+                    super.render();
+                }
+                catch(Exception e) {
+                    System.out.println("Exception in gameGraphics.render");
+                    e.printStackTrace();
+                }
             }
         });
         System.out.println("GRAPHICS SYSTEM INITIALIZED");

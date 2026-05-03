@@ -20,13 +20,9 @@ public class gameSprites {
                 gameSettings.fileSystemSpritesPath + "/characters/player_pink/a03.png"
         ).getName();
 
-        gSprite pinkGuySprite = gSpriteSystem.getScaledSprite(pinkGuyPath, 150, 150);
-        gSprite pinkGuySpriteBig = gSpriteSystem.getScaledSprite(pinkGuyPath, 300, 300);
-        gSprite pinkGuySpriteHuge = gSpriteSystem.getScaledSprite(pinkGuyPath, 600, 600);
+        gSprite pinkGuySprite = gSpriteSystem.getScaledSprite(pinkGuyPath, 300, 300);
 
         gSprites.add(pinkGuySprite);
-        gSprites.add(pinkGuySpriteBig);
-        gSprites.add(pinkGuySpriteHuge);
 
         System.out.println("SPRITES SYSTEM INITIALIZED");
     }

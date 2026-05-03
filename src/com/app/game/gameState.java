@@ -6,9 +6,9 @@ public class gameState {
     public static double testSpriteY = 0;
 
     public static void update() {
-        if(testSpriteX >= 300)
+        if(testSpriteX >= 450)
             dir = -1;
-        if(testSpriteX <= -300)
+        if(testSpriteX <= -450)
             dir = 1;
 
         testSpriteX += (dir * 0.2);

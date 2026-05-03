@@ -1,45 +1,42 @@
 package com.app.game;
 
 import com.app.engine.engine;
-import com.app.engine.graphicsSystem;
 import com.app.engine.graphicsSystem.gCanvas;
-import com.app.engine.graphicsSystem.gPanel;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
 import com.app.engine.utils.gDate;
 
-import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.HashMap;
 
 public class gameGraphics {
-    private static engine engineInstance = engine.instance();
-
-    private static gGraphicsSystem graphics = engineInstance.gGraphicsSystem;
-
     public static gGraphicsSystem instance() {
-        return graphics;
+        return engine.instance().gGraphicsSystem;
     }
 
-    private static void drawWorld(Graphics g) {
-        int spriteId = 1;
+    private static void drawWorld() {
+        instance().canvas.setCameraTransform(gameCamera.gameCamera);
+        Graphics g = instance().canvas.getGraphics();
+
         int spriteWidth = 300;
         int spriteWorldCoordX = (int) (0.0 - spriteWidth/2.0) + (int) gameState.testSpriteX;
         int spriteWorldCoordY = (int) (0.0 - spriteWidth/2.0) + (int) gameState.testSpriteY;
-        if(gameSprites.gSprites.size() > spriteId)
-            g.drawImage(gameSprites.gSprites.get(spriteId).getImage(), spriteWorldCoordX, spriteWorldCoordY,null);
+        g.drawImage(gameSprites.gSprites.getFirst().getImage(), spriteWorldCoordX, spriteWorldCoordY,null);
 
         g.setColor(Color.YELLOW);
         g.drawLine(600, -1000, 600, 1000);
         g.drawLine(-600, -1000, -600, 1000);
+
+        instance().canvas.restoreScaledTransform();
     }
 
     private static void drawUI() {
-        Graphics g = engineInstance.gGraphicsSystem.canvas.getGraphics();
+        instance().canvas.setCameraTransform(gameCamera.uiCamera);
+        Graphics g = instance().canvas.getGraphics();
 
         g.setColor(Color.WHITE);
         int debugInfoY = 0;
         if(gameSettings.showVideoInfo) {
-            HashMap<String, Number> videoMetrics = engineInstance.gGraphicsSystem.getVideoMetrics();
+            HashMap<String, Number> videoMetrics = instance().getVideoMetrics();
             g.drawString("Video FPS: " + videoMetrics.get("videoFramesPerSecondMetricSnapshot"), 0, debugInfoY + 25);
             g.drawString("Video Frames: " + videoMetrics.get("videoFrames"), 0, debugInfoY + 50);
             g.drawString("Video Frametime AVG: " + videoMetrics.get("videoFrametimeMetricSnapshotAvg") + "ms", 0, debugInfoY + 75);
@@ -68,36 +65,17 @@ public class gameGraphics {
     }
 
     public static void init() {
-        engineInstance.gGraphicsSystem.init(new gCanvas() {
+        instance().init(new gCanvas() {
             public void render() {
                 super.clear();
 
-                this.setCameraTransform(gameCamera.uiCamera);
+                drawWorld();
+
                 drawUI();
 
                 super.render();
             }
         });
-//        engineInstance.gGraphicsSystem.setPanel(new gPanel() {
-//                public void draw(Graphics g) {
-//                    try {
-//                        // TODO make it so I dont have to call restoreTransform
-//                        super.draw(g);  // required to collect video metric
-//
-//                        this.setCameraTransform(g, gameCamera.gameCamera);
-//                        drawWorld(g);
-//
-//                        this.restoreScaledTransform(g);
-//
-//                        this.setCameraTransform(g, gameCamera.uiCamera);
-//                        drawUI(g);
-//                    }
-//                    catch (Exception e) {
-//                        System.out.println("EXCEPTION IN gameGraphics.draw()");
-//                        e.printStackTrace();
-//                    }
-//                }
-//        });
         System.out.println("GRAPHICS SYSTEM INITIALIZED");
     }
 }

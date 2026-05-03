@@ -14,8 +14,8 @@ public class gameGraphics {
     }
 
     private static void drawWorld() {
-        instance().canvas.setCameraTransform(gameCamera.gameCamera);
-        Graphics g = instance().canvas.getGraphics();
+        instance().setCameraTransform(gameCamera.gameCamera);
+        Graphics g = instance().getGraphics();
 
         int spriteWidth = 300;
         int spriteWorldCoordX = (int) (0.0 - spriteWidth/2.0) + (int) gameState.testSpriteX;
@@ -26,12 +26,12 @@ public class gameGraphics {
         g.drawLine(600, -1000, 600, 1000);
         g.drawLine(-600, -1000, -600, 1000);
 
-        instance().canvas.restoreScaledTransform();
+        instance().restoreTransform();
     }
 
     private static void drawUI() {
-        instance().canvas.setCameraTransform(gameCamera.uiCamera);
-        Graphics g = instance().canvas.getGraphics();
+        instance().setCameraTransform(gameCamera.uiCamera);
+        Graphics g = instance().getGraphics();
 
         g.setColor(Color.WHITE);
         int debugInfoY = 25;

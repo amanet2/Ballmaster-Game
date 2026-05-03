@@ -1,2 +1,0 @@
-set cam_xy -75,-75
-set cam_zoom 2

@@ -33,7 +33,9 @@ public class gameGraphics {
         g.drawLine(-600, -1000, -600, 1000);
     }
 
-    private static void drawUI(Graphics g) {
+    private static void drawUI() {
+        Graphics g = engineInstance.gGraphicsSystem.canvas.getGraphics();
+
         g.setColor(Color.WHITE);
         int debugInfoY = 0;
         if(gameSettings.showVideoInfo) {
@@ -68,9 +70,10 @@ public class gameGraphics {
     public static void init() {
         engineInstance.gGraphicsSystem.init(new gCanvas() {
             public void render() {
-                super.draw();
-                Graphics g = this.getGraphics();
-                drawUI(g);
+                super.clear();
+
+                this.setCameraTransform(gameCamera.uiCamera);
+                drawUI();
 
                 super.render();
             }

@@ -17,10 +17,7 @@ public class gameGraphics {
         instance().setCameraTransform(gameCamera.gameCamera);
         Graphics g = instance().getGraphics();
 
-        int spriteWidth = 300;
-        int spriteWorldCoordX = (int) (0.0 - spriteWidth/2.0) + (int) gameState.testSpriteX;
-        int spriteWorldCoordY = (int) (0.0 - spriteWidth/2.0) + (int) gameState.testSpriteY;
-        g.drawImage(gameSprites.gSprites.getFirst().getImage(), spriteWorldCoordX, spriteWorldCoordY,null);
+        gameState.ballBoy.draw(g);
 
         g.setColor(Color.YELLOW);
         g.drawLine(600, -600, 600, 600);
@@ -88,6 +85,11 @@ public class gameGraphics {
                     0,
                     debugInfoY += 25
             );
+        g.drawString(
+                "Ballboy: [%f, %f]".formatted(gameState.ballBoy.getX(), gameState.ballBoy.getY()),
+                0,
+                debugInfoY += 25
+        );
     }
 
     public static void init() {

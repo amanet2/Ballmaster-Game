@@ -22,6 +22,8 @@ public class gameSystems {
         System.out.println("TEST GDICT STRING: " + testString);
         System.out.println("TEST GDICT: " + testDict);
 
+        gameState.init();
+
         System.out.println("----------------");
         System.out.println("----------------");
         System.out.println("STARTED GAME SUCCESSFULLY!");

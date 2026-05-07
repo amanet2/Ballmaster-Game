@@ -122,6 +122,5 @@ public class gameGraphics {
                 }
             }
         });
-        System.out.println("GRAPHICS SYSTEM INITIALIZED");
     }
 }

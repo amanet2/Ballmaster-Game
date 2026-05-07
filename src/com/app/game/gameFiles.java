@@ -25,8 +25,6 @@ public class gameFiles {
 
         fileSystemSprites = new gFileSystem(gameSettings.fileSystemSpritesPath);
         parseFiles(gFilesSprites, fileSystemSprites.getRootDirectory());
-
-        System.out.println("FILE SYSTEM INITIALIZED");
     }
 
     public static String[] getFilesListConfig() {

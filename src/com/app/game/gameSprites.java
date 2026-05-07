@@ -23,7 +23,5 @@ public class gameSprites {
         gSprite pinkGuySprite = gSpriteSystem.getScaledSprite(pinkGuyPath, 100, 100);
 
         gSprites.add(pinkGuySprite);
-
-        System.out.println("SPRITES SYSTEM INITIALIZED");
     }
 }

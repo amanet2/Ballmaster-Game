@@ -94,7 +94,5 @@ public class gameConsole {
         console.registerCmd("script", gConsoleCommandScript);
         console.registerCmd("scriptFile", gConsoleCommandScriptFile);
         console.registerCmd("useCam", gConsoleCommandUseCamera);
-
-        System.out.println("CONSOLE SYSTEM INITIALIZED");
     }
 }

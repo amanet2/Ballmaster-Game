@@ -12,23 +12,21 @@ public class gameScheduler {
     }
 
     static void init() {
-//        // DO NOT REMOVE: a template for an infinitely-recurring event
-//        scheduler.addEvent(System.currentTimeMillis() + 30000, new gSchedulerEvent(){
-//            gSchedulerEvent infiniteEvent = this;
-//            public void doEvent() {
-//                System.out.print("echo 30 seconds elapsed.\n% ");
-//                scheduler.addEvent(
-//                        System.currentTimeMillis() + 30000,
-//                        new gSchedulerEvent(){
-//                            public void doEvent() {
-//                                System.out.print("echo 30 seconds elapsed.\n% ");
-//                                scheduler.addEvent(System.currentTimeMillis() + 30000, infiniteEvent);
-//                            }
-//                        }
-//                );
-//            }
-//        });
-
-        System.out.println("SCHEDULER SYSTEM INITIALIZED");
+        // DO NOT REMOVE: a template for an infinitely-recurring event
+        scheduler.addEvent(System.currentTimeMillis() + 30000, new gSchedulerEvent(){
+            gSchedulerEvent infiniteEvent = this;
+            public void doEvent() {
+                System.out.print("echo 30 seconds elapsed.\n% ");
+                scheduler.addEvent(
+                        System.currentTimeMillis() + 30000,
+                        new gSchedulerEvent(){
+                            public void doEvent() {
+                                System.out.print("echo 30 seconds elapsed.\n% ");
+                                scheduler.addEvent(System.currentTimeMillis() + 30000, infiniteEvent);
+                            }
+                        }
+                );
+            }
+        });
     }
 }

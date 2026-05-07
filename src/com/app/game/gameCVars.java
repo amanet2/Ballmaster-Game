@@ -89,7 +89,5 @@ public class gameCVars {
         cVars.registerCVar("g_showcamerainfo", cVarShowCamInfo);
         cVars.registerCVar("g_camXY", cVarCamXY);
         cVars.registerCVar("g_camZoom", cVarCamZoon);
-
-        System.out.println("CVAR SYSTEM INITIALIZED");
     }
 }

@@ -23,8 +23,6 @@ public class gameMetrics {
         currentTimeMillis = timeStartedMillis;
         frameMetricTimeMillis = currentTimeMillis + 1000;
         timeElapsedMillis = 0;
-
-        System.out.println("METRICS SYSTEM INITIALIZED");
     }
 
     public static long getTimeElapsedMillis() {

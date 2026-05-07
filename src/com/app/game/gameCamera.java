@@ -1,7 +1,5 @@
 package com.app.game;
 
-import com.app.engine.camera;
-
 public class gameCamera {
     public static final camera[] gameCameras = {new camera(), new camera()};
 

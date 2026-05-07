@@ -13,8 +13,20 @@ public class gameGraphics {
         return engine.instance().gGraphicsSystem;
     }
 
+    private static void setCameraTransform(camera c) {
+        Graphics g = instance().getGraphics();
+
+        // move world to match camera coords
+        double[] cCoords = c.getCoords();
+        g.translate(-(int)cCoords[0], -(int)cCoords[1]);
+
+        //zoom in or out depending on camera setting
+        double cameraZoom = c.getZoom();
+        ((Graphics2D) g).scale(cameraZoom, cameraZoom);
+    }
+
     private static void drawWorld() {
-        instance().setCameraTransform(gameCamera.gameCamera);
+        setCameraTransform(gameCamera.gameCamera);
         Graphics g = instance().getGraphics();
 
         gameState.ballBoy.draw(g);
@@ -31,7 +43,7 @@ public class gameGraphics {
     }
 
     private static void drawUI() {
-        instance().setCameraTransform(gameCamera.uiCamera);
+        setCameraTransform(gameCamera.uiCamera);
         Graphics g = instance().getGraphics();
 
         g.setColor(Color.WHITE);

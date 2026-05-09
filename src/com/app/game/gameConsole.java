@@ -28,5 +28,10 @@ public class gameConsole {
         };
 
         console.registerCmd("useCam", gConsoleCommandUseCamera);
+
+        gameInput.instance().bind(38, gameImpulses.impulseCameraUp);
+        gameInput.instance().bind(40, gameImpulses.impulseCameraDown);
+        gameInput.instance().bind(37, gameImpulses.impulseCameraLeft);
+        gameInput.instance().bind(39, gameImpulses.impulseCameraRight);
     }
 }

@@ -58,8 +58,10 @@ public class gameGraphics {
         }
         if(gameSettings.showCameraInfo) {
             double[] camCoords = gameCamera.gameCamera.getCoords();
+            double[] camVec = gameCamera.gameCamera.getVec();
             String[] metrics = {
                     "Cam XY: [%f, %f]".formatted(camCoords[0], camCoords[1]),
+                    "Cam Vec: [%f, %f]".formatted(camVec[0], camVec[1]),
                     "Cam Scale: %g".formatted(gameCamera.gameCamera.getZoom()),
             };
             for(String metric : metrics) {

@@ -16,5 +16,9 @@ public class gameState {
             ballBoy.setDx(0.2);
 
         ballBoy.setX(ballBoy.getX() + ballBoy.getDx());
+
+        double[] camCoords = gameCamera.gameCamera.getCoords();
+        double[] camVec = gameCamera.gameCamera.getVec();
+        gameCamera.gameCamera.setCoords(new double[]{ camCoords[0] + camVec[0], camCoords[1] + camVec[1]});
     }
 }

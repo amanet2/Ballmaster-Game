@@ -26,8 +26,6 @@ public class gameGraphics {
         g.drawLine(-600, 0, 600, 0);
         g.drawLine(-600, -600, 600, -600);
         g.drawLine(-600, 600, 600, 600);
-
-        instance().restoreTransform(); // TODO: find a way to not need to manually call this
     }
 
     private static void drawUI() {

@@ -16,8 +16,10 @@ public class gameSystems {
         System.out.print("INITIALIZING FILESYSTEM...");
         gameFiles.init();
         System.out.println("DONE.");
-        System.out.print("READING AUTOEXEC...");
-        gameFiles.execCfgFile("config/autoexec.cfg");
+        System.out.println("READING AUTOEXEC...");
+        gameConsole.instance().execCfgFile(
+                gameFiles.instance().getFileSystemConfig().getRootDirectory().getFile("base/config/autoexec.cfg")
+        );
         System.out.println("DONE.");
         System.out.print("READING LAUNCH ARGS...");
         gameCVars.instance().parseArgs(args);
@@ -37,6 +39,9 @@ public class gameSystems {
         System.out.print("INITIALIZING METRICS...");
         gameMetrics.init();
         System.out.println("DONE.");
+        System.out.print("INITIALIZING INPUTS...");
+        gameInput.init();
+        System.out.println("DONE.");
 
         System.out.println("----------------");
         System.out.print("INITIALIZING GAME STATE...");
@@ -54,7 +59,5 @@ public class gameSystems {
         System.out.println("STARTED GAME SUCCESSFULLY!");
         System.out.println("YOU MAY BEGIN ENTERING CONSOLE COMMANDS");
         System.out.println("----------------");
-
-        gameInput.init();
     }
 }

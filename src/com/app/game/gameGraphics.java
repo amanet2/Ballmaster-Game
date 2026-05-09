@@ -38,9 +38,10 @@ public class gameGraphics {
 
         g.setColor(Color.WHITE);
         int debugInfoY = 0;
+        int offsetY = 20;
         if(gameSettings.showVideoInfo) {
             for(String k : instance().getVideoMetrics()) {
-                g.drawString(k, 0, debugInfoY += 25);
+                g.drawString(k, 0, debugInfoY += offsetY);
             }
         }
         if(gameSettings.showFrameInfo) {
@@ -52,7 +53,7 @@ public class gameGraphics {
                     "Game Frametime Highest: %fms".formatted(gameMetrics.getGameFrametimeMetricSnapshotHighest()),
             };
             for(String metric : metrics) {
-                g.drawString(metric, 0, debugInfoY += 25);
+                g.drawString(metric, 0, debugInfoY += offsetY);
             }
         }
         if(gameSettings.showCameraInfo) {
@@ -62,19 +63,19 @@ public class gameGraphics {
                     "Cam Scale: %g".formatted(gameCamera.gameCamera.getZoom()),
             };
             for(String metric : metrics) {
-                g.drawString(metric, 0, debugInfoY += 25);
+                g.drawString(metric, 0, debugInfoY += offsetY);
             }
         }
         if(gameSettings.showTimeElapsed)
             g.drawString(
                     "Time Elapsed: %s".formatted(gDate.getTimerString(gameMetrics.getTimeElapsedMillis())),
                     0,
-                    debugInfoY += 25
+                    debugInfoY += offsetY
             );
         g.drawString(
                 "Ballboy: [%f, %f]".formatted(gameState.ballBoy.getX(), gameState.ballBoy.getY()),
                 0,
-                debugInfoY += 25
+                debugInfoY += offsetY
         );
     }
 

@@ -17,10 +17,9 @@ public class gameSprites {
 
     public static void init() {
         // TODO: filesystem path should not be passed by game lib
-        String pinkGuyPath = gameFiles.gFilesSprites.get(
-                gameSettings.fileSystemSpritesPath + "/characters/player_pink/a03.png"
-        ).getName();
-        gSprite pinkGuySprite = gSpriteSystem.getScaledSprite(pinkGuyPath, 100, 100);
+        String path = "base/data/characters/player_pink/a03.png";
+        String file = gameFiles.instance().getFileSystemSprites().getRootDirectory().getFile(path).getName();
+        gSprite pinkGuySprite = gSpriteSystem.getSprite(file);
 
         gSprites.put(gameStrings.BALL_PINK, pinkGuySprite);
     }

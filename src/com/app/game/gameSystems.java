@@ -31,6 +31,9 @@ public class gameSystems {
         System.out.print("INITIALIZING SPRITES...");
         gameSprites.init();
         System.out.println("DONE.");
+        System.out.print("INITIALIZING ENTITIES...");
+        gameEntities.init();
+        System.out.println("DONE.");
         System.out.print("INITIALIZING METRICS...");
         gameMetrics.init();
         System.out.println("DONE.");

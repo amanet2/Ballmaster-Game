@@ -6,7 +6,6 @@ import com.app.engine.graphicsSystem.gGraphicsSystem;
 import com.app.engine.utils.gDate;
 
 import java.awt.*;
-import java.util.HashMap;
 
 public class gameGraphics {
     public static gGraphicsSystem instance() {
@@ -14,45 +13,34 @@ public class gameGraphics {
     }
 
     private static void drawWorld() {
-        instance().setCameraTransform(gameCamera.gameCamera);
+        instance().setCameraTransform(gameCamera.gameCamera, false);
         Graphics g = instance().getGraphics();
 
-        gameState.ballBoy.draw(g);
-
-        g.setColor(Color.YELLOW);
-        g.drawLine(600, -600, 600, 600);
-        g.drawLine(-600, -600, -600, 600);
-        g.drawLine(0, -600, 0, 600);
+        g.setColor(Color.WHITE);
+        g.drawRect(-600, -600, 1200, 1200);
         g.drawLine(-600, 0, 600, 0);
-        g.drawLine(-600, -600, 600, -600);
-        g.drawLine(-600, 600, 600, 600);
+        g.drawLine(0, -600, 0, 600);
+
+        g.setColor(Color.PINK);
+        g.drawRect(
+                (int) gameState.ballBoy.getX() - (int) (gameState.ballBoy.getW()/2),
+                (int) gameState.ballBoy.getY() - (int) (gameState.ballBoy.getH()/2),
+                (int) gameState.ballBoy.getW(),
+                (int) gameState.ballBoy.getH()
+        );
+
+        gameState.ballBoy.draw(g);
     }
 
     private static void drawUI() {
-        instance().setCameraTransform(gameCamera.uiCamera);
+        instance().setCameraTransform(gameCamera.uiCamera, true);
         Graphics g = instance().getGraphics();
 
         g.setColor(Color.WHITE);
         int debugInfoY = 0;
         if(gameSettings.showVideoInfo) {
-            HashMap<String, Number> videoMetrics = instance().getVideoMetrics();
-            String[] metrics = {
-                    "Video Render: [%d, %d]".formatted(
-                            videoMetrics.get("videoRenderW"),
-                            videoMetrics.get("videoRenderH")
-                    ),
-                    "Video Window: [%d, %d]".formatted(
-                            videoMetrics.get("videoWindowW"),
-                            videoMetrics.get("videoWindowH")
-                    ),
-                    "Video FPS: %d".formatted(videoMetrics.get("videoFramesPerSecondMetricSnapshot")),
-                    "Video Frames: %d".formatted(videoMetrics.get("videoFrames")),
-                    "Video Frametime Average: %fms".formatted(videoMetrics.get("videoFrametimeMetricSnapshotAvg")),
-                    "Video Frametime Lowest: %fms".formatted(videoMetrics.get("videoFrametimeMetricSnapshotLowest")),
-                    "Video Frametime Highest: %fms".formatted(videoMetrics.get("videoFrametimeMetricSnapshotHighest"))
-            };
-            for(String metric : metrics) {
-                g.drawString(metric, 0, debugInfoY += 25);
+            for(String k : instance().getVideoMetrics()) {
+                g.drawString(k, 0, debugInfoY += 25);
             }
         }
         if(gameSettings.showFrameInfo) {

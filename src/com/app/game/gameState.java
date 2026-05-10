@@ -4,6 +4,10 @@ import com.app.engine.entity;
 
 public class gameState {
     public static entity ballBoy;
+    public static boolean playerUp = false;
+    public static boolean playerDown = false;
+    public static boolean playerLeft = false;
+    public static boolean playerRight = false;
     public static boolean camUp = false;
     public static boolean camDown = false;
     public static boolean camLeft = false;
@@ -14,14 +18,22 @@ public class gameState {
     }
 
     private static void updateCharacters() {
-        if(ballBoy.getX() >= 450)
-            ballBoy.setDx(-0.2);
-        if(ballBoy.getX() <= -450)
-            ballBoy.setDx(0.2);
+        double vecDx = 0.0;
+        double vecDy = 0.0;
 
-        ballBoy.setX(ballBoy.getX() + ballBoy.getDx());
+        if(playerUp) vecDy -= 0.2;
+        if(playerDown) vecDy += 0.2;
+        if(playerLeft) vecDx -= 0.2;
+        if(playerRight) vecDx += 0.2;
+
+        ballBoy.setVec(new double[]{ vecDx, vecDy });
+
+        double[] vec = ballBoy.getVec();
+        double[] coords = ballBoy.getCoords();
+        ballBoy.setCoords(new double[]{ coords[0] + vec[0], coords[1] + vec[1]});
     }
 
+    // TODO: make sure camera movement is proportional to player if same vel
     private static void updateCamera() {
         double vecDx = 0.0;
         double vecDy = 0.0;
@@ -32,14 +44,14 @@ public class gameState {
         if(camRight) vecDx += 0.2;
 
         gameCamera.gameCamera.setVec(new double[]{ vecDx, vecDy });
+
+        double[] vec = gameCamera.gameCamera.getVec();
+        double[] camCoords = gameCamera.gameCamera.getCoords();
+        gameCamera.gameCamera.setCoords(new double[]{ camCoords[0] + vec[0], camCoords[1] + vec[1]});
     }
 
     public static void update() {
         updateCharacters();
         updateCamera();
-
-        double[] vec = gameCamera.gameCamera.getVec();
-        double[] camCoords = gameCamera.gameCamera.getCoords();
-        gameCamera.gameCamera.setCoords(new double[]{ camCoords[0] + vec[0], camCoords[1] + vec[1]});
     }
 }

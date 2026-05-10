@@ -75,7 +75,12 @@ public class gameGraphics {
                     debugInfoY += offsetY
             );
         g.drawString(
-                "Ballboy: [%f, %f]".formatted(gameState.ballBoy.getX(), gameState.ballBoy.getY()),
+                "Player XY: [%f, %f]".formatted(gameState.ballBoy.getX(), gameState.ballBoy.getY()),
+                0,
+                debugInfoY += offsetY
+        );
+        g.drawString(
+                "Player Vec: [%f, %f]".formatted(gameState.ballBoy.getDx(), gameState.ballBoy.getDy()),
                 0,
                 debugInfoY += offsetY
         );

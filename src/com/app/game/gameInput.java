@@ -2,7 +2,6 @@ package com.app.game;
 
 import com.app.engine.engine;
 import com.app.engine.inputSystem.gInputSystem;
-import com.app.engine.inputSystem.impulse;
 
 import java.util.Scanner;
 

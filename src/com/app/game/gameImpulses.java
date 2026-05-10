@@ -42,4 +42,44 @@ public class gameImpulses {
             gameState.camRight = false;
         }
     };
+
+    public static impulse impulsePlayerUp = new impulse() {
+        public void keyPressed() {
+            gameState.playerUp = true;
+        }
+
+        public void keyReleased() {
+            gameState.playerUp = false;
+        }
+    };
+
+    public static impulse impulsePlayerDown = new impulse() {
+        public void keyPressed() {
+            gameState.playerDown = true;
+        }
+
+        public void keyReleased() {
+            gameState.playerDown = false;
+        }
+    };
+
+    public static impulse impulsePlayerLeft = new impulse() {
+        public void keyPressed() {
+            gameState.playerLeft = true;
+        }
+
+        public void keyReleased() {
+            gameState.playerLeft = false;
+        }
+    };
+
+    public static impulse impulsePlayerRight = new impulse() {
+        public void keyPressed() {
+            gameState.playerRight = true;
+        }
+
+        public void keyReleased() {
+            gameState.playerRight = false;
+        }
+    };
 }

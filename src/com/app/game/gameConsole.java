@@ -4,6 +4,8 @@ import com.app.engine.consoleSystem.gConsoleCommand;
 import com.app.engine.consoleSystem.gConsoleSystem;
 import com.app.engine.engine;
 
+import java.awt.event.KeyEvent;
+
 public class gameConsole {
     // TODO: need to use interfaces as headers for game files too
     // TODO: e.g. we need an interface for console to list out commands
@@ -29,9 +31,14 @@ public class gameConsole {
 
         console.registerCmd("useCam", gConsoleCommandUseCamera);
 
-        gameInput.instance().bind(38, gameImpulses.impulseCameraUp);
-        gameInput.instance().bind(40, gameImpulses.impulseCameraDown);
-        gameInput.instance().bind(37, gameImpulses.impulseCameraLeft);
-        gameInput.instance().bind(39, gameImpulses.impulseCameraRight);
+        gameInput.instance().bind(KeyEvent.VK_UP, gameImpulses.impulseCameraUp);
+        gameInput.instance().bind(KeyEvent.VK_DOWN, gameImpulses.impulseCameraDown);
+        gameInput.instance().bind(KeyEvent.VK_LEFT, gameImpulses.impulseCameraLeft);
+        gameInput.instance().bind(KeyEvent.VK_RIGHT, gameImpulses.impulseCameraRight);
+
+        gameInput.instance().bind(KeyEvent.VK_W, gameImpulses.impulsePlayerUp);
+        gameInput.instance().bind(KeyEvent.VK_S, gameImpulses.impulsePlayerDown);
+        gameInput.instance().bind(KeyEvent.VK_A, gameImpulses.impulsePlayerLeft);
+        gameInput.instance().bind(KeyEvent.VK_D, gameImpulses.impulsePlayerRight);
     }
 }

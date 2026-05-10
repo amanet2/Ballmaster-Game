@@ -11,78 +11,78 @@ public class gameCVars {
         return engine.instance().gCVarSystem;
     }
 
+    static gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.gameCamera.getCoords())) {
+        @Override
+        public void onChange() {
+            String[] args = this.getValue().split(",");
+            gameCamera.gameCamera.setCoords(new double[]{Double.parseDouble(args[0]), Double.parseDouble(args[1])});
+        }
+    };
+
+    static gCVar cVarCamZoom = new gCVar(Double.toString(gameCamera.gameCamera.getZoom())) {
+        @Override
+        public void onChange() {
+            gameCamera.gameCamera.setZoom(Double.parseDouble(this.getValue()));
+        }
+    };
+
+    static gCVar cVarShowCamInfo = new gCVar(gameSettings.showCameraInfo ? "1" : "0") {
+        @Override
+        public void onChange() {
+            gameSettings.showCameraInfo = this.getValue().equalsIgnoreCase("1");
+        }
+    };
+
+    static gCVar cVarShowFrameInfo = new gCVar(gameSettings.showFrameInfo ? "1" : "0") {
+        @Override
+        public void onChange() {
+            gameSettings.showFrameInfo = this.getValue().equalsIgnoreCase("1");
+        }
+    };
+
+    static gCVar cVarShowVideoInfo = new gCVar(gameSettings.showVideoInfo ? "1" : "0") {
+        @Override
+        public void onChange() {
+            gameSettings.showVideoInfo = this.getValue().equalsIgnoreCase("1");
+        }
+    };
+
+    static gCVar cVarComShowTimeElapsed = new gCVar(gameSettings.showTimeElapsed ? " 1" : "0") {
+        @Override
+        public void onChange() {
+            gameSettings.showTimeElapsed =  this.getValue().equalsIgnoreCase("1");
+        }
+    };
+
+    static gCVar cVarCamSpeed = new gCVar(Double.toString(gameState.cameraSpeed)) {
+        @Override
+        public void onChange() {
+            gameState.cameraSpeed =  Double.parseDouble(this.getValue());
+        }
+    };
+
+    static gCVar cVarPlayerSpeed = new gCVar(Double.toString(gameState.playerSpeed)) {
+        @Override
+        public void onChange() {
+            gameState.playerSpeed =  Double.parseDouble(this.getValue());
+        }
+    };
+
+    static gCVar cVarGameRate = new gCVar(Double.toString(gameState.gameRate)) {
+        @Override
+        public void onChange() {
+            gameState.gameRate =  Double.parseDouble(this.getValue());
+        }
+    };
+
+    static gCVar cVarGravity = new gCVar(Double.toString(gameState.gravity)) {
+        @Override
+        public void onChange() {
+            gameState.gravity =  Double.parseDouble(this.getValue());
+        }
+    };
+
     public static void init() {
-        gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.gameCamera.getCoords())) {
-            @Override
-            public void onChange() {
-                String[] args = this.getValue().split(",");
-                gameCamera.gameCamera.setCoords(new double[]{Double.parseDouble(args[0]), Double.parseDouble(args[1])});
-            }
-        };
-
-        gCVar cVarCamZoom = new gCVar(Double.toString(gameCamera.gameCamera.getZoom())) {
-            @Override
-            public void onChange() {
-                gameCamera.gameCamera.setZoom(Double.parseDouble(this.getValue()));
-            }
-        };
-
-        gCVar cVarShowCamInfo = new gCVar(gameSettings.showCameraInfo ? "1" : "0") {
-            @Override
-            public void onChange() {
-                gameSettings.showCameraInfo = this.getValue().equalsIgnoreCase("1");
-            }
-        };
-
-        gCVar cVarShowFrameInfo = new gCVar(gameSettings.showFrameInfo ? "1" : "0") {
-            @Override
-            public void onChange() {
-                gameSettings.showFrameInfo = this.getValue().equalsIgnoreCase("1");
-            }
-        };
-
-        gCVar cVarShowVideoInfo = new gCVar(gameSettings.showVideoInfo ? "1" : "0") {
-            @Override
-            public void onChange() {
-                gameSettings.showVideoInfo = this.getValue().equalsIgnoreCase("1");
-            }
-        };
-
-        gCVar cVarComShowTimeElapsed = new gCVar(gameSettings.showTimeElapsed ? " 1" : "0") {
-            @Override
-            public void onChange() {
-                gameSettings.showTimeElapsed =  this.getValue().equalsIgnoreCase("1");
-            }
-        };
-
-        gCVar cVarCamSpeed = new gCVar(Double.toString(gameState.cameraSpeed)) {
-            @Override
-            public void onChange() {
-                gameState.cameraSpeed =  Double.parseDouble(this.getValue());
-            }
-        };
-
-        gCVar cVarPlayerSpeed = new gCVar(Double.toString(gameState.playerSpeed)) {
-            @Override
-            public void onChange() {
-                gameState.playerSpeed =  Double.parseDouble(this.getValue());
-            }
-        };
-
-        gCVar cVarGameRate = new gCVar(Double.toString(gameState.gameRate)) {
-            @Override
-            public void onChange() {
-                gameState.gameRate =  Double.parseDouble(this.getValue());
-            }
-        };
-
-        gCVar cVarGravity = new gCVar(Double.toString(gameState.gravity)) {
-            @Override
-            public void onChange() {
-                gameState.gravity =  Double.parseDouble(this.getValue());
-            }
-        };
-
         instance().registerCVar("com_showframeinfo", cVarShowFrameInfo);
         instance().registerCVar("com_showvideoinfo", cVarShowVideoInfo);
         instance().registerCVar("com_showtimeelapsed", cVarComShowTimeElapsed);

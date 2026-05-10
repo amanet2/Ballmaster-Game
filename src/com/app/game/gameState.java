@@ -1,11 +1,14 @@
 package com.app.game;
 
 import com.app.engine.entity;
+import com.app.engine.eventSystem.*;
+import com.app.engine.utils.*;
 
 public class gameState {
     public static double gameRate = 1000;
 
     public static entity ballBoy;
+    public static gEventTriggerBounds triggerBounds;
 
     public static double playerSpeed = 0.4;
     public static boolean playerUp = false;
@@ -23,6 +26,14 @@ public class gameState {
 
     public static void init() {
         ballBoy = gameEntities.get(gameStrings.BALL_PINK);
+
+        triggerBounds = new gEventTriggerBounds(new gEventTrigger(new gEvent(){
+            @Override
+            public void doEvent() {
+                System.out.println("FOOBAR");
+            }
+        }));
+        triggerBounds.setBounds(new gBounds(new double[] { -600, -600, 150, 150 }));
     }
 
     private static void updateCharacters() {
@@ -49,6 +60,32 @@ public class gameState {
         if(coordsDy >= 450 || coordsDy <= -450) coordsDy = coords[1]; // fake collisons
 
         ballBoy.setCoords(new double[]{ coordsDx, coordsDy });
+
+        checkIntersection();
+    }
+
+    private static void checkIntersection() {
+        gBounds bounds = triggerBounds.getBounds();
+        gBounds ballBoyBounds = new gBounds(new double[] {
+                ballBoy.getX() - ballBoy.getW()/2,
+                ballBoy.getY() - ballBoy.getH()/2,
+                ballBoy.getW(),
+                ballBoy.getH()
+        });
+
+        if (
+                bounds.getX() > ballBoyBounds.getX() + ballBoyBounds.getWidth()
+                        || ballBoyBounds.getX() > bounds.getX() + bounds.getWidth()
+        )
+            return;
+
+        if (
+                bounds.getY() + bounds.getHeight() < ballBoyBounds.getY()
+                        || ballBoyBounds.getY() + ballBoyBounds.getHeight() < bounds.getY()
+        )
+            return;
+
+        triggerBounds.doTrigger();
     }
 
     // TODO: make sure camera movement is proportional to player if same vel

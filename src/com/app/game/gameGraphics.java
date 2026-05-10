@@ -23,10 +23,10 @@ public class gameGraphics {
 
         g.setColor(Color.PINK);
         g.drawRect(
-                (int) gameState.ballBoy.getX() - (int) (gameState.ballBoy.getW()/2),
-                (int) gameState.ballBoy.getY() - (int) (gameState.ballBoy.getH()/2),
-                (int) gameState.ballBoy.getW(),
-                (int) gameState.ballBoy.getH()
+                (int) gameState.ballBoy.getBounds().getX() - (int) (gameState.ballBoy.getBounds().getWidth()/2),
+                (int) gameState.ballBoy.getBounds().getY() - (int) (gameState.ballBoy.getBounds().getHeight()/2),
+                (int) gameState.ballBoy.getBounds().getWidth(),
+                (int) gameState.ballBoy.getBounds().getHeight()
         );
 
         g.setColor(Color.GREEN);
@@ -83,7 +83,7 @@ public class gameGraphics {
                     debugInfoY += offsetY
             );
         g.drawString(
-                "Player XY: [%f, %f]".formatted(gameState.ballBoy.getX(), gameState.ballBoy.getY()),
+                "Player XY: [%f, %f]".formatted(gameState.ballBoy.getBounds().getX(), gameState.ballBoy.getBounds().getY()),
                 0,
                 debugInfoY += offsetY
         );

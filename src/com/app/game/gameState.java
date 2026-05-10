@@ -51,37 +51,32 @@ public class gameState {
         ballBoy.setVec(new double[]{ vecDx, vecDy });
 
         double[] vec = ballBoy.getVec();
-        double[] coords = ballBoy.getCoords();
+        gBounds bounds = ballBoy.getBounds();
 
-        double coordsDx = coords[0] + vec[0];
-        double coordsDy = coords[1] + vec[1];
+        double coordsDx = bounds.getX() + vec[0];
+        double coordsDy = bounds.getY() + vec[1];
 
-        if(coordsDx >= 450 || coordsDx <= -450) coordsDx = coords[0]; // fake collisons
-        if(coordsDy >= 450 || coordsDy <= -450) coordsDy = coords[1]; // fake collisons
+        if(coordsDx >= 450 || coordsDx <= -450) coordsDx = bounds.getX(); // fake collisons
+        if(coordsDy >= 450 || coordsDy <= -450) coordsDy = bounds.getY(); // fake collisons
 
-        ballBoy.setCoords(new double[]{ coordsDx, coordsDy });
+        ballBoy.setBounds(new gBounds(new double[]{ coordsDx, coordsDy, ballBoy.getBounds().getWidth(), ballBoy.getBounds().getHeight() }));
 
         checkIntersection();
     }
 
     private static void checkIntersection() {
         gBounds bounds = triggerBounds.getBounds();
-        gBounds ballBoyBounds = new gBounds(new double[] {
-                ballBoy.getX() - ballBoy.getW()/2,
-                ballBoy.getY() - ballBoy.getH()/2,
-                ballBoy.getW(),
-                ballBoy.getH()
-        });
+        gBounds ballBoyBounds = ballBoy.getBounds();
 
         if (
-                bounds.getX() > ballBoyBounds.getX() + ballBoyBounds.getWidth()
-                        || ballBoyBounds.getX() > bounds.getX() + bounds.getWidth()
+                bounds.getX() > ballBoyBounds.getX() + ballBoyBounds.getWidth()/2
+                        || ballBoyBounds.getX() - ballBoyBounds.getWidth()/2 > bounds.getX() + bounds.getWidth()
         )
             return;
 
         if (
-                bounds.getY() + bounds.getHeight() < ballBoyBounds.getY()
-                        || ballBoyBounds.getY() + ballBoyBounds.getHeight() < bounds.getY()
+                bounds.getY() + bounds.getHeight() < ballBoyBounds.getY() - ballBoyBounds.getHeight()/2
+                        || ballBoyBounds.getY() + ballBoyBounds.getHeight()/2 < bounds.getY()
         )
             return;
 

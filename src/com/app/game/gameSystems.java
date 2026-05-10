@@ -17,12 +17,13 @@ public class gameSystems {
         gameFiles.init();
         System.out.println("DONE.");
         System.out.println("READING AUTOEXEC...");
+        // TODO: want to get to the point where we call getFileSystemConfig.getFile("autoexec.cfg")
         gameConsole.instance().execCfgFile(
                 gameFiles.instance().getFileSystemConfig().getRootDirectory().getFile("base/config/autoexec.cfg")
         );
         System.out.println("DONE.");
         System.out.print("READING LAUNCH ARGS...");
-        gameCVars.instance().parseArgs(args);
+        gameConsole.instance().parseLaunchArgs(args);
         System.out.println("DONE.");
         System.out.print("INITIALIZING SCHEDULER...");
         gameScheduler.init();

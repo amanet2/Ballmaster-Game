@@ -7,15 +7,11 @@ import com.app.engine.engine;
 import java.util.Arrays;
 
 public class gameCVars {
-    private static engine engineInstance = engine.instance();
-    private static final gCVarSystem cVars = engineInstance.gCVarSystem;
-
     public static gCVarSystem instance() {
-        return cVars;
+        return engine.instance().gCVarSystem;
     }
 
     public static void init() {
-        // TODO: register game-specific cvars here
         gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.gameCamera.getCoords())) {
             @Override
             public void onChange() {
@@ -24,7 +20,7 @@ public class gameCVars {
             }
         };
 
-        gCVar cVarCamZoon = new gCVar(Double.toString(gameCamera.gameCamera.getZoom())) {
+        gCVar cVarCamZoom = new gCVar(Double.toString(gameCamera.gameCamera.getZoom())) {
             @Override
             public void onChange() {
                 gameCamera.gameCamera.setZoom(Double.parseDouble(this.getValue()));
@@ -59,11 +55,43 @@ public class gameCVars {
             }
         };
 
-        cVars.registerCVar("com_showframeinfo", cVarShowFrameInfo);
-        cVars.registerCVar("com_showvideoinfo", cVarShowVideoInfo);
-        cVars.registerCVar("com_showtimeelapsed", cVarComShowTimeElapsed);
-        cVars.registerCVar("g_showcamerainfo", cVarShowCamInfo);
-        cVars.registerCVar("g_camXY", cVarCamXY);
-        cVars.registerCVar("g_camZoom", cVarCamZoon);
+        gCVar cVarCamSpeed = new gCVar(Double.toString(gameState.cameraSpeed)) {
+            @Override
+            public void onChange() {
+                gameState.cameraSpeed =  Double.parseDouble(this.getValue());
+            }
+        };
+
+        gCVar cVarPlayerSpeed = new gCVar(Double.toString(gameState.playerSpeed)) {
+            @Override
+            public void onChange() {
+                gameState.playerSpeed =  Double.parseDouble(this.getValue());
+            }
+        };
+
+        gCVar cVarGameRate = new gCVar(Double.toString(gameState.gameRate)) {
+            @Override
+            public void onChange() {
+                gameState.gameRate =  Double.parseDouble(this.getValue());
+            }
+        };
+
+        gCVar cVarGravity = new gCVar(Double.toString(gameState.gravity)) {
+            @Override
+            public void onChange() {
+                gameState.gravity =  Double.parseDouble(this.getValue());
+            }
+        };
+
+        instance().registerCVar("com_showframeinfo", cVarShowFrameInfo);
+        instance().registerCVar("com_showvideoinfo", cVarShowVideoInfo);
+        instance().registerCVar("com_showtimeelapsed", cVarComShowTimeElapsed);
+        instance().registerCVar("g_showcamerainfo", cVarShowCamInfo);
+        instance().registerCVar("g_camXY", cVarCamXY);
+        instance().registerCVar("g_camZoom", cVarCamZoom);
+        instance().registerCVar("g_camSpeed", cVarCamSpeed);
+        instance().registerCVar("g_playerSpeed", cVarPlayerSpeed);
+        instance().registerCVar("g_gameRate", cVarGameRate);
+        instance().registerCVar("g_gravity", cVarGravity);
     }
 }

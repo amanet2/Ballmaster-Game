@@ -3,6 +3,8 @@ package com.app.game;
 import com.app.engine.entity;
 
 public class gameState {
+    public static double gameRate = 1000;
+
     public static entity ballBoy;
 
     public static double playerSpeed = 0.4;
@@ -17,6 +19,8 @@ public class gameState {
     public static boolean camLeft = false;
     public static boolean camRight = false;
 
+    public static double gravity = 0.0;
+
     public static void init() {
         ballBoy = gameEntities.get(gameStrings.BALL_PINK);
     }
@@ -29,6 +33,9 @@ public class gameState {
         if(playerDown) vecDy += playerSpeed;
         if(playerLeft) vecDx -= playerSpeed;
         if(playerRight) vecDx += playerSpeed;
+
+        // gravity
+        vecDy += gravity;
 
         ballBoy.setVec(new double[]{ vecDx, vecDy });
 

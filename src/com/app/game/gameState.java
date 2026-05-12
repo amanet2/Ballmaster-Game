@@ -4,6 +4,8 @@ import com.app.engine.entitySystem.gEntity;
 import com.app.engine.eventSystem.*;
 import com.app.engine.utils.*;
 
+import com.app.game.gameCVars.*;
+
 public class gameState {
     public static double gameRate = 1000;
 
@@ -63,12 +65,12 @@ public class gameState {
         // gravity
 //        vecDy += gravity;
 
-        if (playerJump && playerCanJumpAtMillis < System.currentTimeMillis()) {
-            System.out.println("JUMP");
-            playerCanJumpAtMillis = System.currentTimeMillis() + 1000;
+        if (playerJump) {
+            if(playerCanJumpAtMillis < System.currentTimeMillis()) {
+                playerCanJumpAtMillis = System.currentTimeMillis() + gameCVars.jumpDelay;
+                vecDy -= 72.0;
+            }
             playerJump = false;
-
-            vecDy -= 72.0;
         }
 
         ballBoy.setVec(new double[]{ vecDx, vecDy });

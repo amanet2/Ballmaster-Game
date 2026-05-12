@@ -38,5 +38,8 @@ public class gameConsole {
         gameInput.instance().setBind(KeyEvent.VK_D, gameImpulses.impulsePlayerRight);
 
         gameInput.instance().setBind(KeyEvent.VK_SPACE, gameImpulses.impulsePlayerJump);
+
+        gameInput.instance().setBind(KeyEvent.VK_EQUALS, gameImpulses.impulseCameraZoomIn);
+        gameInput.instance().setBind(KeyEvent.VK_MINUS, gameImpulses.impulseCameraZoomOut);
     }
 }

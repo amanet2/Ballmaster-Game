@@ -91,4 +91,22 @@ public class gameImpulses {
         public void keyReleased() {
         }
     };
+
+    public static gImpulse impulseCameraZoomIn = new gImpulse() {
+        public void keyPressed() {
+            gameCamera.gameCamera.setZoom(Math.min(gameCamera.gameCamera.getZoom() + 0.01, 1.0));
+        }
+
+        public void keyReleased() {
+        }
+    };
+
+    public static gImpulse impulseCameraZoomOut = new gImpulse() {
+        public void keyPressed() {
+            gameCamera.gameCamera.setZoom(Math.max(gameCamera.gameCamera.getZoom() - 0.01, 0.01));
+        }
+
+        public void keyReleased() {
+        }
+    };
 }

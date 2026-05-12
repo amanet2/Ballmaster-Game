@@ -16,6 +16,8 @@ public class gameCVars {
     static boolean showFrameInfo = false;
     static boolean showVideoInfo = false;
 
+    static long jumpDelay = 500;
+
     static gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.gameCamera.getCoords())) {
         @Override
         public void onChange() {
@@ -87,6 +89,13 @@ public class gameCVars {
         }
     };
 
+    static gCVar cVarJumpDelay = new gCVar(Long.toString(jumpDelay)) {
+        @Override
+        public void onChange() {
+            jumpDelay =  Long.parseLong(this.getValue());
+        }
+    };
+
     public static void init() {
         instance().registerCVar("com_showframeinfo", cVarShowFrameInfo);
         instance().registerCVar("com_showvideoinfo", cVarShowVideoInfo);
@@ -98,5 +107,6 @@ public class gameCVars {
         instance().registerCVar("g_playerSpeed", cVarPlayerSpeed);
         instance().registerCVar("g_gameRate", cVarGameRate);
         instance().registerCVar("g_gravity", cVarGravity);
+        instance().registerCVar("g_jumpDelay", cVarJumpDelay);
     }
 }

@@ -25,7 +25,7 @@ public class gameState {
     public static boolean camLeft = false;
     public static boolean camRight = false;
 
-    public static double gravity = 2.0;
+    public static double gravity = 3.0;
 
     public static void init() {
         ballBoy = new gEntity();
@@ -36,7 +36,7 @@ public class gameState {
         triggerBounds = new gEventTriggerBounds(new gEventTrigger(new gEvent(){
             @Override
             public void doEvent() {
-                System.out.println("FOOBAR");
+                triggerBounds = null;
             }
         }));
         triggerBounds.setBounds(new gBounds(new double[] { 900, 450, 150, 150 }));
@@ -90,7 +90,7 @@ public class gameState {
 
         ballBoy.setBounds(new gBounds(new double[]{ coordsDx, coordsDy, bounds.getWidth(), bounds.getHeight() }));
 
-        if(triggerBounds.getBounds().intersects(ballBoy.getBounds()))
+        if(triggerBounds != null && triggerBounds.getBounds().intersects(ballBoy.getBounds()))
             triggerBounds.doTrigger();
     }
 

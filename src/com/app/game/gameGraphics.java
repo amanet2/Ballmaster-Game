@@ -44,13 +44,15 @@ public class gameGraphics {
                 (int) gameState.ballBoy.getBounds().getHeight()
         );
 
-        g.setColor(Color.GREEN);
-        g.drawRect(
-                (int)gameState.triggerBounds.getBounds().getX(),
-                (int)gameState.triggerBounds.getBounds().getY(),
-                (int)gameState.triggerBounds.getBounds().getWidth(),
-                (int)gameState.triggerBounds.getBounds().getHeight()
-        );
+        if(gameState.triggerBounds != null) {
+            g.setColor(Color.GREEN);
+            g.drawRect(
+                    (int)gameState.triggerBounds.getBounds().getX(),
+                    (int)gameState.triggerBounds.getBounds().getY(),
+                    (int)gameState.triggerBounds.getBounds().getWidth(),
+                    (int)gameState.triggerBounds.getBounds().getHeight()
+            );
+        }
 
         gameState.ballBoy.draw(g);
     }

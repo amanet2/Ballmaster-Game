@@ -1,14 +1,17 @@
 package com.app.game;
 
-import com.app.engine.entity;
+import com.app.engine.entitySystem.gEntity;
 import com.app.engine.eventSystem.*;
 import com.app.engine.utils.*;
 
 public class gameState {
     public static double gameRate = 1000;
 
-    public static entity ballBoy;
+    public static gEntity ballBoy;
     public static gEventTriggerBounds triggerBounds;
+    public static gBounds bigBox1;
+    public static gBounds bigBox2;
+    public static gBounds bigBox3;
 
     public static double playerSpeed = 0.4;
     public static boolean playerUp = false;
@@ -22,10 +25,13 @@ public class gameState {
     public static boolean camLeft = false;
     public static boolean camRight = false;
 
-    public static double gravity = 0.0;
+    public static double gravity = 2.0;
 
     public static void init() {
-        ballBoy = gameEntities.get(gameStrings.BALL_PINK);
+        ballBoy = new gEntity();
+        ballBoy.setSprite(gameSprites.pinkGuySprite);
+        ballBoy.setBounds(new gBounds(new double[]{ 0, -3600, 300, 300 }));
+        ballBoy.setVec(new double[]{ 0.2, 0.0 });
 
         triggerBounds = new gEventTriggerBounds(new gEventTrigger(new gEvent(){
             @Override
@@ -33,7 +39,11 @@ public class gameState {
                 System.out.println("FOOBAR");
             }
         }));
-        triggerBounds.setBounds(new gBounds(new double[] { -600, -600, 150, 150 }));
+        triggerBounds.setBounds(new gBounds(new double[] { 900, 450, 150, 150 }));
+
+        bigBox1 = new gBounds(new double[] { -1200, 600, 2400, 600});
+        bigBox2 = new gBounds(new double[] { -1800, 0, 600, 600 });
+        bigBox3 = new gBounds(new double[] { 1200, 0, 600, 600 });
     }
 
     private static void updateCharacters() {
@@ -56,31 +66,32 @@ public class gameState {
         double coordsDx = bounds.getX() + vec[0];
         double coordsDy = bounds.getY() + vec[1];
 
-        if(coordsDx >= 450 || coordsDx <= -450) coordsDx = bounds.getX(); // fake collisons
-        if(coordsDy >= 450 || coordsDy <= -450) coordsDy = bounds.getY(); // fake collisons
+        gBounds ballBoyBoundsDx = new gBounds(new double[] {
+                coordsDx,
+                bounds.getY(),
+                bounds.getWidth(),
+                bounds.getHeight()
+        });
 
-        ballBoy.setBounds(new gBounds(new double[]{ coordsDx, coordsDy, ballBoy.getBounds().getWidth(), ballBoy.getBounds().getHeight() }));
+        gBounds ballBoyBoundsDy = new gBounds(new double[] {
+                bounds.getX(),
+                coordsDy,
+                bounds.getWidth(),
+                bounds.getHeight()
+        });
 
-        checkIntersection();
-    }
+        // collisions
+        if(ballBoyBoundsDx.intersects(bigBox1)) coordsDx = bounds.getX();
+        if(ballBoyBoundsDy.intersects(bigBox1)) coordsDy = bounds.getY();
+        if(ballBoyBoundsDx.intersects(bigBox2)) coordsDx = bounds.getX();
+        if(ballBoyBoundsDy.intersects(bigBox2)) coordsDy = bounds.getY();
+        if(ballBoyBoundsDx.intersects(bigBox3)) coordsDx = bounds.getX();
+        if(ballBoyBoundsDy.intersects(bigBox3)) coordsDy = bounds.getY();
 
-    private static void checkIntersection() {
-        gBounds bounds = triggerBounds.getBounds();
-        gBounds ballBoyBounds = ballBoy.getBounds();
+        ballBoy.setBounds(new gBounds(new double[]{ coordsDx, coordsDy, bounds.getWidth(), bounds.getHeight() }));
 
-        if (
-                bounds.getX() > ballBoyBounds.getX() + ballBoyBounds.getWidth()/2
-                        || ballBoyBounds.getX() - ballBoyBounds.getWidth()/2 > bounds.getX() + bounds.getWidth()
-        )
-            return;
-
-        if (
-                bounds.getY() + bounds.getHeight() < ballBoyBounds.getY() - ballBoyBounds.getHeight()/2
-                        || ballBoyBounds.getY() + ballBoyBounds.getHeight()/2 < bounds.getY()
-        )
-            return;
-
-        triggerBounds.doTrigger();
+        if(triggerBounds.getBounds().intersects(ballBoy.getBounds()))
+            triggerBounds.doTrigger();
     }
 
     // TODO: make sure camera movement is proportional to player if same vel

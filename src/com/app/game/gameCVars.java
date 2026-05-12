@@ -11,6 +11,11 @@ public class gameCVars {
         return engine.instance().gCVarSystem;
     }
 
+    static boolean showTimeElapsed = false;
+    static boolean showCameraInfo = false;
+    static boolean showFrameInfo = false;
+    static boolean showVideoInfo = false;
+
     static gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.gameCamera.getCoords())) {
         @Override
         public void onChange() {
@@ -26,31 +31,31 @@ public class gameCVars {
         }
     };
 
-    static gCVar cVarShowCamInfo = new gCVar(gameSettings.showCameraInfo ? "1" : "0") {
+    static gCVar cVarShowCamInfo = new gCVar(showCameraInfo ? "1" : "0") {
         @Override
         public void onChange() {
-            gameSettings.showCameraInfo = this.getValue().equalsIgnoreCase("1");
+            showCameraInfo = this.getValue().equalsIgnoreCase("1");
         }
     };
 
-    static gCVar cVarShowFrameInfo = new gCVar(gameSettings.showFrameInfo ? "1" : "0") {
+    static gCVar cVarShowFrameInfo = new gCVar(showFrameInfo ? "1" : "0") {
         @Override
         public void onChange() {
-            gameSettings.showFrameInfo = this.getValue().equalsIgnoreCase("1");
+            showFrameInfo = this.getValue().equalsIgnoreCase("1");
         }
     };
 
-    static gCVar cVarShowVideoInfo = new gCVar(gameSettings.showVideoInfo ? "1" : "0") {
+    static gCVar cVarShowVideoInfo = new gCVar(showVideoInfo ? "1" : "0") {
         @Override
         public void onChange() {
-            gameSettings.showVideoInfo = this.getValue().equalsIgnoreCase("1");
+            showVideoInfo = this.getValue().equalsIgnoreCase("1");
         }
     };
 
-    static gCVar cVarComShowTimeElapsed = new gCVar(gameSettings.showTimeElapsed ? " 1" : "0") {
+    static gCVar cVarComShowTimeElapsed = new gCVar(showTimeElapsed ? " 1" : "0") {
         @Override
         public void onChange() {
-            gameSettings.showTimeElapsed =  this.getValue().equalsIgnoreCase("1");
+            showTimeElapsed =  this.getValue().equalsIgnoreCase("1");
         }
     };
 

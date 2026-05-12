@@ -7,29 +7,25 @@ import com.app.engine.engine;
 import java.awt.event.KeyEvent;
 
 public class gameConsole {
-    // TODO: need to use interfaces as headers for game files too
-    // TODO: e.g. we need an interface for console to list out commands
-    private static final gConsoleSystem console = engine.instance().gConsoleSystem;
-
     public static gConsoleSystem instance() {
-        return console;
+        return engine.instance().gConsoleSystem;
     }
 
-    public static void init() {
-        gConsoleCommand gConsoleCommandUseCamera = new gConsoleCommand("change active camera") {
-            @Override
-            public String doCommand(String[] args) {
-                if(args.length < 1 || args[0].trim().isEmpty())
-                    return "Usage: useCam NUMBER";
-                int index = Integer.parseInt(args[0]);
-                if(index < 0 || gameCamera.gameCameras.length < index)
-                    return "camera does not exist";
-                gameCamera.gameCamera = gameCamera.gameCameras[index];
-                return "using camera %d".formatted(index);
-            }
-        };
+    static gConsoleCommand gConsoleCommandUseCamera = new gConsoleCommand("change active camera") {
+        @Override
+        public String doCommand(String[] args) {
+            if(args.length < 1 || args[0].trim().isEmpty())
+                return "Usage: useCam NUMBER";
+            int index = Integer.parseInt(args[0]);
+            if(index < 0 || gameCamera.gameCameras.length < index)
+                return "camera does not exist";
+            gameCamera.gameCamera = gameCamera.gameCameras[index];
+            return "using camera %d".formatted(index);
+        }
+    };
 
-        console.registerCmd("useCam", gConsoleCommandUseCamera);
+    public static void init() {
+        instance().registerCmd("useCam", gConsoleCommandUseCamera);
 
         gameInput.instance().bind(KeyEvent.VK_UP, gameImpulses.impulseCameraUp);
         gameInput.instance().bind(KeyEvent.VK_DOWN, gameImpulses.impulseCameraDown);

@@ -17,14 +17,29 @@ public class gameGraphics {
         Graphics g = instance().getGraphics();
 
         g.setColor(Color.WHITE);
-        g.drawRect(-600, -600, 1200, 1200);
-        g.drawLine(-600, 0, 600, 0);
-        g.drawLine(0, -600, 0, 600);
+        g.drawRect(
+                (int) gameState.bigBox1.getX(),
+                (int) gameState.bigBox1.getY(),
+                (int) gameState.bigBox1.getWidth(),
+                (int) gameState.bigBox1.getHeight()
+        );
+        g.drawRect(
+                (int) gameState.bigBox2.getX(),
+                (int) gameState.bigBox2.getY(),
+                (int) gameState.bigBox2.getWidth(),
+                (int) gameState.bigBox2.getHeight()
+        );
+        g.drawRect(
+                (int) gameState.bigBox3.getX(),
+                (int) gameState.bigBox3.getY(),
+                (int) gameState.bigBox3.getWidth(),
+                (int) gameState.bigBox3.getHeight()
+        );
 
         g.setColor(Color.PINK);
         g.drawRect(
-                (int) gameState.ballBoy.getBounds().getX() - (int) (gameState.ballBoy.getBounds().getWidth()/2),
-                (int) gameState.ballBoy.getBounds().getY() - (int) (gameState.ballBoy.getBounds().getHeight()/2),
+                (int) gameState.ballBoy.getBounds().getX(),
+                (int) gameState.ballBoy.getBounds().getY(),
                 (int) gameState.ballBoy.getBounds().getWidth(),
                 (int) gameState.ballBoy.getBounds().getHeight()
         );
@@ -47,12 +62,12 @@ public class gameGraphics {
         g.setColor(Color.WHITE);
         int debugInfoY = 0;
         int offsetY = 20;
-        if(gameSettings.showVideoInfo) {
+        if(gameCVars.showVideoInfo) {
             for(String k : instance().getVideoMetrics()) {
                 g.drawString(k, 0, debugInfoY += offsetY);
             }
         }
-        if(gameSettings.showFrameInfo) {
+        if(gameCVars.showFrameInfo) {
             String[] metrics = {
                     "Game FPS: %d".formatted(gameMetrics.getGameFramesPerSecondMetricSnapshot()),
                     "Game Frames: %d".formatted(gameMetrics.getGameFrames()),
@@ -64,7 +79,7 @@ public class gameGraphics {
                 g.drawString(metric, 0, debugInfoY += offsetY);
             }
         }
-        if(gameSettings.showCameraInfo) {
+        if(gameCVars.showCameraInfo) {
             double[] camCoords = gameCamera.gameCamera.getCoords();
             double[] camVec = gameCamera.gameCamera.getVec();
             String[] metrics = {
@@ -76,7 +91,7 @@ public class gameGraphics {
                 g.drawString(metric, 0, debugInfoY += offsetY);
             }
         }
-        if(gameSettings.showTimeElapsed)
+        if(gameCVars.showTimeElapsed)
             g.drawString(
                     "Time Elapsed: %s".formatted(gDate.getTimerString(gameMetrics.getTimeElapsedMillis())),
                     0,

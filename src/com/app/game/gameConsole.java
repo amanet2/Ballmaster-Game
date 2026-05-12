@@ -36,5 +36,7 @@ public class gameConsole {
         gameInput.instance().setBind(KeyEvent.VK_S, gameImpulses.impulsePlayerDown);
         gameInput.instance().setBind(KeyEvent.VK_A, gameImpulses.impulsePlayerLeft);
         gameInput.instance().setBind(KeyEvent.VK_D, gameImpulses.impulsePlayerRight);
+
+        gameInput.instance().setBind(KeyEvent.VK_SPACE, gameImpulses.impulsePlayerJump);
     }
 }

@@ -19,6 +19,9 @@ public class gameState {
     public static boolean playerLeft = false;
     public static boolean playerRight = false;
 
+    public static boolean playerJump = false;
+    public static long playerCanJumpAtMillis = 0;
+
     public static double cameraSpeed = 0.2;
     public static boolean camUp = false;
     public static boolean camDown = false;
@@ -30,8 +33,8 @@ public class gameState {
     public static void init() {
         ballBoy = new gEntity();
         ballBoy.setSprite(gameSprites.pinkGuySprite);
-        ballBoy.setBounds(new gBounds(new double[]{ 0, -3600, 300, 300 }));
-        ballBoy.setVec(new double[]{ 0.2, 0.0 });
+        ballBoy.setBounds(new gBounds(new double[]{ 0, -600, 300, 300 }));
+        ballBoy.setVec(new double[]{ 0.0, 0.0 });
 
         triggerBounds = new gEventTriggerBounds(new gEventTrigger(new gEvent(){
             @Override
@@ -47,16 +50,26 @@ public class gameState {
     }
 
     private static void updateCharacters() {
+//        double vecDx = 0.0;
+//        double vecDy = 0.0;
         double vecDx = 0.0;
-        double vecDy = 0.0;
+        double vecDy = Math.min(ballBoy.getVec()[1] + gravity, gravity);
 
-        if(playerUp) vecDy -= playerSpeed;
-        if(playerDown) vecDy += playerSpeed;
+//        if(playerUp) vecDy -= playerSpeed;
+//        if(playerDown) vecDy += playerSpeed;
         if(playerLeft) vecDx -= playerSpeed;
         if(playerRight) vecDx += playerSpeed;
 
         // gravity
-        vecDy += gravity;
+//        vecDy += gravity;
+
+        if (playerJump && playerCanJumpAtMillis < System.currentTimeMillis()) {
+            System.out.println("JUMP");
+            playerCanJumpAtMillis = System.currentTimeMillis() + 1000;
+            playerJump = false;
+
+            vecDy -= 72.0;
+        }
 
         ballBoy.setVec(new double[]{ vecDx, vecDy });
 

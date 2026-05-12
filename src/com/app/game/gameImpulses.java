@@ -82,4 +82,13 @@ public class gameImpulses {
             gameState.playerRight = false;
         }
     };
+
+    public static gImpulse impulsePlayerJump = new gImpulse() {
+        public void keyPressed() {
+            gameState.playerJump = true;
+        }
+
+        public void keyReleased() {
+        }
+    };
 }

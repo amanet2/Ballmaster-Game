@@ -1,10 +1,10 @@
 package com.app.game;
 
-import com.app.engine.camera;
+import com.app.engine.cameraSystem.gCamera;
 
 public class gameCamera {
-    public static final camera[] gameCameras = {new camera(), new camera()};
+    public static final gCamera[] gameCameras = {new gCamera(), new gCamera()};
 
-    public static camera gameCamera = gameCameras[0];
-    public static camera uiCamera = new camera();
+    public static gCamera gameCamera = gameCameras[0];
+    public static gCamera uiCamera = new gCamera();
 }

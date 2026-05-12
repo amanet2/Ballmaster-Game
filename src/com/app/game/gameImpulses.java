@@ -1,9 +1,9 @@
 package com.app.game;
 
-import com.app.engine.inputSystem.impulse;
+import com.app.engine.inputSystem.gImpulse;
 
 public class gameImpulses {
-    public static impulse impulseCameraUp = new impulse() {
+    public static gImpulse impulseCameraUp = new gImpulse() {
         public void keyPressed() {
             gameState.camUp = true;
         }
@@ -13,7 +13,7 @@ public class gameImpulses {
         }
     };
 
-    public static impulse impulseCameraDown = new impulse() {
+    public static gImpulse impulseCameraDown = new gImpulse() {
         public void keyPressed() {
             gameState.camDown = true;
         }
@@ -23,7 +23,7 @@ public class gameImpulses {
         }
     };
 
-    public static impulse impulseCameraLeft = new impulse() {
+    public static gImpulse impulseCameraLeft = new gImpulse() {
         public void keyPressed() {
             gameState.camLeft = true;
         }
@@ -33,7 +33,7 @@ public class gameImpulses {
         }
     };
 
-    public static impulse impulseCameraRight = new impulse() {
+    public static gImpulse impulseCameraRight = new gImpulse() {
         public void keyPressed() {
             gameState.camRight = true;
         }
@@ -43,7 +43,7 @@ public class gameImpulses {
         }
     };
 
-    public static impulse impulsePlayerUp = new impulse() {
+    public static gImpulse impulsePlayerUp = new gImpulse() {
         public void keyPressed() {
             gameState.playerUp = true;
         }
@@ -53,7 +53,7 @@ public class gameImpulses {
         }
     };
 
-    public static impulse impulsePlayerDown = new impulse() {
+    public static gImpulse impulsePlayerDown = new gImpulse() {
         public void keyPressed() {
             gameState.playerDown = true;
         }
@@ -63,7 +63,7 @@ public class gameImpulses {
         }
     };
 
-    public static impulse impulsePlayerLeft = new impulse() {
+    public static gImpulse impulsePlayerLeft = new gImpulse() {
         public void keyPressed() {
             gameState.playerLeft = true;
         }
@@ -73,7 +73,7 @@ public class gameImpulses {
         }
     };
 
-    public static impulse impulsePlayerRight = new impulse() {
+    public static gImpulse impulsePlayerRight = new gImpulse() {
         public void keyPressed() {
             gameState.playerRight = true;
         }

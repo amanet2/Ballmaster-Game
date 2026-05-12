@@ -27,14 +27,14 @@ public class gameConsole {
     public static void init() {
         instance().registerCmd("useCam", gConsoleCommandUseCamera);
 
-        gameInput.instance().bind(KeyEvent.VK_UP, gameImpulses.impulseCameraUp);
-        gameInput.instance().bind(KeyEvent.VK_DOWN, gameImpulses.impulseCameraDown);
-        gameInput.instance().bind(KeyEvent.VK_LEFT, gameImpulses.impulseCameraLeft);
-        gameInput.instance().bind(KeyEvent.VK_RIGHT, gameImpulses.impulseCameraRight);
+        gameInput.instance().setBind(KeyEvent.VK_UP, gameImpulses.impulseCameraUp);
+        gameInput.instance().setBind(KeyEvent.VK_DOWN, gameImpulses.impulseCameraDown);
+        gameInput.instance().setBind(KeyEvent.VK_LEFT, gameImpulses.impulseCameraLeft);
+        gameInput.instance().setBind(KeyEvent.VK_RIGHT, gameImpulses.impulseCameraRight);
 
-        gameInput.instance().bind(KeyEvent.VK_W, gameImpulses.impulsePlayerUp);
-        gameInput.instance().bind(KeyEvent.VK_S, gameImpulses.impulsePlayerDown);
-        gameInput.instance().bind(KeyEvent.VK_A, gameImpulses.impulsePlayerLeft);
-        gameInput.instance().bind(KeyEvent.VK_D, gameImpulses.impulsePlayerRight);
+        gameInput.instance().setBind(KeyEvent.VK_W, gameImpulses.impulsePlayerUp);
+        gameInput.instance().setBind(KeyEvent.VK_S, gameImpulses.impulsePlayerDown);
+        gameInput.instance().setBind(KeyEvent.VK_A, gameImpulses.impulsePlayerLeft);
+        gameInput.instance().setBind(KeyEvent.VK_D, gameImpulses.impulsePlayerRight);
     }
 }

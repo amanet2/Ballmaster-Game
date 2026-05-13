@@ -31,15 +31,13 @@ public class gameConsole {
         gameInput.instance().setBind(KeyEvent.VK_DOWN, gameImpulses.impulseCameraDown);
         gameInput.instance().setBind(KeyEvent.VK_LEFT, gameImpulses.impulseCameraLeft);
         gameInput.instance().setBind(KeyEvent.VK_RIGHT, gameImpulses.impulseCameraRight);
+        gameInput.instance().setBind(KeyEvent.VK_EQUALS, gameImpulses.impulseCameraZoomIn);
+        gameInput.instance().setBind(KeyEvent.VK_MINUS, gameImpulses.impulseCameraZoomOut);
 
         gameInput.instance().setBind(KeyEvent.VK_W, gameImpulses.impulsePlayerUp);
         gameInput.instance().setBind(KeyEvent.VK_S, gameImpulses.impulsePlayerDown);
         gameInput.instance().setBind(KeyEvent.VK_A, gameImpulses.impulsePlayerLeft);
         gameInput.instance().setBind(KeyEvent.VK_D, gameImpulses.impulsePlayerRight);
-
         gameInput.instance().setBind(KeyEvent.VK_SPACE, gameImpulses.impulsePlayerJump);
-
-        gameInput.instance().setBind(KeyEvent.VK_EQUALS, gameImpulses.impulseCameraZoomIn);
-        gameInput.instance().setBind(KeyEvent.VK_MINUS, gameImpulses.impulseCameraZoomOut);
     }
 }

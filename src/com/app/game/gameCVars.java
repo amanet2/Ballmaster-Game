@@ -24,7 +24,7 @@ public class gameCVars {
 
     static double cameraMaxSpeed = 0.2;
 
-    static double worldGravity = 0.3;
+    static double worldGravity = 1.0;
 
     static gCVar cVarCamXY = new gCVar(Arrays.toString(gameCamera.gameCamera.getCoords())) {
         @Override
@@ -112,10 +112,10 @@ public class gameCVars {
     };
 
     public static void init() {
-        instance().registerCVar("com_showframeinfo", cVarShowFrameInfo);
-        instance().registerCVar("com_showvideoinfo", cVarShowVideoInfo);
-        instance().registerCVar("com_showtimeelapsed", cVarComShowTimeElapsed);
-        instance().registerCVar("g_showcamerainfo", cVarShowCamInfo);
+        instance().registerCVar("com_showFrameInfo", cVarShowFrameInfo);
+        instance().registerCVar("com_showVideoInfo", cVarShowVideoInfo);
+        instance().registerCVar("com_showTimeElapsed", cVarComShowTimeElapsed);
+        instance().registerCVar("g_showCamInfo", cVarShowCamInfo);
         instance().registerCVar("g_camXY", cVarCamXY);
         instance().registerCVar("g_camZoom", cVarCamZoom);
         instance().registerCVar("g_camSpeed", cVarCamSpeed);

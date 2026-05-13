@@ -1,6 +1,5 @@
 package com.app.game;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,65 +28,38 @@ public class gameState {
     public static boolean camLeft = false;
     public static boolean camRight = false;
 
-    static String dictString = """
-    {
-        collisions=[
-            {
-                x=-1200,
-                y=600,
-                w=2400,
-                h=600
-            },
-            {
-                x=-1800,
-                y=0,
-                w=600,
-                h=600
-            },
-            {
-                x=-1800,
-                y=-600,
-                w=600,
-                h=600
-            },
-            {
-                x=1200,
-                y=0,
-                w=600,
-                h=600
-            },
-            {
-                x=1200,
-                y=-600,
-                w=600,
-                h=600
-            },
-            {
-                x=-300,
-                y=0,
-                w=600,
-                h=250
-            }
-        ],
-        triggers=[
-            {
-                x=900,
-                y=450,
-                w=150,
-                h=150
-            }
-        ]
-    }
-    """;
-
     public static void init() {
+        String filePath = "base/map/test.map";
+        String stateString = gameFiles.instance().getFileSystemMaps().getRootDirectory().getFile(filePath).getFileString();
+
+        gDict stateDict = new gDict(stateString);
+
+//        ArrayList execStrings = (ArrayList) stateDict.get("exec");
+//        for(Object execStringObject : execStrings) {
+//            String execString = execStringObject.toString();
+//            String output = gameConsole.instance().readLine(execString);
+//            System.out.print(output + (!output.isEmpty() ? "\n" : ""));
+//        }
+
+        HashMap ballBoyVars = (HashMap) stateDict.get("ballboy");
+        HashMap ballBoyBounds = (HashMap) ballBoyVars.get("bounds");
+        ArrayList ballBoyVec = (ArrayList) ballBoyVars.get("vec");
+
         ballBoy = new gEntity();
         ballBoy.setSprite(gameSprites.pinkGuySprite);
-        ballBoy.setBounds(new gBounds(new double[]{ 0, -600, 300, 300 }));
-        ballBoy.setVec(new double[]{ 0.0, 0.0 });
+        ballBoy.setBounds(new gBounds(new double[]{
+                Double.parseDouble(ballBoyBounds.get("x").toString()),
+                Double.parseDouble(ballBoyBounds.get("y").toString()),
+                Double.parseDouble(ballBoyBounds.get("w").toString()),
+                Double.parseDouble(ballBoyBounds.get("h").toString())
+        }));
+        ballBoy.setVec(new double[]{
+                Double.parseDouble(ballBoyVec.get(0).toString()),
+                Double.parseDouble(ballBoyVec.get(1).toString())
+        });
 
         collisionBounds = new ArrayList<>();
-        for(Object entry : (ArrayList) new gDict(dictString).get("collisions")) {
+        for(Object entry : (ArrayList) stateDict.get("collisions")) {
             HashMap collision = (HashMap) entry;
             collisionBounds.add(new gBounds(new double[] {
                     Double.parseDouble(collision.get("x").toString()),
@@ -98,13 +70,13 @@ public class gameState {
         }
 
         // Gonna need the scripting engine to make triggers truly definable in a string/file
+        // But for now, we can hard-code different triggers e.g. triggers_superspeed, triggers_superjump
         triggerBounds = new ArrayList<>();
-        for(Object entry : (ArrayList) new gDict(dictString).get("triggers")) {
+        for(Object entry : (ArrayList) stateDict.get("triggers")) {
             HashMap trigger = (HashMap) entry;
 
             gEvent event = new gEvent(){
                 public void doEvent() {
-                    System.out.println("FOOOO");
                     triggerBounds.remove(this.getParentEventTrigger().getParentEventTriggerBounds());
                 }
             };

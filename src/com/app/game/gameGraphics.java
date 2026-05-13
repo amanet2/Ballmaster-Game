@@ -3,6 +3,7 @@ package com.app.game;
 import com.app.engine.engine;
 import com.app.engine.graphicsSystem.gCanvas;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
+import com.app.engine.eventSystem.gEventTriggerBounds;
 import com.app.engine.utils.gDate;
 import com.app.engine.utils.gBounds;
 
@@ -35,13 +36,13 @@ public class gameGraphics {
                 (int) gameState.ballBoy.getBounds().getHeight()
         );
 
-        if(gameState.triggerBounds != null) {
-            g.setColor(Color.GREEN);
+        g.setColor(Color.GREEN);
+        for(gEventTriggerBounds eventTriggerBounds : gameState.triggerBounds) {
             g.drawRect(
-                    (int)gameState.triggerBounds.getBounds().getX(),
-                    (int)gameState.triggerBounds.getBounds().getY(),
-                    (int)gameState.triggerBounds.getBounds().getWidth(),
-                    (int)gameState.triggerBounds.getBounds().getHeight()
+                    (int)eventTriggerBounds.getBounds().getX(),
+                    (int)eventTriggerBounds.getBounds().getY(),
+                    (int)eventTriggerBounds.getBounds().getWidth(),
+                    (int)eventTriggerBounds.getBounds().getHeight()
             );
         }
 

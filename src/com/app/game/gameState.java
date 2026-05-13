@@ -1,7 +1,10 @@
 package com.app.game;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import com.app.engine.entitySystem.gEntity;
 import com.app.engine.eventSystem.*;
@@ -10,8 +13,8 @@ import com.app.engine.utils.*;
 public class gameState {
     public static gEntity ballBoy;
 
-    public static gEventTriggerBounds triggerBounds;
     public static ArrayList<gBounds> collisionBounds;
+    public static ArrayList<gEventTriggerBounds> triggerBounds;
 
     public static boolean playerUp = false;
     public static boolean playerDown = false;
@@ -26,22 +29,63 @@ public class gameState {
     public static boolean camLeft = false;
     public static boolean camRight = false;
 
+    static String dictString = """
+    {
+        collisions=[
+            {
+                x=-1200,
+                y=600,
+                w=2400,
+                h=600
+            },
+            {
+                x=-1800,
+                y=0,
+                w=600,
+                h=600
+            },
+            {
+                x=-1800,
+                y=-600,
+                w=600,
+                h=600
+            },
+            {
+                x=1200,
+                y=0,
+                w=600,
+                h=600
+            },
+            {
+                x=1200,
+                y=-600,
+                w=600,
+                h=600
+            },
+            {
+                x=-300,
+                y=0,
+                w=600,
+                h=250
+            }
+        ],
+        triggers=[
+            {
+                x=900,
+                y=450,
+                w=150,
+                h=150
+            }
+        ]
+    }
+    """;
+
     public static void init() {
         ballBoy = new gEntity();
         ballBoy.setSprite(gameSprites.pinkGuySprite);
         ballBoy.setBounds(new gBounds(new double[]{ 0, -600, 300, 300 }));
         ballBoy.setVec(new double[]{ 0.0, 0.0 });
 
-        // Gonna need the scripting engine to make this be definable in a string/file
-        triggerBounds = new gEventTriggerBounds(new gEventTrigger(new gEvent(){
-            @Override
-            public void doEvent() {
-                triggerBounds = null;
-            }
-        }));
-        triggerBounds.setBounds(new gBounds(new double[] { 900, 450, 150, 150 }));
-
-        String dictString = "{collisions=[{x=-1200, y=600, w=2400, h=600},{x=-1800, y=0, w=600, h=600},{x=1200, y=0, w=600, h=600}]}";
         collisionBounds = new ArrayList<>();
         for(Object entry : (ArrayList) new gDict(dictString).get("collisions")) {
             HashMap collision = (HashMap) entry;
@@ -51,6 +95,34 @@ public class gameState {
                     Double.parseDouble(collision.get("w").toString()),
                     Double.parseDouble(collision.get("h").toString())
             }));
+        }
+
+        // Gonna need the scripting engine to make triggers truly definable in a string/file
+        triggerBounds = new ArrayList<>();
+        for(Object entry : (ArrayList) new gDict(dictString).get("triggers")) {
+            HashMap trigger = (HashMap) entry;
+
+            gEvent event = new gEvent(){
+                public void doEvent() {
+                    System.out.println("FOOOO");
+                    triggerBounds.remove(this.getParentEventTrigger().getParentEventTriggerBounds());
+                }
+            };
+
+            gEventTrigger eventTrigger = new gEventTrigger(event);
+            event.setParentEventTrigger(eventTrigger);
+
+            gEventTriggerBounds eventTriggerBounds = new gEventTriggerBounds(eventTrigger);
+            eventTrigger.setParentEventTriggerBounds(eventTriggerBounds);
+
+            eventTriggerBounds.setBounds(new gBounds(new double[]{
+                    Double.parseDouble(trigger.get("x").toString()),
+                    Double.parseDouble(trigger.get("y").toString()),
+                    Double.parseDouble(trigger.get("w").toString()),
+                    Double.parseDouble(trigger.get("h").toString())
+            }));
+
+            triggerBounds.add(eventTriggerBounds);
         }
     }
 
@@ -106,8 +178,16 @@ public class gameState {
 
         ballBoy.setBounds(new gBounds(new double[]{ coordsDx, coordsDy, bounds.getWidth(), bounds.getHeight() }));
 
-        if(triggerBounds != null && triggerBounds.getBounds().intersects(ballBoy.getBounds()))
-            triggerBounds.doTrigger();
+        // triggers
+        Queue<gEventTriggerBounds> triggeredEventBounds = new LinkedList<>();
+        for(gEventTriggerBounds eventTriggerBounds : triggerBounds) {
+            if(eventTriggerBounds.getBounds().intersects(ballBoy.getBounds()))
+                triggeredEventBounds.add(eventTriggerBounds);
+        }
+        while(triggeredEventBounds.peek() != null) {
+            gEventTriggerBounds eventTriggerBounds = triggeredEventBounds.remove();
+            eventTriggerBounds.doTrigger();
+        }
     }
 
     // TODO: make sure camera movement is proportional to player if same vel

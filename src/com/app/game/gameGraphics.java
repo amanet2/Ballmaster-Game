@@ -4,6 +4,7 @@ import com.app.engine.engine;
 import com.app.engine.graphicsSystem.gCanvas;
 import com.app.engine.graphicsSystem.gGraphicsSystem;
 import com.app.engine.utils.gDate;
+import com.app.engine.utils.gBounds;
 
 import java.awt.*;
 
@@ -17,24 +18,14 @@ public class gameGraphics {
         Graphics g = instance().getGraphics();
 
         g.setColor(Color.WHITE);
-        g.drawRect(
-                (int) gameState.bigBox1.getX(),
-                (int) gameState.bigBox1.getY(),
-                (int) gameState.bigBox1.getWidth(),
-                (int) gameState.bigBox1.getHeight()
-        );
-        g.drawRect(
-                (int) gameState.bigBox2.getX(),
-                (int) gameState.bigBox2.getY(),
-                (int) gameState.bigBox2.getWidth(),
-                (int) gameState.bigBox2.getHeight()
-        );
-        g.drawRect(
-                (int) gameState.bigBox3.getX(),
-                (int) gameState.bigBox3.getY(),
-                (int) gameState.bigBox3.getWidth(),
-                (int) gameState.bigBox3.getHeight()
-        );
+        for(gBounds collisionBounds : gameState.collisionBounds) {
+            g.drawRect(
+                    (int) collisionBounds.getX(),
+                    (int) collisionBounds.getY(),
+                    (int) collisionBounds.getWidth(),
+                    (int) collisionBounds.getHeight()
+            );
+        }
 
         g.setColor(Color.PINK);
         g.drawRect(

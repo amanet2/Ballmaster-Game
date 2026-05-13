@@ -4,8 +4,6 @@ import com.app.engine.engine;
 import com.app.engine.graphicsSystem.gSprite;
 import com.app.engine.graphicsSystem.gSpriteSystem;
 
-import java.util.HashMap;
-
 public class gameSprites {
     public static gSpriteSystem instance() {
         return engine.instance().gGraphicsSystem.getSpriteSystem();

@@ -1,12 +1,10 @@
 package com.app.game;
 
-import com.app.engine.utils.gDict;
-
 public class gameSystems {
     public static void init(String[] args) {
         System.out.println("----------------");
         System.out.println("INITIALIZING GAME SYSTEMS...");
-
+        System.out.println("----------------");
         System.out.print("INITIALIZING CONSOLE...");
         gameConsole.init();
         System.out.println("DONE.");
@@ -40,15 +38,7 @@ public class gameSystems {
         System.out.print("INITIALIZING INPUTS...");
         gameInput.init();
         System.out.println("DONE.");
-
-        System.out.println("----------------");
         System.out.print("INITIALIZING GAME STATE...");
-
-        String testString = "{foo=bar, baz={foo=bar, qaz={yaz=p\\}zaz}}, zaz={abz=bzaz}, laz=[1, 2, 3, 4]}";
-        gDict testDict = new gDict(testString);
-        System.out.println("TEST GDICT STRING: " + testString);
-        System.out.println("TEST GDICT: " + testDict);
-
         gameState.init();
         System.out.println("DONE.");
 

@@ -13,7 +13,7 @@ public class game {
 
             // update state
             while (tickTimeNanos < snapshotTimeNanos) {
-                tickTimeNanos += (long) (1000000000.0 / gameState.gameRate);
+                tickTimeNanos += (long) (1000000000.0 / gameCVars.worldTickRate);
 
                 gameState.update();
 

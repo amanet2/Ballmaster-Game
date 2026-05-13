@@ -1,21 +1,18 @@
 package com.app.game;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import com.app.engine.entitySystem.gEntity;
 import com.app.engine.eventSystem.*;
 import com.app.engine.utils.*;
 
-import com.app.game.gameCVars.*;
-
 public class gameState {
-    public static double gameRate = 1000;
-
     public static gEntity ballBoy;
-    public static gEventTriggerBounds triggerBounds;
-    public static gBounds bigBox1;
-    public static gBounds bigBox2;
-    public static gBounds bigBox3;
 
-    public static double playerSpeed = 0.4;
+    public static gEventTriggerBounds triggerBounds;
+    public static ArrayList<gBounds> collisionBounds;
+
     public static boolean playerUp = false;
     public static boolean playerDown = false;
     public static boolean playerLeft = false;
@@ -24,13 +21,10 @@ public class gameState {
     public static boolean playerJump = false;
     public static long playerCanJumpAtMillis = 0;
 
-    public static double cameraSpeed = 0.2;
     public static boolean camUp = false;
     public static boolean camDown = false;
     public static boolean camLeft = false;
     public static boolean camRight = false;
-
-    public static double gravity = 3.0;
 
     public static void init() {
         ballBoy = new gEntity();
@@ -38,6 +32,7 @@ public class gameState {
         ballBoy.setBounds(new gBounds(new double[]{ 0, -600, 300, 300 }));
         ballBoy.setVec(new double[]{ 0.0, 0.0 });
 
+        // Gonna need the scripting engine to make this be definable in a string/file
         triggerBounds = new gEventTriggerBounds(new gEventTrigger(new gEvent(){
             @Override
             public void doEvent() {
@@ -46,29 +41,37 @@ public class gameState {
         }));
         triggerBounds.setBounds(new gBounds(new double[] { 900, 450, 150, 150 }));
 
-        bigBox1 = new gBounds(new double[] { -1200, 600, 2400, 600});
-        bigBox2 = new gBounds(new double[] { -1800, 0, 600, 600 });
-        bigBox3 = new gBounds(new double[] { 1200, 0, 600, 600 });
+        String dictString = "{collisions=[{x=-1200, y=600, w=2400, h=600},{x=-1800, y=0, w=600, h=600},{x=1200, y=0, w=600, h=600}]}";
+        collisionBounds = new ArrayList<>();
+        for(Object entry : (ArrayList) new gDict(dictString).get("collisions")) {
+            HashMap collision = (HashMap) entry;
+            collisionBounds.add(new gBounds(new double[] {
+                    Double.parseDouble(collision.get("x").toString()),
+                    Double.parseDouble(collision.get("y").toString()),
+                    Double.parseDouble(collision.get("w").toString()),
+                    Double.parseDouble(collision.get("h").toString())
+            }));
+        }
     }
 
     private static void updateCharacters() {
 //        double vecDx = 0.0;
 //        double vecDy = 0.0;
         double vecDx = 0.0;
-        double vecDy = Math.min(ballBoy.getVec()[1] + gravity, gravity);
+        double vecDy = Math.min(ballBoy.getVec()[1] + gameCVars.worldGravity, gameCVars.worldGravity);
 
 //        if(playerUp) vecDy -= playerSpeed;
 //        if(playerDown) vecDy += playerSpeed;
-        if(playerLeft) vecDx -= playerSpeed;
-        if(playerRight) vecDx += playerSpeed;
+        if(playerLeft) vecDx -= gameCVars.playerMaxSpeed;
+        if(playerRight) vecDx += gameCVars.playerMaxSpeed;
 
         // gravity
 //        vecDy += gravity;
 
         if (playerJump) {
             if(playerCanJumpAtMillis < System.currentTimeMillis()) {
-                playerCanJumpAtMillis = System.currentTimeMillis() + gameCVars.jumpDelay;
-                vecDy -= 72.0;
+                playerCanJumpAtMillis = System.currentTimeMillis() + gameCVars.playerJumpDelay;
+                vecDy -= gameCVars.playerJumpForce;
             }
             playerJump = false;
         }
@@ -96,12 +99,10 @@ public class gameState {
         });
 
         // collisions
-        if(ballBoyBoundsDx.intersects(bigBox1)) coordsDx = bounds.getX();
-        if(ballBoyBoundsDy.intersects(bigBox1)) coordsDy = bounds.getY();
-        if(ballBoyBoundsDx.intersects(bigBox2)) coordsDx = bounds.getX();
-        if(ballBoyBoundsDy.intersects(bigBox2)) coordsDy = bounds.getY();
-        if(ballBoyBoundsDx.intersects(bigBox3)) coordsDx = bounds.getX();
-        if(ballBoyBoundsDy.intersects(bigBox3)) coordsDy = bounds.getY();
+        for(gBounds collisionBounds : collisionBounds) {
+            if(ballBoyBoundsDx.intersects(collisionBounds)) coordsDx = bounds.getX();
+            if(ballBoyBoundsDy.intersects(collisionBounds)) coordsDy = bounds.getY();
+        }
 
         ballBoy.setBounds(new gBounds(new double[]{ coordsDx, coordsDy, bounds.getWidth(), bounds.getHeight() }));
 
@@ -114,10 +115,10 @@ public class gameState {
         double vecDx = 0.0;
         double vecDy = 0.0;
 
-        if(camUp) vecDy -= cameraSpeed;
-        if(camDown) vecDy += cameraSpeed;
-        if(camLeft) vecDx -= cameraSpeed;
-        if(camRight) vecDx += cameraSpeed;
+        if(camUp) vecDy -= gameCVars.cameraMaxSpeed;
+        if(camDown) vecDy += gameCVars.cameraMaxSpeed;
+        if(camLeft) vecDx -= gameCVars.cameraMaxSpeed;
+        if(camRight) vecDx += gameCVars.cameraMaxSpeed;
 
         gameCamera.gameCamera.setVec(new double[]{ vecDx, vecDy });
 

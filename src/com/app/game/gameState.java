@@ -38,8 +38,6 @@ public class gameState {
         for(Object execStringObject : execStrings) {
             String execString = execStringObject.toString();
 
-            System.out.println(execString);
-
             String output = gameConsole.instance().readLine(execString);
             System.out.print(output + (!output.isEmpty() ? "\n" : ""));
         }

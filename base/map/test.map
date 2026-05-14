@@ -1,6 +1,7 @@
 {
     exec = [
         set g_camZoom 0.1,
+        set g_gravity 2.5
     ],
     ballboy = {
         bounds = {
@@ -47,6 +48,12 @@
             y=0,
             w=600,
             h=250
+        },
+        {
+            x=600,
+            y=-150,
+            w=300,
+            h=300
         }
     ],
     triggers=[

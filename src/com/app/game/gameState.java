@@ -34,12 +34,15 @@ public class gameState {
 
         gDict stateDict = new gDict(stateString);
 
-//        ArrayList execStrings = (ArrayList) stateDict.get("exec");
-//        for(Object execStringObject : execStrings) {
-//            String execString = execStringObject.toString();
-//            String output = gameConsole.instance().readLine(execString);
-//            System.out.print(output + (!output.isEmpty() ? "\n" : ""));
-//        }
+        ArrayList execStrings = (ArrayList) stateDict.get("exec");
+        for(Object execStringObject : execStrings) {
+            String execString = execStringObject.toString();
+
+            System.out.println(execString);
+
+            String output = gameConsole.instance().readLine(execString);
+            System.out.print(output + (!output.isEmpty() ? "\n" : ""));
+        }
 
         HashMap ballBoyVars = (HashMap) stateDict.get("ballboy");
         HashMap ballBoyBounds = (HashMap) ballBoyVars.get("bounds");

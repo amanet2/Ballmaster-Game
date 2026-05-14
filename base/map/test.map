@@ -1,4 +1,7 @@
 {
+    exec = [
+        set g_camZoom 0.1,
+    ],
     ballboy = {
         bounds = {
             x=0,

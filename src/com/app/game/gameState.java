@@ -28,8 +28,8 @@ public class gameState {
     public static boolean camLeft = false;
     public static boolean camRight = false;
 
-    public static void init() {
-        String filePath = "base/map/test.map";
+    public static void init(String filePath) {
+//        String filePath = "base/map/test.map";
         String stateString = gameFiles.instance().getFileSystemMaps().getRootDirectory().getFile(filePath).getFileString();
 
         gDict stateDict = new gDict(stateString);

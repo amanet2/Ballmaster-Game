@@ -39,7 +39,7 @@ public class gameSystems {
         gameInput.init();
         System.out.println("DONE.");
         System.out.print("INITIALIZING GAME STATE...");
-        gameState.init();
+        gameState.init("base/map/test.map");
         System.out.println("DONE.");
 
         System.out.println("----------------");

@@ -24,8 +24,20 @@ public class gameConsole {
         }
     };
 
+    static gConsoleCommand gConsoleCommandInit = new gConsoleCommand("change game state") {
+        @Override
+        public String doCommand(String[] args) {
+            if(args.length < 1 || args[0].trim().isEmpty())
+                return "Usage: init path/to/map";
+            String filePath = args[0];
+            gameState.init(filePath);
+            return "loaded map " + filePath;
+        }
+    };
+
     public static void init() {
         instance().registerCmd("useCam", gConsoleCommandUseCamera);
+        instance().registerCmd("map", gConsoleCommandInit);
 
         gameInput.instance().setBind(KeyEvent.VK_UP, gameImpulses.impulseCameraUp);
         gameInput.instance().setBind(KeyEvent.VK_DOWN, gameImpulses.impulseCameraDown);

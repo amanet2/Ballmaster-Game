@@ -18,9 +18,9 @@ public class gameGraphics {
         instance().setCameraTransform(gameCamera.gameCamera, false);
         Graphics g = instance().getGraphics();
 
-        g.setColor(Color.WHITE);
+        ((Graphics2D) g).setPaint(gameTextures.wallTexture.getTexturePaint());
         for(gBounds collisionBounds : gameState.collisionBounds) {
-            g.drawRect(
+            g.fillRect(
                     (int) collisionBounds.getX(),
                     (int) collisionBounds.getY(),
                     (int) collisionBounds.getWidth(),

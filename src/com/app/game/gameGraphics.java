@@ -110,51 +110,35 @@ public class gameGraphics {
                 debugInfoY += offsetY
         );
 
-        // TODO: get this logic reusable
+        // MOUSE COORDS
         int[] mouseXY = gameInput.instance().getMouse().getCoordinates();
         int[] windowXY = instance().getWindowXY();
+        int[] screenXY = { mouseXY[0] - windowXY[0], mouseXY[1] - windowXY[1] };
 
-//        int[] uiMouseXY = new int[] {
-//                (int) ((double) (mouseXY[0] - windowXY[0]) * (double) ((double) instance().getRenderW() / (double) instance().getWindowW())),
-//                (int) ((double) (mouseXY[1] - windowXY[1]) * (double) ((double) instance().getRenderH() / (double) instance().getWindowH()))
-//        };
-        int[] uiMouseXY = getUIXYFromScreenXY(new int[]{ mouseXY[0] - windowXY[0], mouseXY[1] - windowXY[1] });
+        int[] uiMouseXY = getUIXYFromScreenXY(new int[]{ screenXY[0], screenXY[1]});
 
         g.setColor(Color.CYAN);
         g.drawString(
-                "Mouse XY (UI): [%d, %d]".formatted(uiMouseXY[0], uiMouseXY[1]),
+                "Mouse XY (CANVAS UI): [%d, %d]".formatted(uiMouseXY[0], uiMouseXY[1]),
                 0,
                 debugInfoY += offsetY
         );
-        g.drawLine(uiMouseXY[0], -10000, uiMouseXY[0], 10000);
-        g.drawLine(-10000, uiMouseXY[1], 10000, uiMouseXY[1]);
 
-//        int[] worldMouseXY = new int[] {
-//                (int) (((double) uiMouseXY[0] - (((double) instance().getRenderW())/2.0))/gameCamera.gameCamera.getZoom() + gameCamera.gameCamera.getCoords()[0]/gameCamera.gameCamera.getZoom()),
-//                (int) (((double) uiMouseXY[1] - (((double) instance().getRenderH())/2.0))/gameCamera.gameCamera.getZoom() + gameCamera.gameCamera.getCoords()[1]/gameCamera.gameCamera.getZoom()),
-//        };
-        double[] worldMouseXY = getWorldXYFromScreenXY(new int[]{ uiMouseXY[0], uiMouseXY[1] });
-
-        g.setColor(Color.PINK);
-        g.drawString(
-                "Mouse XY (WORLD): [%f, %f]".formatted(worldMouseXY[0], worldMouseXY[1]),
-                0,
-                debugInfoY += offsetY
-        );
+        double[] scaleXY = {
+                ((double) uiMouseXY[0] * (480.0/(double) instance().getRenderH())),
+                ((double) uiMouseXY[1] * (480.0/(double) instance().getRenderH())),
+        };
+        g.drawLine((int) scaleXY[0], 0, (int) scaleXY[0], instance().getWindowH());
+        g.drawLine(0, (int) scaleXY[1], instance().getWindowW(), (int) scaleXY[1]);
     }
 
     public static int[] getUIXYFromScreenXY(int[] xy) {
-        return new int[]{
-                (int) ((double) (xy[0]) * ((double) instance().getRenderW() / (double) instance().getWindowW())),
-                (int) ((double) (xy[1]) * ((double) instance().getRenderH() / (double) instance().getWindowH()))
+        double[] canvasXY = {
+                (double) xy[0] * ((double) instance().getRenderW() / (double) instance().getWindowW()),
+                (double) xy[1] * ((double) instance().getRenderH() / (double) instance().getWindowH()),
         };
-    }
 
-    public static double[] getWorldXYFromScreenXY(int[] xy) {
-        return new double[] {
-                ((double) xy[0] - (((double) instance().getRenderW())/2.0))/gameCamera.gameCamera.getZoom() + gameCamera.gameCamera.getCoords()[0]/gameCamera.gameCamera.getZoom(),
-                ((double) xy[1] - (((double) instance().getRenderH())/2.0))/gameCamera.gameCamera.getZoom() + gameCamera.gameCamera.getCoords()[1]/gameCamera.gameCamera.getZoom(),
-        };
+        return new int[]{ (int) (canvasXY[0]), (int) (canvasXY[1]) };
     }
 
     public static void init() {

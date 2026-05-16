@@ -1,6 +1,5 @@
 {
     exec = [
-        set g_camZoom 0.1,
         set g_gravity 2.5
     ],
     ballboy = {

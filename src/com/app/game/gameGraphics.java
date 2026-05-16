@@ -73,6 +73,14 @@ public class gameGraphics {
                 g.drawString(metric, 0, debugInfoY += offsetY);
             }
         }
+        if(gameCVars.showMouseInfo) {
+            int[] mouseCoords = gameInput.instance().getMouse().getCoordinates();
+            g.drawString(
+                    "Mouse XY: [%d, %d]".formatted(mouseCoords[0], mouseCoords[1]),
+                    0,
+                    debugInfoY += offsetY
+            );
+        }
         if(gameCVars.showCameraInfo) {
             double[] camCoords = gameCamera.gameCamera.getCoords();
             double[] camVec = gameCamera.gameCamera.getVec();
@@ -101,6 +109,24 @@ public class gameGraphics {
                 0,
                 debugInfoY += offsetY
         );
+
+        // TODO: get this logic reusable
+        int[] mouseXY = gameInput.instance().getMouse().getCoordinates();
+        int[] windowXY = instance().getWindowXY();
+
+        int[] uiMouseXY = new int[] {
+                (int) ((double) (mouseXY[0] - windowXY[0]) * (double) ((double) instance().getRenderW() / (double) instance().getWindowW())),
+                (int) ((double) (mouseXY[1] - windowXY[1]) * (double) ((double) instance().getRenderH() / (double) instance().getWindowH()))
+        };
+
+        g.setColor(Color.CYAN);
+        g.drawString(
+                "Mouse XY (UI): [%d, %d]".formatted(uiMouseXY[0], uiMouseXY[1]),
+                0,
+                debugInfoY += offsetY
+        );
+        g.drawLine(uiMouseXY[0], -10000, uiMouseXY[0], 10000);
+        g.drawLine(-10000, uiMouseXY[1], 10000, uiMouseXY[1]);
     }
 
     public static void init() {

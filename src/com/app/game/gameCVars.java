@@ -15,6 +15,7 @@ public class gameCVars {
     static boolean showCameraInfo = false;
     static boolean showFrameInfo = false;
     static boolean showVideoInfo = false;
+    static boolean showMouseInfo = false;
 
     static double worldTickRate = 1000;
 
@@ -69,6 +70,13 @@ public class gameCVars {
         }
     };
 
+    static gCVar cVarComShowMouseInfo = new gCVar(showMouseInfo ? " 1" : "0") {
+        @Override
+        public void onChange() {
+            showMouseInfo =  this.getValue().equalsIgnoreCase("1");
+        }
+    };
+
     static gCVar cVarCamSpeed = new gCVar(Double.toString(cameraMaxSpeed)) {
         @Override
         public void onChange() {
@@ -115,6 +123,7 @@ public class gameCVars {
         instance().registerCVar("com_showFrameInfo", cVarShowFrameInfo);
         instance().registerCVar("com_showVideoInfo", cVarShowVideoInfo);
         instance().registerCVar("com_showTimeElapsed", cVarComShowTimeElapsed);
+        instance().registerCVar("com_showMouseInfo", cVarComShowMouseInfo);
         instance().registerCVar("g_showCamInfo", cVarShowCamInfo);
         instance().registerCVar("g_camXY", cVarCamXY);
         instance().registerCVar("g_camZoom", cVarCamZoom);

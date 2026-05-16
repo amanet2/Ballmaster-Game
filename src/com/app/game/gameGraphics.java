@@ -127,6 +127,18 @@ public class gameGraphics {
         );
         g.drawLine(uiMouseXY[0], -10000, uiMouseXY[0], 10000);
         g.drawLine(-10000, uiMouseXY[1], 10000, uiMouseXY[1]);
+
+        int[] worldMouseXY = new int[] {
+                (int) (((double) uiMouseXY[0] - (int) (((double) instance().getRenderW())/2.0)) * (1.0/gameCamera.gameCamera.getZoom())),
+                (int) (((double) uiMouseXY[1] - (int) (((double) instance().getRenderH())/2.0)) * (1.0/gameCamera.gameCamera.getZoom())),
+        };
+
+        g.setColor(Color.PINK);
+        g.drawString(
+                "Mouse XY (WORLD): [%d, %d]".formatted(worldMouseXY[0], worldMouseXY[1]),
+                0,
+                debugInfoY += offsetY
+        );
     }
 
     public static void init() {

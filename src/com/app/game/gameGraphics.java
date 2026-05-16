@@ -129,8 +129,8 @@ public class gameGraphics {
         g.drawLine(-10000, uiMouseXY[1], 10000, uiMouseXY[1]);
 
         int[] worldMouseXY = new int[] {
-                (int) (((double) uiMouseXY[0] - (int) (((double) instance().getRenderW())/2.0)) * (1.0/gameCamera.gameCamera.getZoom())),
-                (int) (((double) uiMouseXY[1] - (int) (((double) instance().getRenderH())/2.0)) * (1.0/gameCamera.gameCamera.getZoom())),
+                (int) (((double) uiMouseXY[0] - (int) (((double) instance().getRenderW())/2.0)) * (1.0/gameCamera.gameCamera.getZoom()) + (int)((gameCamera.gameCamera.getCoords()[0]) * (1.0/gameCamera.gameCamera.getZoom()))),
+                (int) (((double) uiMouseXY[1] - (int) (((double) instance().getRenderH())/2.0)) * (1.0/gameCamera.gameCamera.getZoom()) + (int)((gameCamera.gameCamera.getCoords()[1]) * (1.0/gameCamera.gameCamera.getZoom()))),
         };
 
         g.setColor(Color.PINK);

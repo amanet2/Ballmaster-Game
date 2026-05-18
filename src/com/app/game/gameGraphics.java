@@ -115,9 +115,9 @@ public class gameGraphics {
         int[] windowXY = instance().getWindowXY();
         int[] screenXY = { mouseXY[0] - windowXY[0], mouseXY[1] - windowXY[1] };
 
+        g.setColor(Color.CYAN);
         int[] uiMouseXY = getUIXYFromScreenXY(new int[]{ screenXY[0], screenXY[1]});
 
-        g.setColor(Color.CYAN);
         g.drawString(
                 "Mouse XY (CANVAS UI): [%d, %d]".formatted(uiMouseXY[0], uiMouseXY[1]),
                 0,
@@ -130,6 +130,23 @@ public class gameGraphics {
         };
         g.drawLine((int) scaleXY[0], 0, (int) scaleXY[0], instance().getWindowH());
         g.drawLine(0, (int) scaleXY[1], instance().getWindowW(), (int) scaleXY[1]);
+
+
+        g.setColor(Color.PINK);
+        double[] worldMouseXY = getWorldXYFromScreenXY(new int[]{ uiMouseXY[0], uiMouseXY[1]});
+
+        g.drawString(
+                "Mouse XY (WORLD): [%f, %f]".formatted(worldMouseXY[0], worldMouseXY[1]),
+                0,
+                debugInfoY += offsetY
+        );
+
+//        double[] worldScaleUI = {((double) worldMouseXY[0]), ((double) worldMouseXY[1]),};
+//        g.drawLine((int) worldScaleUI[0], 0, (int) worldScaleUI[0], instance().getWindowH());
+//        g.drawLine(0, (int) worldScaleUI[1], instance().getWindowW(), (int) worldScaleUI[1]);
+
+        // EVENTS
+        gameScheduler.instance().doEventsGraphics(System.currentTimeMillis(), g);
     }
 
     public static int[] getUIXYFromScreenXY(int[] xy) {
@@ -139,6 +156,13 @@ public class gameGraphics {
         };
 
         return new int[]{ (int) (canvasXY[0]), (int) (canvasXY[1]) };
+    }
+
+    public static double[] getWorldXYFromScreenXY(int[] xy) {
+        return new double[]{
+                ((double) xy[0] - (double) instance().getRenderW()/2.0) * ((double) instance().getRenderH()/480.0) * gameCamera.gameCamera.getZoom(),
+                ((double) xy[1] - (double) instance().getRenderH()/2.0) * ((double) instance().getRenderH()/480.0) * gameCamera.gameCamera.getZoom(),
+        };
     }
 
     public static void init() {

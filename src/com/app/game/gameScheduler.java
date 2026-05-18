@@ -1,7 +1,10 @@
 package com.app.game;
 
+import java.awt.Graphics;
+
 import com.app.engine.schedulerSystem.gSchedulerSystem;
 import com.app.engine.eventSystem.gEvent;
+import com.app.engine.eventSystem.gEventGraphics;
 import com.app.engine.engine;
 
 public class gameScheduler {
@@ -28,5 +31,23 @@ public class gameScheduler {
                 );
             }
         });
+
+        gEventGraphics eventGraphics = new gEventGraphics(){
+            gEventGraphics infiniteEvent = this;
+            public void doEvent(Graphics g) {
+                g.drawString("10 seconds elapsed.", 320,240);
+                scheduler.addEventGraphics(
+                        System.currentTimeMillis() + 10000,
+                        new gEventGraphics(){
+                            public void doEvent(Graphics g) {
+                                g.drawString("10 seconds elapsed.", 320,240);
+                                scheduler.addEventGraphics(System.currentTimeMillis() + 10000, infiniteEvent, 5000);
+                            }
+                        },
+                        5000
+                );
+            }
+        };
+        scheduler.addEventGraphics(System.currentTimeMillis() + 10000, eventGraphics, 5000);
     }
 }

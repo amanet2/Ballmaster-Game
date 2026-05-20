@@ -1,6 +1,6 @@
 package com.app.game;
 
-import java.awt.Graphics;
+import java.awt.*;
 
 import com.app.engine.schedulerSystem.gSchedulerSystem;
 import com.app.engine.eventSystem.gEvent;
@@ -32,22 +32,16 @@ public class gameScheduler {
             }
         });
 
-        gEventGraphics eventGraphics = new gEventGraphics(){
-            gEventGraphics infiniteEvent = this;
-            public void doEvent(Graphics g) {
-                g.drawString("10 seconds elapsed.", 320,240);
-                scheduler.addEventGraphics(
-                        System.currentTimeMillis() + 10000,
-                        new gEventGraphics(){
-                            public void doEvent(Graphics g) {
-                                g.drawString("10 seconds elapsed.", 320,240);
-                                scheduler.addEventGraphics(System.currentTimeMillis() + 10000, infiniteEvent, 5000);
-                            }
-                        },
-                        5000
-                );
-            }
-        };
-        scheduler.addEventGraphics(System.currentTimeMillis() + 10000, eventGraphics, 5000);
+        // WARNING, calling infinite doEvent() every render loop is adding graphics events in the 1000s
+        scheduler.addEventGraphics(
+                System.currentTimeMillis() + 5000,
+                new gEventGraphics(){
+                    public void doEvent(Graphics g) {
+                        g.setColor(Color.YELLOW);
+                        g.drawString("5 seconds elapsed.", 320, 240);
+                    }
+                },
+                3000
+        );
     }
 }

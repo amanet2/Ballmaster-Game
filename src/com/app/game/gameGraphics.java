@@ -134,6 +134,7 @@ public class gameGraphics {
 
         g.setColor(Color.PINK);
         double[] worldMouseXY = getWorldXYFromScreenXY(new int[]{ uiMouseXY[0], uiMouseXY[1]});
+//        double[] worldMouseXY = getWorldXYFromScreenXY(new int[]{ screenXY[0], screenXY[1]});
 
         g.drawString(
                 "Mouse XY (WORLD): [%f, %f]".formatted(worldMouseXY[0], worldMouseXY[1]),
@@ -158,10 +159,11 @@ public class gameGraphics {
         return new int[]{ (int) (canvasXY[0]), (int) (canvasXY[1]) };
     }
 
+    // TODO: works fine for all situations except when render is above 640x480 and cam coords are not at 0,0
     public static double[] getWorldXYFromScreenXY(int[] xy) {
         return new double[]{
-                ((double) xy[0] - (double) instance().getRenderW()/2.0) * ((double) instance().getRenderH()/480.0) * gameCamera.gameCamera.getZoom(),
-                ((double) xy[1] - (double) instance().getRenderH()/2.0) * ((double) instance().getRenderH()/480.0) * gameCamera.gameCamera.getZoom(),
+                ((((double) xy[0] + gameCamera.gameCamera.getCoords()[0] - (double) instance().getRenderW()/2) / gameCamera.gameCamera.getZoom()))*(480.0/instance().getRenderH()),
+                ((((double) xy[1] + gameCamera.gameCamera.getCoords()[1] - (double) instance().getRenderH()/2) / gameCamera.gameCamera.getZoom()))*(480.0/instance().getRenderH()),
         };
     }
 

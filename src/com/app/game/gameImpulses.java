@@ -3,6 +3,12 @@ package com.app.game;
 import com.app.engine.inputSystem.gImpulse;
 
 public class gameImpulses {
+    public static gImpulse impulsePauseGame = new gImpulse() {
+        public void keyPressed() {
+            gameState.paused = !gameState.paused;
+        }
+    };
+
     public static gImpulse impulseCameraUp = new gImpulse() {
         public void keyPressed() {
             gameState.camUp = true;

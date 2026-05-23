@@ -39,6 +39,8 @@ public class gameConsole {
         instance().registerCmd("useCam", gConsoleCommandUseCamera);
         instance().registerCmd("map", gConsoleCommandInit);
 
+        gameInput.instance().setBind(KeyEvent.VK_ESCAPE, gameImpulses.impulsePauseGame);
+
         gameInput.instance().setBind(KeyEvent.VK_UP, gameImpulses.impulseCameraUp);
         gameInput.instance().setBind(KeyEvent.VK_DOWN, gameImpulses.impulseCameraDown);
         gameInput.instance().setBind(KeyEvent.VK_LEFT, gameImpulses.impulseCameraLeft);

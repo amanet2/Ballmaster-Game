@@ -15,6 +15,8 @@ public class gameState {
     public static ArrayList<gBounds> collisionBounds;
     public static ArrayList<gEventTriggerBounds> triggerBounds;
 
+    public static boolean paused = false;
+
     public static boolean playerUp = false;
     public static boolean playerDown = false;
     public static boolean playerLeft = false;
@@ -181,6 +183,8 @@ public class gameState {
     }
 
     public static void update() {
+        if (paused) return;
+
         updateCharacters();
         updateCamera();
     }

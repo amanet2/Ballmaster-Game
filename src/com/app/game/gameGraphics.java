@@ -146,6 +146,9 @@ public class gameGraphics {
 //        g.drawLine((int) worldScaleUI[0], 0, (int) worldScaleUI[0], instance().getWindowH());
 //        g.drawLine(0, (int) worldScaleUI[1], instance().getWindowW(), (int) worldScaleUI[1]);
 
+        g.setColor(Color.YELLOW);
+        if(gameState.paused)
+            g.drawString("PAUSED", 320, 240);
         // EVENTS
         gameScheduler.instance().doEventsGraphics(System.currentTimeMillis(), g);
     }

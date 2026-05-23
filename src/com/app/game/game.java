@@ -17,7 +17,7 @@ public class game {
 
                 gameState.update();
 
-                gameMetrics.update();
+//                gameMetrics.update();
             }
 
             gameScheduler.instance().doEvents(System.currentTimeMillis());

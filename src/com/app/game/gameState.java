@@ -187,5 +187,6 @@ public class gameState {
 
         updateCharacters();
         updateCamera();
+        gameMetrics.update(); // TODO: testing here
     }
 }

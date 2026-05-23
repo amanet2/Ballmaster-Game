@@ -8,6 +8,10 @@ import com.app.engine.eventSystem.gEventGraphics;
 import com.app.engine.engine;
 
 public class gameScheduler {
+    // TODO: multiple schedulers, one for world time events, one for game (internal) time events
+    // TODO: timeScale, advance X game ms for every Y real ms
+    //  Example: game scheduler, play time tracking for saved game, weapon cooldowns, ai behaviors
+    //  Example: real-world scheduler, timed multiplayer matches, ui effects
     private static final gSchedulerSystem scheduler = engine.instance().gSchedulerSystem;
 
     public static gSchedulerSystem instance() {

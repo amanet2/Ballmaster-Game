@@ -13,11 +13,10 @@ public class game {
 
             // update state
             while (tickTimeNanos < snapshotTimeNanos) {
-                tickTimeNanos += (long) (1000000000.0 / gameCVars.worldTickRate);
+                long timeSliceNanos = (long) (1000000000.0 / gameCVars.worldTickRate);
+                tickTimeNanos += timeSliceNanos;
 
-                gameState.update();
-
-//                gameMetrics.update();
+                gameState.update(timeSliceNanos/(long)1000000.0);
             }
 
             gameScheduler.instance().doEvents(System.currentTimeMillis());

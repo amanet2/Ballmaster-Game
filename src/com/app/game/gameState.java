@@ -10,7 +10,12 @@ import com.app.engine.eventSystem.*;
 import com.app.engine.utils.*;
 
 public class gameState {
+    // TODO: the real-world time cant be used for jump cooldown, MUST be tied to game tick
+    //  IDEA: pass in the time slice from outer loop to here, and increment an internal gameTimeMillis
+    //   not to be confused with the currentTimeMillis
     public static gEntity ballBoy;
+
+    public static long gameTimeMillis = 0;
 
     public static ArrayList<gBounds> collisionBounds;
     public static ArrayList<gEventTriggerBounds> triggerBounds;
@@ -116,8 +121,8 @@ public class gameState {
 //        vecDy += gravity;
 
         if (playerJump) {
-            if(playerCanJumpAtMillis < System.currentTimeMillis()) {
-                playerCanJumpAtMillis = System.currentTimeMillis() + gameCVars.playerJumpDelay;
+            if(playerCanJumpAtMillis < gameTimeMillis) {
+                playerCanJumpAtMillis = gameTimeMillis + gameCVars.playerJumpDelay;
                 vecDy -= gameCVars.playerJumpForce;
             }
             playerJump = false;
@@ -182,11 +187,13 @@ public class gameState {
         gameCamera.gameCamera.setCoords(new double[]{ camCoords[0] + vec[0], camCoords[1] + vec[1]});
     }
 
-    public static void update() {
+    public static void update(long timeSliceMillis) {
         if (paused) return;
+
+        gameTimeMillis += timeSliceMillis;
 
         updateCharacters();
         updateCamera();
-        gameMetrics.update(); // TODO: testing here
+        gameMetrics.update();
     }
 }
